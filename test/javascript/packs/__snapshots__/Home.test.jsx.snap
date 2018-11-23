@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  style={
+    Object {
+      "height": "100%",
+    }
+  }
+>
+  <Toolbar
+    drawerToggleClickHandler={[Function]}
+  />
+  <SideDrawer
+    open={false}
+  />
+  ;
+  <main
+    style={
+      Object {
+        "marginTop": "113px",
+      }
+    }
+  >
+    <p>
+       Main content 
+    </p>
+  </main>
+</div>
+`;

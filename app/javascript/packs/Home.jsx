@@ -50,3 +50,5 @@ class Home extends Component {
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(<Home />, document.querySelector('.app'))
 })
+
+export default Home
