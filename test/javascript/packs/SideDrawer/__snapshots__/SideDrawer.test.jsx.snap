@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SideDrawer renders correctly 1`] = `
+<nav
+  className="side-drawer"
+>
+  <ul>
+    <li>
+      <img
+        className="avatar"
+        src="test-file-stub"
+      />
+    </li>
+    <li>
+      <a
+        href="/"
+      >
+        Logout/Login
+      </a>
+    </li>
+  </ul>
+</nav>
+`;
+
+exports[`SideDrawer renders correctly with props, open: true 1`] = `
+<nav
+  className="side-drawer open"
+>
+  <ul>
+    <li>
+      <img
+        className="avatar"
+        src="test-file-stub"
+      />
+    </li>
+    <li>
+      <a
+        href="/"
+      >
+        Logout/Login
+      </a>
+    </li>
+  </ul>
+</nav>
+`;
