@@ -16,7 +16,6 @@
     "enzyme-to-json": "^3.3.4",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^23.6.0",
-    "sinon": "^7.1.1",
     "webpack-dev-server": "3.1.10"
   },
   "jest": {
