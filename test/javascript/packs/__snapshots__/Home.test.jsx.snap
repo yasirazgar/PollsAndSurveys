@@ -9,7 +9,7 @@ exports[`Home renders correctly 1`] = `
   }
 >
   <Toolbar
-    drawerToggleClickHandler={[Function]}
+    sideDrawerToggleClickHandler={[Function]}
   />
   <SideDrawer
     open={false}

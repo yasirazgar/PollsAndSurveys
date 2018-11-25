@@ -1,6 +1,6 @@
 import React from 'react';
 
-import DrawerToggleButton from '../SideDrawer/DrawerToggleButton'
+import ToggleButton from '../SideDrawer/ToggleButton'
 
 import './Toolbar.scss';
 
@@ -10,7 +10,7 @@ const Toolbar = props => (
   <header className="toolbar">
     <nav className="toolbar__navigation">
       <div className="toolbar__toggle-button">
-        <DrawerToggleButton drawerToggleClickHandler={props.drawerToggleClickHandler} />
+        <ToggleButton clickHandler={props.sideDrawerToggleClickHandler} />
       </div>
       <div className="toolbar__logo"><a href="/">Logo</a></div>
       <div className="spacer"> <input className="search" type="text" placeholder="Search.." /> </div>

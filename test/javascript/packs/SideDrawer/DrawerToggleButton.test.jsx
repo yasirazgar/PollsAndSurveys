@@ -1,17 +1,17 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme'
-import DrawerToggleButton from 'packs/SideDrawer/DrawerToggleButton'
+import ToggleButton from 'packs/SideDrawer/ToggleButton'
 
-describe("DrawerToggleButton", () => {
+describe("ToggleButton", () => {
   it("renders correctly", () => {
-    const wrapper = shallow(<DrawerToggleButton />);
+    const wrapper = shallow(<ToggleButton />);
 
     expect(wrapper).toMatchSnapshot();
   });
 
-  it("drawerToggleClickHandler gets called on clicking ToggleButton", () => {
+  it("clickHandler gets called on clicking ToggleButton", () => {
     const clickHandler = jest.fn();
-    const wrapper = mount(<DrawerToggleButton drawerToggleClickHandler={clickHandler} />)
+    const wrapper = mount(<ToggleButton clickHandler={clickHandler} />)
 
     wrapper.find('.toggle-button').first().simulate('click');
 

@@ -4,7 +4,6 @@
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 
 import Toolbar from './Toolbar/Toolbar';
 import SideDrawer from './SideDrawer/SideDrawer'
@@ -15,7 +14,7 @@ class Home extends Component {
     sideDrawerOpen: false
   };
 
-  drawerToggleClickHandler = () => {
+  sideDrawerToggleClickHandler = () => {
     this.setState((prevState) => {
       return {sideDrawerOpen: !prevState.sideDrawerOpen};
     });
@@ -34,7 +33,7 @@ class Home extends Component {
 
     return (
       <div style={{height: '100%'}}>
-        <Toolbar drawerToggleClickHandler={this.drawerToggleClickHandler} />
+        <Toolbar sideDrawerToggleClickHandler={this.sideDrawerToggleClickHandler} />
 
         <SideDrawer open={this.state.sideDrawerOpen} />;
         {backdrop}
