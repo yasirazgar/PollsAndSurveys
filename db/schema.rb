@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2018_11_10_045829) do
 
   create_table "polls", force: :cascade do |t|
     t.integer "user_id"
-    t.integer "category_id"
+    t.integer "category_ids", array: true
     t.text "options", array: true
     t.integer "mutlioption"
   end
