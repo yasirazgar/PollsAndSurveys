@@ -1,0 +1,49 @@
+.main-wrapper{
+  margin: 5%;
+  position: relative;
+
+  .main-wrapper-header{
+    display: flex;
+    overflow: hidden;
+
+    position: -webkit-sticky;
+    position: -moz-sticky;
+    position: -ms-sticky;
+    position: -o-sticky;
+    position: sticky;
+    top: 60px;
+
+    z-index: 10;
+
+    .main-wrapper-header-content {
+      background-color: green;
+      padding: 10px 20px;
+      width: 100%;
+    }
+
+    .btn__inner {
+      float: right;
+    }
+
+    input {
+      padding: 6px;
+      margin: 0 10px;
+    }
+  }
+
+  .main-wrapper__content{
+    margin-top: 50px;
+
+  }
+
+}
+
+@media (max-width: 700px) {
+  .main-wrapper {
+    margin: 1% ;
+    .poll-search {
+      float: right;
+    }
+  }
+}
+

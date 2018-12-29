@@ -1,6 +1,6 @@
 .side-drawer {
   height: 100%;
-  background: white;
+  background: green;
   box-shadow: 1px 0px 7px rgba(0, 0, 0, 0.5);
   position: fixed;
   top: 0;
@@ -14,29 +14,42 @@
     transform: translateX(0);
   }
 
-  ul {
+  .wrapper {
     height: 100%;
     list-style: none;
     display: flex;
     flex-direction: column;
-  }
-
-  li {
-    margin: 0.5rem 0;
+    margin: 5px;
     .avatar {
+      margin: 0.5rem 0;
       vertical-align: middle;
       width: 100px;
       height: 100px;
       border-radius: 50%;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
     }
-  }
-
-  a {
-    color: red;
-    text-decoration: none;
-    font-size: 1.2rem;
-    &:hover, &:active {
-      color: green;
+    .profile-form {
+      input {
+        width: 80%;
+        padding: 5px 0px;
+        margin: 5px 0;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+      }
+      // transform: translateX(-100%);
+      // transition: transform 0.3s ease-out;
+      // &.show{
+      //   transform: translateX(0);
+      // }
+    }
+    .btn {
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
     }
   }
 }

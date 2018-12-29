@@ -8,10 +8,16 @@ import ReactDOM from 'react-dom';
 import Toolbar from './Toolbar/Toolbar';
 import SideDrawer from './SideDrawer/SideDrawer'
 import Backdrop from './Backdrop/Backdrop'
+import MainWrapper from './MainWrapper'
+import Modal from './Utils/Modal'
+import Input from './Utils/Input'
+import ModalButtonGroup from './Utils/ModalButtonGroup'
+import ProfileForm from './Profile/form'
 
 class Home extends Component {
   state = {
-    sideDrawerOpen: false
+    sideDrawerOpen: false,
+    modalOpen: false
   };
 
   sideDrawerToggleClickHandler = () => {
@@ -23,24 +29,45 @@ class Home extends Component {
   backdropClickHandler = () => {
     this.setState({sideDrawerOpen: false});
   };
+  closeModalHandler = () => {
+    this.setState({modalOpen: false});
+  };
+  openModalHandler = () => {
+    this.setState({modalOpen: true});
+  };
 
   render() {
-    let backdrop;
+    let backdrop, modal, modalBody, modalFooter;
 
     if (this.state.sideDrawerOpen) {
       backdrop = <Backdrop backdropClickHandler={this.backdropClickHandler} />;
     };
 
+    if (this.state.modalOpen) {
+      modalBody = <div className="profile__form">
+        <ProfileForm />
+      </div>
+      modalFooter = <ModalButtonGroup />
+      modal = <Modal
+        closeModalHandler={this.closeModalHandler}
+        modalHeader="Profile"
+        modalBody={modalBody}
+        modalFooter={modalFooter}
+      />;
+    };
+
     return (
       <div style={{height: '100%'}}>
-        <Toolbar sideDrawerToggleClickHandler={this.sideDrawerToggleClickHandler} />
+        <Toolbar sideDrawerToggleClickHandler={this.sideDrawerToggleClickHandler} openModalHandler={this.openModalHandler}/>
 
-        <SideDrawer open={this.state.sideDrawerOpen} />;
+        <SideDrawer open={this.state.sideDrawerOpen} openModalHandler={this.openModalHandler}/>;
+
+        <MainWrapper />
+
         {backdrop}
 
-        <main style={{marginTop: '113px'}}>
-          <p> Main content </p>
-        </main>
+        {modal}
+
       </div>
     );
   }

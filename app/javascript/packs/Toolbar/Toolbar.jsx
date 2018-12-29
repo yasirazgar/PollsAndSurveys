@@ -13,11 +13,11 @@ const Toolbar = props => (
         <ToggleButton clickHandler={props.sideDrawerToggleClickHandler} />
       </div>
       <div className="toolbar__logo"><a href="/">Logo</a></div>
-      <div className="spacer"> <input className="search" type="text" placeholder="Search.." /> </div>
+      <div className="spacer"> </div>
       <div className="toolbar_navigation-items">
         <ul>
           <li><a href="/">Logout/Login</a></li>
-          <li><img className="avatar" src={ProfileIcon}></img></li>
+          <li><img className="avatar" src={ProfileIcon} onClick={props.openModalHandler}></img></li>
         </ul>
       </div>
     </nav>
