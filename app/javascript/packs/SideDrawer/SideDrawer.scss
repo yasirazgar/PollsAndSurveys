@@ -30,15 +30,31 @@
       margin-right: auto;
       display: block;
     }
-    .profile-form {
+    .form {
       input {
-        width: 80%;
+        width: 75%;
         padding: 5px 0px;
         margin: 5px 0;
         margin-left: auto;
         margin-right: auto;
         display: block;
       }
+      &.signin {
+        // transform: translateX(-100%);
+        // transition: transform 0.3s ease-out;
+      }
+      &.signup {
+        // transform: translateX(-100%);
+        // transition: transform 0.3s ease-out;
+      }
+      &.show{
+        // transform: translateX(0);
+      }
+      &.hidden {
+        display: none
+      }
+
+
       // transform: translateX(-100%);
       // transition: transform 0.3s ease-out;
       // &.show{

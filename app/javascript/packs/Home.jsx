@@ -11,14 +11,28 @@ import Backdrop from './Backdrop/Backdrop'
 import MainWrapper from './MainWrapper'
 import Modal from './Utils/Modal'
 import Input from './Utils/Input'
+import ProfileModal from './Modals/ProfileModal'
+import SignInModal from './Modals/SignInModal'
+import SignUpModal from './Modals/SignUpModal'
 import ModalButtonGroup from './Utils/ModalButtonGroup'
-import ProfileForm from './Profile/form'
 
 class Home extends Component {
-  state = {
-    sideDrawerOpen: false,
-    modalOpen: false
-  };
+  constructor(){
+    super();
+    this.backdrop = null;
+    this.modal = null;
+    this.modalBody = null;
+    this.modalFooter = null;
+
+    this.state = {
+      sideDrawerOpen: false,
+      modalOpen: false,
+      profileModalOpen: false,
+      signInModalOpen: false,
+      signUpModalOpen: false,
+    };
+  }
+
 
   sideDrawerToggleClickHandler = () => {
     this.setState((prevState) => {
@@ -32,41 +46,54 @@ class Home extends Component {
   closeModalHandler = () => {
     this.setState({modalOpen: false});
   };
-  openModalHandler = () => {
-    this.setState({modalOpen: true});
+  openProfileModal = () => {
+
+    this.modal = <ProfileModal closeModalHandler={this.closeModalHandler} />
+
+    this.setState({modalOpen: true, profileModalOpen: true});
+  };
+  logoutHandler = () => {
+
+  };
+  openSigninModal = () => {
+    this.modal = <SignInModal closeModalHandler={this.closeModalHandler} />
+
+    this.setState({modalOpen: true, signInModalOpen: true});
+  };
+  openSignupModal = () => {
+    this.modal = <SignUpModal closeModalHandler={this.closeModalHandler} />
+
+    this.setState({modalOpen: true, signUpModalOpen: true});
   };
 
   render() {
-    let backdrop, modal, modalBody, modalFooter;
+    let commonModal;
 
     if (this.state.sideDrawerOpen) {
-      backdrop = <Backdrop backdropClickHandler={this.backdropClickHandler} />;
+      this.backdrop = <Backdrop backdropClickHandler={this.backdropClickHandler} />;
     };
 
     if (this.state.modalOpen) {
-      modalBody = <div className="profile__form">
-        <ProfileForm />
-      </div>
-      modalFooter = <ModalButtonGroup />
-      modal = <Modal
-        closeModalHandler={this.closeModalHandler}
-        modalHeader="Profile"
-        modalBody={modalBody}
-        modalFooter={modalFooter}
-      />;
+      commonModal = this.modal;
     };
 
     return (
       <div style={{height: '100%'}}>
-        <Toolbar sideDrawerToggleClickHandler={this.sideDrawerToggleClickHandler} openModalHandler={this.openModalHandler}/>
 
-        <SideDrawer open={this.state.sideDrawerOpen} openModalHandler={this.openModalHandler}/>;
+        <Toolbar
+          sideDrawerToggleClickHandler={this.sideDrawerToggleClickHandler}
+          openProfileModal={this.openProfileModal}
+          logoutHandler={this.logoutHandler}
+          openSigninModal={this.openSigninModal}
+          openSignupModal={this.openSignupModal}/>
+
+        <SideDrawer open={this.state.sideDrawerOpen} openProfileModal={this.openProfileModal}/>
 
         <MainWrapper />
 
-        {backdrop}
+        {this.backdrop}
 
-        {modal}
+        {commonModal}
 
       </div>
     );
