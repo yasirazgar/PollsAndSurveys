@@ -11,6 +11,7 @@ import Backdrop from './Backdrop/Backdrop'
 import MainWrapper from './MainWrapper'
 import Modal from './Utils/Modal'
 import Input from './Utils/Input'
+import Loader from './Utils/Loader'
 import ProfileModal from './Modals/ProfileModal'
 import SignInModal from './Modals/SignInModal'
 import SignUpModal from './Modals/SignUpModal'
@@ -23,6 +24,7 @@ class Home extends Component {
     this.modal = null;
     this.modalBody = null;
     this.modalFooter = null;
+    this.loader = null;
 
     this.state = {
       sideDrawerOpen: false,
@@ -30,6 +32,7 @@ class Home extends Component {
       profileModalOpen: false,
       signInModalOpen: false,
       signUpModalOpen: false,
+      showLoader: false
     };
   }
 
@@ -77,8 +80,14 @@ class Home extends Component {
       commonModal = this.modal;
     };
 
+    if (this.state.showLoader) {
+      this.loader = <Loader />
+    }
+
     return (
       <div style={{height: '100%'}}>
+
+        {this.loader}
 
         <Toolbar
           sideDrawerToggleClickHandler={this.sideDrawerToggleClickHandler}
