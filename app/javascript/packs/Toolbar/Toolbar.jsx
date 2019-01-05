@@ -4,7 +4,7 @@ import ToggleButton from '../SideDrawer/ToggleButton'
 
 import './Toolbar.scss';
 
-import ProfileIcon from 'profile_icon.png'
+import ProfileIcon from 'user__anonymous.svg'
 
 const Toolbar = props => {
   let loginOrLogout;

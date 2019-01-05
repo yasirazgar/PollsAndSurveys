@@ -4,16 +4,18 @@ import Button from '../Utils/Button'
 import ProfileForm from '../Profile/Form'
 import SignInForm from '../Session/SignInForm'
 import SignUpForm from '../Session/SignUpForm'
+import Footer from '../Footer/Footer'
 
 import './SideDrawer.scss';
 
-import ProfileIcon from 'profile_icon.png'
+import ProfileIcon from 'user__anonymous.svg'
 
 // let isFormVisible = false;
 // const showForm = () => {
 //   let profileForm = document.getElementsByClassName("profile-form")[0];
 //   profileForm.classList.add("show");
 // }
+
 class SideDrawer extends Component {
   state = {
     signedIn: true
@@ -67,11 +69,12 @@ class SideDrawer extends Component {
       </Fragment>
     }
 
-
     return (
       <nav className={classes}>
         <div className="wrapper">
           {content}
+
+          <Footer />
         </div>
       </nav>
     );

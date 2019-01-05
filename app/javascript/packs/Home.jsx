@@ -9,6 +9,7 @@ import Toolbar from './Toolbar/Toolbar';
 import SideDrawer from './SideDrawer/SideDrawer'
 import Backdrop from './Backdrop/Backdrop'
 import MainWrapper from './MainWrapper'
+import Footer from './Footer/Footer'
 import Modal from './Utils/Modal'
 import Input from './Utils/Input'
 import Loader from './Utils/Loader'
@@ -16,6 +17,8 @@ import ProfileModal from './Modals/ProfileModal'
 import SignInModal from './Modals/SignInModal'
 import SignUpModal from './Modals/SignUpModal'
 import ModalButtonGroup from './Utils/ModalButtonGroup'
+
+import './Tooltip.scss'
 
 class Home extends Component {
   constructor(){
@@ -35,7 +38,6 @@ class Home extends Component {
       showLoader: false
     };
   }
-
 
   sideDrawerToggleClickHandler = () => {
     this.setState((prevState) => {
@@ -71,6 +73,9 @@ class Home extends Component {
 
   render() {
     let commonModal;
+    this.backdrop = null;
+    this.loader = null;
+
 
     if (this.state.sideDrawerOpen) {
       this.backdrop = <Backdrop backdropClickHandler={this.backdropClickHandler} />;
@@ -104,12 +109,14 @@ class Home extends Component {
 
         {commonModal}
 
+        <Footer classes="normal"/>
+
       </div>
     );
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {  
   ReactDOM.render(<Home />, document.querySelector('.app'))
 })
 
