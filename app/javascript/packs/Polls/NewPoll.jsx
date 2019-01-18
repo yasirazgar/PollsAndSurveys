@@ -15,7 +15,7 @@ class NewPoll extends Component {
     for (let i = 0; i < this.state.options.length; i++) {
       options.push(<li key={i.toString()} >{this.state.options[i]} <span className="close" onClick={this.removeOption.bind(this, i)}>×</span></li>)
     }
-    options.push(<li key={this.state.options.length.toString()}> <Input classes="poll-option__new" placeholder="Options for you question" /> <span className="add" onClick={this.addOption.bind(this)}>+</span></li>)
+    options.push(<li key={this.state.options.length.toString()}> <input classes="poll-option__new" placeholder="Options for you question" /> <span className="add" onClick={this.addOption.bind(this)}>+</span></li>)
     return options
   };
 
@@ -36,7 +36,7 @@ class NewPoll extends Component {
     return (
       <div className="poll" id="new-poll">
         <div className="poll-question">
-          <Input type="text" className="poll-question-input" placeholder="Ask your question..." />
+          <input type="text" className="poll-question-input" placeholder="Ask your question..." />
         </div>
 
         <ul >

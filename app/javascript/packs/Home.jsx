@@ -13,12 +13,15 @@ import Footer from './Footer/Footer'
 import Modal from './Utils/Modal'
 import Input from './Utils/Input'
 import Loader from './Utils/Loader'
-import ProfileModal from './Modals/ProfileModal'
-import SignInModal from './Modals/SignInModal'
-import SignUpModal from './Modals/SignUpModal'
+import ProfileModal from './Modals/Profile'
+import SignInModal from './Modals/SignIn'
+import SignUpModal from './Modals/SignUp'
 import ModalButtonGroup from './Utils/ModalButtonGroup'
 
 import './Tooltip.scss'
+import './Common.scss'
+
+import 'whatwg-fetch'
 
 class Home extends Component {
   constructor(){
@@ -35,7 +38,9 @@ class Home extends Component {
       profileModalOpen: false,
       signInModalOpen: false,
       signUpModalOpen: false,
-      showLoader: false
+      showLoader: false,
+      signedIn: false,
+      user: null
     };
   }
 
@@ -60,13 +65,57 @@ class Home extends Component {
   logoutHandler = () => {
 
   };
-  openSigninModal = () => {
-    this.modal = <SignInModal closeModalHandler={this.closeModalHandler} />
+  signInHandler = () => {
+    fetch('/login', {
+      credentials: 'same-origin',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content,
+      },
+      body: JSON.stringify({email: document.querySelector('.sign-in .email').value, password: document.querySelector('.sign-in .password').value})
+    }).then(response => {
+      return response.json()
+    }).then(data => {
+      if(data.user){
+        this.setState({
+          signedIn: true,
+          signInModalOpen: false,
+          modalOpen: false,
+          user: data.user
+        })
+      }
+    });
+  }
+  openSignInModal = () => {
+    this.modal = <SignInModal closeModalHandler={this.closeModalHandler} signInHandler={this.signInHandler}/>
 
     this.setState({modalOpen: true, signInModalOpen: true});
   };
-  openSignupModal = () => {
-    this.modal = <SignUpModal closeModalHandler={this.closeModalHandler} />
+  signUpHandler = () => {
+    fetch('/signup', {
+      credentials: 'same-origin',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content,
+      },
+      body: JSON.stringify({email: document.querySelector('.sign-in .email').value, password: document.querySelector('.sign-in .password').value})
+    }).then(response => {
+      return response.json()
+    }).then(data => {
+      if(data.user){
+        this.setState({
+          signedIn: true,
+          signInModalOpen: false,
+          modalOpen: false,
+          user: data.user
+        })
+      }
+    });
+  }
+  openSignUpModal = () => {
+    this.modal = <SignUpModal closeModalHandler={this.closeModalHandler} signUnHandler={this.signInHandler}/>
 
     this.setState({modalOpen: true, signUpModalOpen: true});
   };
@@ -98,12 +147,13 @@ class Home extends Component {
           sideDrawerToggleClickHandler={this.sideDrawerToggleClickHandler}
           openProfileModal={this.openProfileModal}
           logoutHandler={this.logoutHandler}
-          openSigninModal={this.openSigninModal}
-          openSignupModal={this.openSignupModal}/>
+          openSignInModal={this.openSignInModal}
+          openSignUpModal={this.openSignUpModal}
+          user={this.state.user}/>
 
-        <SideDrawer open={this.state.sideDrawerOpen} openProfileModal={this.openProfileModal}/>
+        <SideDrawer open={this.state.sideDrawerOpen} openProfileModal={this.openProfileModal} user={this.state.user}/>
 
-        <MainWrapper />
+        <MainWrapper user={this.state.user}/>
 
         {this.backdrop}
 
@@ -116,7 +166,7 @@ class Home extends Component {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {  
+document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(<Home />, document.querySelector('.app'))
 })
 

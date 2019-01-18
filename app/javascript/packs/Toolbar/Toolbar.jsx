@@ -8,13 +8,13 @@ import ProfileIcon from 'user__anonymous.svg'
 
 const Toolbar = props => {
   let loginOrLogout;
-  if (props.signedIn){
+  if (props.user){
     loginOrLogout = <li className="links" onClick={props.logoutHandler}>Logout</li>
   }
   else {
     loginOrLogout = [
-      <li key="0" className="links" onClick={props.openSigninModal}>Singin</li>,
-      <li key="1" className="links" onClick={props.openSignupModal}>Signup</li>
+      <li key="0" className="links" onClick={props.openSignInModal}>Sign in</li>,
+      <li key="1" className="links" onClick={props.openSignUpModal}>Sign up</li>
     ]
 
   }
