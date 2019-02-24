@@ -1,12 +1,18 @@
 import React, {Component} from 'react';
 import Modal from '../Utils/Modal';
+import SignUpForm from './SignUpForm'
 
 import ModalButtonGroup from '../Utils/ModalButtonGroup';
 
-class SignUp extends Component {
+class SignUpModal extends Component {
   state = {
     emailError: null,
-    passwordError: null
+    passwordError: null,
+    submitEnabled: false
+  }
+
+  enableSubmitButton = (enabled) => {
+    this.setState({submitEnabled: enabled});
   }
 
   validateEmail = (event) => {
@@ -26,20 +32,17 @@ class SignUp extends Component {
 
   render() {
     let modalBody = <div className="form sign-in">
-      <input placeholder={this.props.name} classes="email" onChange={this.validateEmail} />
-      <span className='error-message'> {this.state.emailError} </span>
-      <input placeholder={this.props.name} classes="password" onChange={this.validatePassword}/>
-      <span className='error-message'> {this.state.passwordError} </span>
-      <input placeholder={this.props.name} classes="confirm-password" onChange={this.validatePassword}/>
-      <span className='error-message'> {this.state.passwordError} </span>
-      <input placeholder={this.props.name} classes="name" onChange={this.validatePassword}/>
-      <span className='error-message'> {this.state.passwordError} </span>
+      <SignUpForm enableSubmitButton={this.enableSubmitButton}/>
     </div>;
-    let modalFooter = <ModalButtonGroup prim_text="Submit"/>
+    let modalFooter = <ModalButtonGroup prim_text="Submit"
+      submitEnabled={this.state.submitEnabled}
+      closeModalHandler={this.props.closeModalHandler}
+      submitHandler={this.props.signInHandler}
+    />
 
     return (
       <Modal
-        closeModalHandler={props.closeModalHandler}
+        closeModalHandler={this.props.closeModalHandler}
         modalHeader="Profile"
         modalBody={modalBody}
         modalFooter={modalFooter}
@@ -48,4 +51,4 @@ class SignUp extends Component {
   }
 };
 
-export default SignUp;
+export default SignUpModal;

@@ -13,9 +13,9 @@ import Footer from './Footer/Footer'
 import Modal from './Utils/Modal'
 import Input from './Utils/Input'
 import Loader from './Utils/Loader'
-import ProfileModal from './Modals/Profile'
-import SignInModal from './Modals/SignIn'
-import SignUpModal from './Modals/SignUp'
+import ProfileModal from './Profile/ProfileModal'
+import SignInModal from './Session/SignInModal'
+import SignUpModal from './Session/SignUpModal'
 import ModalButtonGroup from './Utils/ModalButtonGroup'
 
 import './Tooltip.scss'
@@ -53,6 +53,7 @@ class Home extends Component {
   backdropClickHandler = () => {
     this.setState({sideDrawerOpen: false});
   };
+
   closeModalHandler = () => {
     this.setState({modalOpen: false});
   };

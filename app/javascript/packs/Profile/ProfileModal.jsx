@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
 import Modal from '../Utils/Modal';
+import ProfileForm from './ProfileForm'
 
 import ModalButtonGroup from '../Utils/ModalButtonGroup';
 
-class Profile extends Component {
+class ProfileModal extends Component {
   state = {
 
   };
 
   render() {
     let modalBody = <div className="form profile">
-      <input placeholder={this.props.name} />
-      <input placeholder={this.props.name} />
-      <input placeholder={this.props.name} />
-      <input placeholder={this.props.name} />
+      <ProfileForm />
     </div>
-    let modalFooter = <ModalButtonGroup prim_text="Submit"/>
+    let modalFooter = <ModalButtonGroup prim_text="Submit" closeModalHandler={this.props.closeModalHandler} />
 
     return (
       <Modal
@@ -28,4 +26,4 @@ class Profile extends Component {
   }
 };
 
-export default Profile;
+export default ProfileModal;

@@ -7,13 +7,17 @@ import ReactDOM from 'react-dom';
 
 import Input from '../Utils/Input'
 
-class SignUpForm extends Component {
+class ProfileForm extends Component {
   constructor(props){
     super(props)
 
     this.email = null
     this.password = null
     this.confirmPassword = null
+    this.phone = null
+    this.address = null
+    this.confirmPassword = null
+
     this.emailValid = false
     this.passwordValid = false
     this.confirmPasswordValid = false
@@ -41,10 +45,12 @@ class SignUpForm extends Component {
         <Input placeholder={this.props.name} />
         <Input placeholder={this.props.name} />
         <Input placeholder={this.props.name} />
+        <Input placeholder={this.props.name} />
+        <Input placeholder={this.props.name} />
 
       </Fragment>
     );
   }
 }
 
-export default SignUpForm
+export default ProfileForm

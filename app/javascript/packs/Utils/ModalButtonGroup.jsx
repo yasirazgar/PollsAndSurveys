@@ -4,13 +4,14 @@ import Button from './Button';
 import './ModalButtonGroup.scss';
 
 const ModalButtonGroup = props => {
-  let prim_text = props.prim_text || "Ok";
-  let sec_text = props.sec_text || "Cancel";
+  let primaryText = props.primaryText || "Ok";
+  let secondaryText = props.secondaryText || "Cancel";
+  let disabled = !props.submitEnabled;
 
   return (
     <div className="btn-group">
-      <Button classes="primary" text={prim_text} clickHandler={props.submitHandler} disabled/>
-      <Button classes="secondary" text={sec_text} clickHandler={props.closeModalHandler} />
+      <Button classes="primary" text={primaryText} clickHandler={props.submitHandler} disabled={disabled}/>
+      <Button classes="secondary" text={secondaryText} clickHandler={props.closeModalHandler} />
     </div>
   )
 };

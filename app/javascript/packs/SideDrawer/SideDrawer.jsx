@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 
 import Button from '../Utils/Button'
-import ProfileForm from '../Profile/Form'
+import ProfileForm from '../Profile/ProfileForm'
 import SignInForm from '../Session/SignInForm'
 import SignUpForm from '../Session/SignUpForm'
 import Footer from '../Footer/Footer'
@@ -18,23 +18,29 @@ import ProfileIcon from 'user__anonymous.svg'
 
 class SideDrawer extends Component {
   state = {
-    signedIn: true
+    signedIn: false,
+    showSignInForm: true,
+    enable: false
   }
 
   showSignInForm = () => {
-    let signInForm = document.getElementsByClassName("signin form")[0];
-    let signUpForm = document.getElementsByClassName("signup form")[0];
+    // let signInForm = document.getElementsByClassName("signin form")[0];
+    // let signUpForm = document.getElementsByClassName("signup form")[0];
 
-    signUpForm.classList.add("hidden");
-    signInForm.classList.remove("hidden");
+    // signUpForm.classList.add("hidden");
+    // signInForm.classList.remove("hidden");
+
+    this.setState({showSignInForm: true})
   }
 
   showSignUpForm = () => {
-    let signUpForm = document.getElementsByClassName("signup form")[0];
-    let signInForm = document.getElementsByClassName("signin form")[0];
+    // let signUpForm = document.getElementsByClassName("signup form")[0];
+    // let signInForm = document.getElementsByClassName("signin form")[0];
 
-    signInForm.classList.add("hidden");
-    signUpForm.classList.remove("hidden");
+    // signInForm.classList.add("hidden");
+    // signUpForm.classList.remove("hidden");
+
+    this.setState({showSignInForm: false})
   }
 
   render () {
@@ -43,7 +49,19 @@ class SideDrawer extends Component {
       classes = classes + ' open';
     }
 
-    let content;
+    let content, form;
+    if (this.state.showSignInForm){
+      form = <div className="signin form">
+        <SignInForm />
+        <Button text="Login" />
+      </div>
+    }
+    else {
+      form = <div className="signup form">
+        <SignUpForm />
+        <Button text="Submit" />
+      </div>
+    }
     if (this.state.signedIn) {
       content = <Fragment>
         <Button classes="delete" text="Logout" />
@@ -58,14 +76,7 @@ class SideDrawer extends Component {
       content = <Fragment>
         <Button key="0" classes="other" text="SignIn" clickHandler={this.showSignInForm} />,
         <Button key="1" classes="other" text="SignUp" clickHandler={this.showSignUpForm} />
-        <div className="signin form">
-          <SignInForm />
-          <Button text="Login" />
-        </div>
-        <div className="signup form hidden">
-          <SignUpForm />
-          <Button text="Submit" />
-        </div>
+        {form}
       </Fragment>
     }
 

@@ -9,12 +9,15 @@ import ProfileIcon from 'user__anonymous.svg'
 const Toolbar = props => {
   let loginOrLogout;
   if (props.user){
-    loginOrLogout = <li className="links" onClick={props.logoutHandler}>Logout</li>
+    loginOrLogout = [
+      <li key="0" className="links" onClick={props.logoutHandler}>Logout</li>,
+      <li key="1"><img className="avatar" src={ProfileIcon} onClick={props.openProfileModal}></img></li>
+    ]
   }
   else {
     loginOrLogout = [
       <li key="0" className="links" onClick={props.openSignInModal}>Sign in</li>,
-      <li key="1" className="links" onClick={props.openSignUpModal}>Sign up</li>
+      <li key="1" className="links" onClick={props.openSignUpModal}>Sign up</li>,
     ]
 
   }
@@ -29,7 +32,6 @@ const Toolbar = props => {
         <div className="toolbar_navigation-items">
           <ul>
             {loginOrLogout}
-            <li><img className="avatar" src={ProfileIcon} onClick={props.openProfileModal}></img></li>
           </ul>
         </div>
       </nav>

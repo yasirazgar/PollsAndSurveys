@@ -8,16 +8,35 @@ import ReactDOM from 'react-dom';
 import Input from '../Utils/Input'
 
 class SignInForm extends Component {
-  state = {
-    sideDrawerOpen: false,
-    modalOpen: false
-  };
+  constructor(props){
+    super(props)
+
+    this.email = null
+    this.password = null
+    this.emailValid = false
+    this.passwordValid = false
+  }
+
+  setFormValidity = (key, isValid, value) => {
+    this[key + "Valid"] = isValid;
+    this[key] = value;
+    console.log(this)
+
+    if (this.props.enableSubmitButton){
+      if (this.emailValid && this.passwordValid) {
+        this.props.enableSubmitButton(true);
+      }
+      else {
+        this.props.enableSubmitButton(false);
+      }
+    }
+  }
 
   render() {
     return (
       <Fragment>
-        <Input placeholder={this.props.name} />
-        <Input placeholder={this.props.name} />
+        <Input type="email" placeholder={this.props.name} setFormValidity={this.setFormValidity} />
+        <Input type="password" placeholder={this.props.name} setFormValidity={this.setFormValidity} />
       </Fragment>
     );
   }
