@@ -18,6 +18,7 @@ import SignInModal from './Session/SignInModal'
 import SignUpModal from './Session/SignUpModal'
 import ModalButtonGroup from './Utils/ModalButtonGroup'
 
+import signInHandler from './Handlers/signInHandler';
 import './Tooltip.scss'
 import './Common.scss'
 
@@ -42,6 +43,12 @@ class Home extends Component {
       signedIn: false,
       user: null
     };
+  componentDidMount() {
+    const user = JSON.parse(window.localStorage.getItem('user'));
+    if (user){
+      this.setState({signedIn: true, user: user})
+    }
+  }
   }
 
   sideDrawerToggleClickHandler = () => {
