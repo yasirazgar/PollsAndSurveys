@@ -1,42 +1,27 @@
 import React, {Component, Fragment} from 'react';
 import Modal from '../Utils/Modal';
 import ModalButtonGroup from '../Utils/ModalButtonGroup';
-import SignInForm from './SignInForm'
-import Input from '../Utils/Input'
+import SignInForm from './SignInForm';
 
-class SignInModal extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      submitEnabled: false
-    }
-    this.enableSubmitButton = this.enableSubmitButton.bind(this);
-  }
+const SignInModal = props => {
+  let modalBody = <div className="form sign-in">
+    <SignInForm setFormValidity={props.setFormValidity}/>
+  </div>;
 
-  enableSubmitButton = (enabled) => {
-    this.setState({submitEnabled: enabled});
-  }
+  let modalFooter = <ModalButtonGroup
+    primaryText='Submit'
+    submitEnabled={props.submitEnabled}
+    closeModalHandler={props.closeModalHandler}
+    submitHandler={props.signInHandler}/>
 
-  render() {
-    let modalBody = <div className="form sign-in">
-      <SignInForm enableSubmitButton={this.enableSubmitButton}/>
-    </div>;
-
-    let modalFooter = <ModalButtonGroup
-      primaryText='Submit'
-      submitEnabled={this.state.submitEnabled}
-      closeModalHandler={this.props.closeModalHandler}
-      submitHandler={this.props.signInHandler}/>
-
-    return (
-      <Modal
-        closeModalHandler={this.props.closeModalHandler}
-        modalHeader='Sign in'
-        modalBody={modalBody}
-        modalFooter={modalFooter}
-      />
-    )
-  }
+  return (
+    <Modal
+      closeModalHandler={props.closeModalHandler}
+      modalHeader='Sign in'
+      modalBody={modalBody}
+      modalFooter={modalFooter}
+    />
+  )
 };
 
 export default SignInModal;

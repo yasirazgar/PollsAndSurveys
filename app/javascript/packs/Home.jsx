@@ -18,7 +18,10 @@ import SignInModal from './Session/SignInModal'
 import SignUpModal from './Session/SignUpModal'
 import ModalButtonGroup from './Utils/ModalButtonGroup'
 
+import signUpHandler from './Handlers/signUpHandler';
 import signInHandler from './Handlers/signInHandler';
+import logoutHandler from './Handlers/logoutHandler';
+
 import './Tooltip.scss'
 import './Common.scss'
 
@@ -27,28 +30,44 @@ import 'whatwg-fetch'
 class Home extends Component {
   constructor(){
     super();
-    this.backdrop = null;
+
+    this.setLoginFormValidity = this.setLoginFormValidity.bind(this);
+    this.signInHandler = signInHandler;
     this.modal = null;
-    this.modalBody = null;
-    this.modalFooter = null;
-    this.loader = null;
+    this.email = null;
+    this.emailValid = false;
+    this.password = null;
+    this.passwordValid = false;
+    this.formValid = false;
 
     this.state = {
       sideDrawerOpen: false,
       modalOpen: false,
-      profileModalOpen: false,
-      signInModalOpen: false,
-      signUpModalOpen: false,
       showLoader: false,
       signedIn: false,
-      user: null
+      user: null,
+      loginButtonEnabled: false
     };
+
+  }
+
   componentDidMount() {
     const user = JSON.parse(window.localStorage.getItem('user'));
     if (user){
       this.setState({signedIn: true, user: user})
     }
   }
+
+  setLoginFormValidity = (key, Input_value, isValid) => {
+    this[key + "Valid"] = isValid;
+    this[key] = Input_value;
+
+    this.formValid = this.emailValid && this.passwordValid
+    if (this.formValid != this.state.loginButtonEnabled){
+      this.signInHandler = this.signInHandler.bind(this, this.email, this.password)
+      this.setSignInModal()
+      this.setState({loginButtonEnabled: this.formValid});
+    }
   }
 
   sideDrawerToggleClickHandler = () => {
@@ -62,84 +81,36 @@ class Home extends Component {
   };
 
   closeModalHandler = () => {
+    this.modal = null;
     this.setState({modalOpen: false});
   };
-  openProfileModal = () => {
 
-    this.modal = <ProfileModal closeModalHandler={this.closeModalHandler} />
-
-    this.setState({modalOpen: true, profileModalOpen: true});
-  };
-  logoutHandler = () => {
-
-  };
-  signInHandler = () => {
-    fetch('/login', {
-      credentials: 'same-origin',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content,
-      },
-      body: JSON.stringify({email: document.querySelector('.sign-in .email').value, password: document.querySelector('.sign-in .password').value})
-    }).then(response => {
-      return response.json()
-    }).then(data => {
-      if(data.user){
-        this.setState({
-          signedIn: true,
-          signInModalOpen: false,
-          modalOpen: false,
-          user: data.user
-        })
-      }
-    });
+  setProfileModal = () => {
+    return <ProfileModal closeModalHandler={this.closeModalHandler} />
   }
-  openSignInModal = () => {
-    this.modal = <SignInModal closeModalHandler={this.closeModalHandler} signInHandler={this.signInHandler}/>
-
-    this.setState({modalOpen: true, signInModalOpen: true});
+  openModal = (name) => {
+    this.modal = name
+    this.setState({modalOpen: true});
   };
-  signUpHandler = () => {
-    fetch('/signup', {
-      credentials: 'same-origin',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content,
-      },
-      body: JSON.stringify({email: document.querySelector('.sign-in .email').value, password: document.querySelector('.sign-in .password').value})
-    }).then(response => {
-      return response.json()
-    }).then(data => {
-      if(data.user){
-        this.setState({
-          signedIn: true,
-          signInModalOpen: false,
-          modalOpen: false,
-          user: data.user
-        })
-      }
-    });
+
+  setSignInModal = () => {
+    return <SignInModal submitEnabled={this.state.loginButtonEnabled} closeModalHandler={this.closeModalHandler} signInHandler={this.signInHandler} setFormValidity={this.setLoginFormValidity}/>
   }
-  openSignUpModal = () => {
-    this.modal = <SignUpModal closeModalHandler={this.closeModalHandler} signUnHandler={this.signInHandler}/>
 
-    this.setState({modalOpen: true, signUpModalOpen: true});
-  };
+  setSignUpModal = () => {
+    return <SignUpModal closeModalHandler={this.closeModalHandler} signUnHandler={this.signInHandler}/>
+  }
+
 
   render() {
-    let commonModal;
-    this.backdrop = null;
-    this.loader = null;
+    let modal, backdrop, loader;
 
+    if(this.modal && this.state.modalOpen){
+      modal = this["set"+this.modal+"Modal"]()
+    }
 
     if (this.state.sideDrawerOpen) {
       this.backdrop = <Backdrop backdropClickHandler={this.backdropClickHandler} />;
-    };
-
-    if (this.state.modalOpen) {
-      commonModal = this.modal;
     };
 
     if (this.state.showLoader) {
@@ -149,23 +120,23 @@ class Home extends Component {
     return (
       <div style={{height: '100%'}}>
 
-        {this.loader}
+        {loader}
 
         <Toolbar
           sideDrawerToggleClickHandler={this.sideDrawerToggleClickHandler}
-          openProfileModal={this.openProfileModal}
+          openProfileModal={this.openModal.bind(this, 'Profile')}
           logoutHandler={this.logoutHandler}
-          openSignInModal={this.openSignInModal}
-          openSignUpModal={this.openSignUpModal}
+          openSignInModal={this.openModal.bind(this, 'SignIn')}
+          openSignUpModal={this.openModal.bind(this, 'SignUp')}
           user={this.state.user}/>
 
-        <SideDrawer open={this.state.sideDrawerOpen} openProfileModal={this.openProfileModal} user={this.state.user}/>
+        <SideDrawer open={this.state.sideDrawerOpen} user={this.state.user}/>
 
         <MainWrapper user={this.state.user}/>
 
-        {this.backdrop}
+        {backdrop}
 
-        {commonModal}
+        {modal}
 
         <Footer classes="normal"/>
 

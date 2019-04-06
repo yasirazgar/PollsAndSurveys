@@ -19,7 +19,7 @@ class SignUpForm extends Component {
     this.confirmPasswordValid = false
   }
 
-  setFormValidity = (key, isValid, value) => {
+  setFormValidity = (key, value, isValid) => {
     this[key+'Valid'] = isValid;
     this[key] = value;
 
@@ -38,9 +38,10 @@ class SignUpForm extends Component {
   render() {
     return (
       <Fragment>
-        <Input placeholder={this.props.name} />
-        <Input placeholder={this.props.name} />
-        <Input placeholder={this.props.name} />
+        <Input name="name" type="email" placeholder="name" setFormValidity={this.setFormValidity}/>
+        <Input name="email" type="password" placeholder="email" setFormValidity={this.setFormValidity}/>
+        <Input name="password" type="password" placeholder="password" setFormValidity={this.setFormValidity}/>
+        <Input name="confirmPassword" type="password" placeholder="confirmPassword" setFormValidity={this.setFormValidity}/>
 
       </Fragment>
     );
