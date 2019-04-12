@@ -4,6 +4,7 @@
 
 import React, { Component, Fragment } from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 
 import Input from '../Utils/Input'
 
@@ -46,6 +47,10 @@ class SignUpForm extends Component {
       </Fragment>
     );
   }
+}
+
+SignUpForm.propTypes = {
+  enableSubmitButton: PropTypes.func
 }
 
 export default SignUpForm

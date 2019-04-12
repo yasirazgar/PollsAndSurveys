@@ -1,4 +1,5 @@
 import React, {Component, Fragment} from 'react';
+import PropTypes from 'prop-types';
 
 class Input extends Component {
   constructor(props) {
@@ -66,8 +67,22 @@ class Input extends Component {
 
         {errorSpan}
       </Fragment>
+
     );
   }
+}
+
+Input.propTypes = {
+  type: PropTypes.string,
+  onChange: PropTypes.func,
+  validateWithRegex: PropTypes.func,
+  setFormValidity: PropTypes.func,
+  type: PropTypes.string,
+  name: PropTypes.string,
+  classes: PropTypes.string,
+  placeholder: PropTypes.string,
+  changeHandler: PropTypes.func,
+
 }
 
 export default Input;

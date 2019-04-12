@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './Select.scss'
 
@@ -16,6 +17,10 @@ const Select = props => {
       {options}
     </select>
   );
+}
+
+Select.propTypes = {
+  options: PropTypes.object
 }
 
 export default Select;

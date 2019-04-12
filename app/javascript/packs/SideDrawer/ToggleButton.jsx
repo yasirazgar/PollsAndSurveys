@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './ToggleButton.scss';
 
@@ -10,5 +11,9 @@ const ToggleButton = props => (
   </button>
 
 );
+
+ToggleButton.propTypes = {
+  clickHandler: PropTypes.func
+}
 
 export default ToggleButton;

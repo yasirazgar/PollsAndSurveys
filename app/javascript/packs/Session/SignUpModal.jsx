@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+
 import Modal from '../Utils/Modal';
 import SignUpForm from './SignUpForm'
 import signUpHandler from '../Handlers/signUpHandler';
@@ -41,5 +43,9 @@ class SignUpModal extends Component {
     )
   }
 };
+
+SignUpModal.propTypes = {
+  enableSubmitButton: PropTypes.func
+}
 
 export default SignUpModal;

@@ -4,6 +4,8 @@
 
 import React, { Component, Fragment } from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
+
 import './Modal.scss'
 
 class Modal extends Component {
@@ -40,12 +42,21 @@ class Modal extends Component {
             <div className="modal__footer">
               {this.props.modalFooter}
             </div>
+            import PropTypes from 'prop-types';
+
           </div>
         </div>
       </Fragment>,
       document.body
     );
   }
+}
+
+Modal.propTypes = {
+  closeModalHandler: PropTypes.func,
+  modalHeader: PropTypes.element,
+  modalFooter: PropTypes.element,
+  modalBody: PropTypes.element
 }
 
 export default Modal

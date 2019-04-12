@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import Modal from '../Utils/Modal';
 import ProfileForm from './ProfileForm'
 
@@ -25,5 +27,9 @@ class ProfileModal extends Component {
     )
   }
 };
+
+ProfileModal.propTypes = {
+  closeModalHandler: PropTypes.func
+}
 
 export default ProfileModal;

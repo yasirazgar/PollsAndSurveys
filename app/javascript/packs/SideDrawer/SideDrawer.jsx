@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 
 import Button from '../Utils/Button'
 import ProfileForm from '../Profile/ProfileForm'
@@ -90,6 +91,10 @@ class SideDrawer extends Component {
       </nav>
     );
   }
+}
+
+SideDrawer.propTypes = {
+  open: PropTypes.bool
 }
 
 export default SideDrawer;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import FooterLeft from './FooterLeft'
 import FooterRight from './FooterRight'
@@ -11,5 +12,9 @@ const Footer = props => (
     <FooterLeft />
   </div>
 );
+
+Footer.propTypes = {
+  classes: PropTypes.string
+};
 
 export default Footer

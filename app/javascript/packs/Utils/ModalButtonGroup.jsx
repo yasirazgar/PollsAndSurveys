@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from './Button';
+import PropTypes from 'prop-types';
 
 import './ModalButtonGroup.scss';
 
@@ -15,5 +16,11 @@ const ModalButtonGroup = props => {
     </div>
   )
 };
+
+ModalButtonGroup.propTypes = {
+  primaryText: PropTypes.string,
+  secondaryText: PropTypes.string,
+  submitEnabled: PropTypes.bool
+}
 
 export default ModalButtonGroup;

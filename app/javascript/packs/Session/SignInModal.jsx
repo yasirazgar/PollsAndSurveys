@@ -1,4 +1,6 @@
 import React, {Component, Fragment} from 'react';
+import PropTypes from 'prop-types';
+
 import Modal from '../Utils/Modal';
 import ModalButtonGroup from '../Utils/ModalButtonGroup';
 import SignInForm from './SignInForm';
@@ -23,5 +25,12 @@ const SignInModal = props => {
     />
   )
 };
+
+SignInModal.propTypes = {
+  setFormValidity: PropTypes.func,
+  submitEnabled: PropTypes.func,
+  signInHandler: PropTypes.func,
+  closeModalHandler: PropTypes.func
+}
 
 export default SignInModal;

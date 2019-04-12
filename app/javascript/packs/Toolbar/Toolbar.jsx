@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import ToggleButton from '../SideDrawer/ToggleButton'
 
@@ -38,5 +39,13 @@ const Toolbar = props => {
     </header>
   )
 };
+
+Toolbar.propTypes = {
+  user: PropTypes.object,
+  openSignInModal: PropTypes.func,
+  openSignUpModal: PropTypes.func,
+  logoutHandler: PropTypes.func,
+  sideDrawerToggleClickHandler: PropTypes.func
+}
 
 export default Toolbar;
