@@ -68,11 +68,15 @@ GEM
       nokogiri (~> 1.8)
     concurrent-ruby (1.1.5)
     crass (1.0.4)
+    dotenv (0.7.0)
     erubi (1.8.0)
     execjs (2.7.0)
     factory_bot (5.0.2)
       activesupport (>= 4.2.0)
     ffi (1.10.0)
+    foreman (0.64.0)
+      dotenv (~> 0.7.0)
+      thor (>= 0.13.6)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     i18n (1.6.0)
@@ -199,6 +203,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   chromedriver-helper
   factory_bot
+  foreman
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
   pg (>= 0.18, < 2.0)
