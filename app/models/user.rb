@@ -17,6 +17,7 @@ class User < ApplicationRecord
   has_secure_password
 
   validates :email, presence: true, uniqueness: true
+  validates :nick_name, presence: true, uniqueness: true
 
 	has_one :details, class_name: 'UserDetails'
 	has_many :polls
