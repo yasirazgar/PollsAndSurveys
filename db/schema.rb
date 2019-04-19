@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_10_045829) do
+ActiveRecord::Schema.define(version: 2019_04_18_163352) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,11 +22,37 @@ ActiveRecord::Schema.define(version: 2018_11_10_045829) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "options", force: :cascade do |t|
+    t.string "option"
+  end
+
+  create_table "poll_answers", force: :cascade do |t|
+    t.integer "polls_options_id", null: false
+    t.integer "user_id", null: false
+    t.index ["polls_options_id"], name: "index_poll_answers_on_polls_options_id"
+    t.index ["user_id", "polls_options_id"], name: "index_poll_answers_on_user_id_and_polls_options_id"
+    t.index ["user_id"], name: "index_poll_answers_on_user_id"
+  end
+
   create_table "polls", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "category_ids", array: true
-    t.text "options", array: true
-    t.integer "mutlioption"
+    t.integer "user_id", null: false
+    t.text "question", null: false
+    t.index ["user_id"], name: "index_polls_on_user_id"
+  end
+
+  create_table "polls_categories", id: false, force: :cascade do |t|
+    t.integer "poll_id", null: false
+    t.integer "category_id", null: false
+    t.index ["category_id"], name: "index_polls_categories_on_category_id"
+    t.index ["poll_id"], name: "index_polls_categories_on_poll_id"
+  end
+
+  create_table "polls_options", force: :cascade do |t|
+    t.integer "poll_id", null: false
+    t.integer "option_id", null: false
+    t.index ["option_id"], name: "index_polls_options_on_option_id"
+    t.index ["poll_id", "option_id"], name: "index_polls_options_on_poll_id_and_option_id"
+    t.index ["poll_id"], name: "index_polls_options_on_poll_id"
   end
 
   create_table "user_details", force: :cascade do |t|
@@ -47,6 +73,7 @@ ActiveRecord::Schema.define(version: 2018_11_10_045829) do
     t.string "uid"
     t.string "provider"
     t.string "token"
+    t.boolean "admin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

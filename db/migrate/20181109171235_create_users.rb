@@ -8,11 +8,12 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :uid
       t.string :provider
       t.string :token
+      t.boolean :admin
 
       t.timestamps
     end
   end
-  
+
   # rake db:migrate:down VERSION=20181109171235
   def down
   	drop_table(:users)
