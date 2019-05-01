@@ -19,4 +19,7 @@ class Poll < ApplicationRecord
     join_table: 'polls_categories'
 
   validates :question, presence: true
+  validates :question, uniqueness: { scope: :user_id }
+
+  accepts_nested_attributes_for :options
 end

@@ -10,5 +10,4 @@ class Option < ApplicationRecord
 	has_many :polls, through: :poll_options
 
   validates :option, presence: true
-
 end

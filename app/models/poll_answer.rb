@@ -12,5 +12,6 @@
 
 class PollAnswer < ApplicationRecord
 	belongs_to :polls_options
+  has_one :option, through: :polls_options
   belongs_to :user
 end
