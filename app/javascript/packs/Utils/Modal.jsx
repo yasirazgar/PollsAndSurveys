@@ -42,7 +42,6 @@ class Modal extends Component {
             <div className="modal__footer">
               {this.props.modalFooter}
             </div>
-            import PropTypes from 'prop-types';
 
           </div>
         </div>
