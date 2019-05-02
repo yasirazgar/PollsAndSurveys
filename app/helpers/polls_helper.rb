@@ -19,9 +19,9 @@ module PollsHelper
   end
 
   def create_poll
-    poll_params = params.require(:poll).permit(:question, categories: [], options: [])
+    poll_params = params.require(:poll).permit(:question, category_ids: [], options: [])
 
-    poll = Poll.new(poll_params.slice(:question, :categories))
+    poll = Poll.new(poll_params.slice(:question, :category_ids))
     poll.user_id = current_user.id
     poll.options_attributes = poll_params[:options].inject([]) do |opts, opt|
       if (existing_opt = Option.find_by_option(opt))
@@ -31,6 +31,7 @@ module PollsHelper
       end
       opts
     end
+    poll.save
     poll
   end
 end

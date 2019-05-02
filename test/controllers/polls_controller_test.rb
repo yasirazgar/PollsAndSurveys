@@ -12,30 +12,39 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
 
   test "create" do
     user = FactoryBot.create(:user)
+    cat = Category.create(name: 'samp')
+
     sign_in_as user
-    cat = Category.find_by(option: 'Gk')
+
     params = {
-      question: 'My question',
-      options: ['opt1', 'opt2', 'opt3', 'opt4'],
-      categories: [cat.id]
+      poll: {
+        question: 'My question',
+        options: ['opt1', 'opt2', 'opt3', 'opt4'],
+        category_ids: [cat.id],
+      }
     }
 
-    post(create(params), xhr: true)
-    assert_reponse :success
-    poll = Poll.find_by_question params[:question]
+    assert_difference('Poll.count', 1) do
+      post(polls_url, params: params, xhr: true)
+    end
+
+    assert_response :success
+    poll = Poll.find_by_question params[:poll][:question]
     assert poll
-    assert_equal params[:options].sort, poll.options.map(&:option).sort
-    assert_equal params[:categories], poll.categories.map(&:id)
+    assert_equal params[:poll][:options].sort, poll.options.map(&:option).sort
+    assert_equal params[:poll][:category_ids], poll.categories.map(&:id)
   end
 
   test "destroy" do
     user = FactoryBot.create(:user)
+    poll = Poll.create(question: 'Sample', user_id: user.id)
+
     sign_in_as user
 
-    poll = Poll.create(:poll, option)
-    assert_difference(Poll.count, -1) do
-      delete({id: poll.id}, xhr: true)
+    assert_difference('Poll.count', -1) do
+      delete(poll_url(poll), xhr: true)
     end
-    assert_reponse :success
+
+    assert_response :success
   end
 end
