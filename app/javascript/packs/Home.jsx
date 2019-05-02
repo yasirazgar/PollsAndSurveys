@@ -16,7 +16,6 @@ import Loader from './Utils/Loader'
 import ProfileModal from './Profile/ProfileModal'
 import SignInModal from './Session/SignInModal'
 import SignUpModal from './Session/SignUpModal'
-import ModalButtonGroup from './Utils/ModalButtonGroup'
 
 import signUpHandler from './Handlers/signUpHandler';
 import signInHandler from './Handlers/signInHandler';
@@ -51,6 +50,26 @@ class Home extends Component {
 
   }
 
+  loginSucessCallback = (data) => {
+    if(data.user) {
+      this.setState({
+        signedIn: true,
+        signInModalOpen: false,
+        modalOpen: false,
+        user: data.user
+      })
+
+      window.localStorage.setItem('user', {name: (data.user.name || data.user.email)})
+    }
+    else{
+      this.setState({
+        signInModalOpen: false,
+        modalOpen: false,
+      })
+      alert("Invalid");
+    }
+  };
+
   componentDidMount() {
     const user = JSON.parse(window.localStorage.getItem('user'));
     if (user){
@@ -59,13 +78,11 @@ class Home extends Component {
   }
 
   setLoginFormValidity = (key, Input_value, isValid) => {
-    this[key + "Valid"] = isValid;
     this[key] = Input_value;
-
+    this[key + "Valid"] = isValid;
     this.formValid = this.emailValid && this.passwordValid
+    this.setSignInModal()
     if (this.formValid != this.state.loginButtonEnabled){
-      this.signInHandler = this.signInHandler.bind(this, this.email, this.password)
-      this.setSignInModal()
       this.setState({loginButtonEnabled: this.formValid});
     }
   }
@@ -94,7 +111,9 @@ class Home extends Component {
   };
 
   setSignInModal = () => {
-    return <SignInModal submitEnabled={this.state.loginButtonEnabled} closeModalHandler={this.closeModalHandler} signInHandler={this.signInHandler} setFormValidity={this.setLoginFormValidity}/>
+    this.loginSucessCallback = this.loginSucessCallback.bind(this)
+    let handler = signInHandler.bind(this, this['email'], this['password'], this.loginSucessCallback);
+    return <SignInModal submitEnabled={this.state.loginButtonEnabled} closeModalHandler={this.closeModalHandler} signInHandler={handler} setFormValidity={this.setLoginFormValidity}/>
   }
 
   setSignUpModal = () => {
