@@ -38,9 +38,9 @@ poll1_ans1 = PollAnswer.create(user_id: admin.id, polls_options_id: poll1_opt1.i
 poll1_ans2 = PollAnswer.create(user_id: user1.id, polls_options_id: poll1_opt2.id)
 poll1_ans1 = PollAnswer.create(user_id: user2.id, polls_options_id: poll1_opt3.id)
 
-poll2 = Poll.create(question: 'Longest Snake', category_ids: [cat3.id], user_id: user1.id)
+poll2 = Poll.new(question: 'Longest Snake', category_ids: [cat3.id], user_id: user1.id)
 poll2.categories << cat3
-poll1.save
+poll2.save
 
 poll2_opt1 = PollsOptions.create(poll_id: poll2.id, option_id: opt4.id)
 poll2_opt2 = PollsOptions.create(poll_id: poll2.id, option_id: opt5.id)
