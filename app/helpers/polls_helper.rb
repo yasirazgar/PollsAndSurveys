@@ -7,7 +7,7 @@ module PollsHelper
 
   def get_polls_for_user(user)
     # user_details = user.details
-    Poll.includes(polls_options: :option)
+    Poll.includes([:categories, :options])
   end
 
   def get_answers_for_poll(poll)
