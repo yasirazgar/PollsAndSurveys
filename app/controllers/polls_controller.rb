@@ -5,7 +5,7 @@ class PollsController < ApplicationController
   def index
     polls = get_polls_for_user(current_user)
 
-    render json: {polls: format_polls(polls)}
+    render json: {polls: format_polls(polls), categories: Category.pluck(:id, :name)} #pull categories into separate controller
   end
 
   def user_polls
