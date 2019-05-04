@@ -5,15 +5,10 @@ import './Select.scss'
 
 const Select = props => {
   let options = []
-
-  Object.keys(props.options).forEach(key => {
-    let option = props.options[key];
-
-    options.push(<option key={key} value={key}> {option} </option>)
-  });
+  options = props.options.map((object, i) => <option key={i} value={object[0]}> {object[1]} </option>)
 
   return (
-    <select className="theme-construction">
+    <select multiple onChange={props.onChange} className="theme-construction">
       {options}
     </select>
   );

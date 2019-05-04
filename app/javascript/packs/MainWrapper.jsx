@@ -5,17 +5,60 @@ import NewPoll from './Polls/NewPoll'
 import Button from './Utils/Button'
 import Input from './Utils/Input'
 import ToggleSwitch from './Utils/ToggleSwitch'
-import ModalButtonGroup from './Utils/ModalButtonGroup'
 import Select from './Utils/Select'
+import createPollHandler from './Handlers/createPollHandler'
 
 import './MainWrapper.scss'
 
 class MainWrapper extends Component {
-  state = {
-    createPollMode: false
-  };
+  constructor(props){
+    super(props)
+
+    this.state = {
+      createPollMode: false,
+      polls: []
+    };
+
+    this.question = null
+    this.options = null
+    this.hideCreatePollForm = this.hideCreatePollForm.bind(this)
+    this.createPollHandler = this.createPollHandler.bind(this)
+    this.categories = []
+  }
+
+  setPoll(question, options) {
+    this.question = question
+    this.options = options
+  }
+
+  hideCreatePollForm() {
+    this.setState({createPollMode: false})
+  }
+
+  componentDidMount() {
+    let polls;
+    fetch('/polls', {
+      credentials: 'same-origin',
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content,
+      }
+    }).then(response => {
+      return response.json()
+    }).then(data => {
+      let index = 0
+      polls = data.polls.map((poll) => {
+        return (<Poll key={index += 1} question={poll.question} categories={poll.categories} options={poll.options} />)
+      });
+      window.localStorage.setItem('categories', JSON.stringify(data.categories))
+      this.categories = data.categories
+      this.setState({polls: polls})
+    });
+  }
 
   createPollHandler = () => {
+
     alert("Poll creating comming soon")
 
   }
@@ -41,7 +84,7 @@ class MainWrapper extends Component {
   render() {
     let pollSearchInput, newPollForm, innerButton, outerButton;
     if (this.state.createPollMode){
-      newPollForm = <NewPoll />
+      newPollForm = <NewPoll hideCreatePollForm={this.hideCreatePollForm}/>
       innerButton = <Button classes="btn__inner" text="Create poll" clickHandler={this.createPollHandler} />
       outerButton = <Button classes="btn__outer" text="Search poll" clickHandler={this.setSearchPollView} />
     }
@@ -61,9 +104,9 @@ class MainWrapper extends Component {
 
               {pollSearchInput}
 
-              <Select options={{0: 'Category', 1: 'Politics', 2: 'Education'}}/>
+              <Select options={this.categories}/>
 
-              <Select options={{0: 'Age group', 1: '1-10', 2: '10-17', 3: '18+', 4: '30+', 5: '40+', 6: '50+'}}/>
+              <Select options={[[0,'Age group'], [1,'1-10'], [2,'10-17'], [3,'18+'], [4,'30+'], [5,'40+'], [6,'50+']]}/>
 
               {innerButton}
             </div>
@@ -80,12 +123,7 @@ class MainWrapper extends Component {
 
         <div className="main-wrapper__content">
           {newPollForm}
-          <Poll />
-          <Poll />
-          <Poll />
-          <Poll />
-          <Poll />
-
+          {this.state.polls}
         </div>
       </div>
     );
