@@ -6,7 +6,6 @@ import Button from './Utils/Button'
 import Input from './Utils/Input'
 import ToggleSwitch from './Utils/ToggleSwitch'
 import Select from './Utils/Select'
-import createPollHandler from './Handlers/createPollHandler'
 
 import './MainWrapper.scss'
 
@@ -16,14 +15,15 @@ class MainWrapper extends Component {
 
     this.state = {
       createPollMode: false,
+      myPollMode: false,
       polls: []
     };
 
     this.question = null
     this.options = null
     this.hideCreatePollForm = this.hideCreatePollForm.bind(this)
-    this.createPollHandler = this.createPollHandler.bind(this)
     this.categories = []
+    this.fetchUserPolls = this.fetchUserPolls.bind(this)
   }
 
   setPoll(question, options) {
@@ -33,6 +33,28 @@ class MainWrapper extends Component {
 
   hideCreatePollForm() {
     this.setState({createPollMode: false})
+  }
+
+  fetchUserPolls = () => {
+    let polls;
+    fetch('user/polls', {
+      credentials: 'same-origin',
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content,
+      }
+    }).then(response => {
+      return response.json()
+    }).then(data => {
+      let index = 0
+      polls = data.polls.map((poll) => {
+        return (<Poll key={index += 1} question={poll.question} categories={poll.categories} options={poll.options} />)
+      });
+      window.localStorage.setItem('categories', JSON.stringify(data.categories))
+      this.categories = data.categories
+      this.setState({polls: polls})
+    });
   }
 
   componentDidMount() {
@@ -57,15 +79,8 @@ class MainWrapper extends Component {
     });
   }
 
-  createPollHandler = () => {
-
-    alert("Poll creating comming soon")
-
-  }
-
   searchPollHandler = () => {
     alert("Poll searching comming soon")
-
   }
 
   setCreatePollView = () => {
@@ -77,21 +92,14 @@ class MainWrapper extends Component {
     }, 400);
   }
 
-  setSearchPollView = () => {
-    this.setState({createPollMode: false});
+  setMyPollView = () => {
+
   }
 
   render() {
-    let pollSearchInput, newPollForm, innerButton, outerButton;
+    let newPollForm;
     if (this.state.createPollMode){
       newPollForm = <NewPoll hideCreatePollForm={this.hideCreatePollForm}/>
-      innerButton = <Button classes="btn__inner" text="Create poll" clickHandler={this.createPollHandler} />
-      outerButton = <Button classes="btn__outer" text="Search poll" clickHandler={this.setSearchPollView} />
-    }
-    else {
-      pollSearchInput = <Input classes="poll-search" placeholder="Search poll" />
-      innerButton = <Button classes="btn__inner" text="Search" clickHandler={this.searchPollHandler} />
-      outerButton = <Button classes="btn__outer" text="Add new poll" clickHandler={this.setCreatePollView} />
     }
 
     return (
@@ -102,22 +110,20 @@ class MainWrapper extends Component {
 
               <Input classes="poll-location" placeholder="Location" />
 
-              {pollSearchInput}
+              <Input classes="poll-search" placeholder="Search poll" />
 
               <Select options={this.categories}/>
 
               <Select options={[[0,'Age group'], [1,'1-10'], [2,'10-17'], [3,'18+'], [4,'30+'], [5,'40+'], [6,'50+']]}/>
 
-              {innerButton}
+              <Button classes="btn__inner" text="Search" clickHandler={this.searchPollHandler} />
             </div>
 
             <div className="search-poll">
             </div>
-
           </div>
           <span>
-
-            {outerButton}
+            <Button classes="btn__outer" text="Add new poll" clickHandler={this.setCreatePollView} />
           </span>
         </div>
 
