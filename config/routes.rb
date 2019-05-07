@@ -5,7 +5,11 @@ Rails.application.routes.draw do
   post "login", to: "sessions#create", as: "login"
   get "logout", to: "sessions#destroy", as: "logout"
   get "signup", to: "users#new", as: "signup"
-  resources :users, only: [:create, :update, :edit]
+  resource :user, :controller => :user, only: [:create, :update] do
+    collection do
+      get 'polls'
+    end
+  end
   resources :polls, except: [:new, :update]
   root to: "home#index"
 end
