@@ -31,15 +31,17 @@ module PollsFormater
     polls.map(&method(:format_user_poll))
   end
 
-  def format_users_poll(poll)
+  def format_user_poll(poll)
     {
+      poll_id: poll.id,
       question: poll.question,
       categories: poll.categories,
-      options: poll.poll_ansers.inject({}){ |h,a|
-        h[a.polls_options.option.option] ||= [0, false]
-        count = h[a.polls_options.option.option][0] + 1
-        h[a.polls_options.option.option][0] = count
-        h[a.polls_options.option.option][1] = true if poll.poll_answers.user_id == current_user.id
+      options: poll.poll_answers.inject({}){ |h,ans|
+        h[ans.polls_options.option.option] ||= [0, false]
+        count = h[ans.polls_options.option.option][0] + 1
+        h[ans.polls_options.option.option][0] = count
+        h[ans.polls_options.option.option][1] = true if ans.user_id == current_user.id
+        h
       }
     }
   end

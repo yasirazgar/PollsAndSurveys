@@ -1,17 +1,11 @@
 class PollsController < ApplicationController
-  include PollsHelper
+  include PollsHelper #change this to service
   include PollsFormater
 
   def index
-    polls = get_polls_for_user(current_user)
+    polls = get_polls_for_user
 
-    render json: {polls: format_polls(polls), categories: Category.pluck(:id, :name)} #pull categories into separate controller
-  end
-
-  def user_polls
-    polls = get_users_polls
-
-    render json: {polls: format_user_polls(polls)}
+    render json: {polls: format_polls(polls)} #pull categories into separate controller
   end
 
   def create
