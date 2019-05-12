@@ -1,11 +1,31 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-# This model initially had no columns defined. If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
-one: {}
-# column: value
-#
-two: {}
-# column: value
+# All passwords => BCrypt::Password.create('passworD%1')
+
+yasir:
+  name: Yasir
+  password_digest: "$2a$10$mdVj/q7siLTZcbUiaccyUu8W4UPyehLXp1HFNtolPvCg2iQadHn5C"
+  email: yasir@pas.com
+  nick_name: yasirpas
+  admin: true
+
+yaseer:
+  name: Yaseer
+  password_digest: "$2a$10$mdVj/q7siLTZcbUiaccyUu8W4UPyehLXp1HFNtolPvCg2iQadHn5C"
+  email: yaseer@pas.com
+  nick_name: yaseerpas
+  admin: true
+
+david:
+  name: David
+  password_digest: "$2a$10$mdVj/q7siLTZcbUiaccyUu8W4UPyehLXp1HFNtolPvCg2iQadHn5C"
+  email: david@pas.com
+  nick_name: davidpas
+  admin: false
+
+sundar:
+  name: Sundar
+  password_digest: "$2a$10$mdVj/q7siLTZcbUiaccyUu8W4UPyehLXp1HFNtolPvCg2iQadHn5C"
+  email: sundar@pas.com
+  nick_name: sundarpas
+  admin: false

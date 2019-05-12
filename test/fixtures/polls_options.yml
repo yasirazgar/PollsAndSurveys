@@ -1,0 +1,45 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+yasir_snake_python:
+  poll: yasir_snake
+  option: python
+yasir_snake_cobra:
+  poll: yasir_snake
+  option: cobra
+yasir_snake_viper:
+  poll: yasir_snake
+  option: viper
+yasir_snake_mamba:
+  poll: yasir_snake
+  option: mamba
+
+yasir_it_python:
+  poll: yasir_it
+  option: python
+yasir_it_ruby:
+  poll: yasir_it
+  option: ruby
+yasir_it_java:
+  poll: yasir_it
+  option: java
+yasir_it_javascript:
+  poll: yasir_it
+  option: javascript
+
+david_gems_platinum:
+  poll: david_gems
+  option: platinum
+david_gems_dimond:
+  poll: david_gems
+  option: dimond
+david_gems_gold:
+  poll: david_gems
+  option: gold
+david_gems_ruby:
+  poll: david_gems
+  option: ruby
+

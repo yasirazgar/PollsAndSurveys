@@ -4,14 +4,27 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-it:
-  name: It
-  aliases: <%= ['Software engineering'] %>
 
-programming_languages:
-  name: 'programming_languages'
-  aliases: <%= ['Coding'] %>
+python:
+  option: Python
+cobra:
+  option: Cobra
+viper:
+  option: Viper
+mamba:
+  option: Mamba
+java:
+  option: Java
+javascript:
+  option: JavaScript
+ruby:
+  option: Ruby
+gold:
+  option: Gold
+dimond:
+  option: Dimond
+emerald:
+  option: Emerald
+platinum:
+  option: Platinum
 
-animals:
-  name: animals
-  aliases: <%= ['Snakes'] %>
