@@ -15,13 +15,34 @@ class NewPoll extends Component {
       question: '',
       options: [],
       category_ids: [],
-      submitEnabled: false
+      submitEnabled: false,
+      categories: []
     };
 
     this.enableSubmitButton = this.enableSubmitButton.bind(this);
     this.categoryChangeHandler = this.categoryChangeHandler.bind(this);
     this.setPollHandler = this.setPollHandler.bind(this);
     this.categories = JSON.parse(window.localStorage.getItem('categories'))
+  }
+
+  componentDidMount() {
+    let categories = window.localStorage.getItem('categories')
+    if (!categories){
+      fetch('/categories', {
+        credentials: 'same-origin',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content,
+        }
+      }).then(response => {
+        return response.json()
+      }).then(data => {
+        let categories = data.categories
+      });
+    }
+    this.setState({categories: categories})
+
   }
 
   categoryChangeHandler = (event) => {
