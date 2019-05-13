@@ -1,27 +1,35 @@
 class PollsController < ApplicationController
-  include PollsHelper #change this to service
-  include PollsFormater
-
   def index
-    polls = get_polls_for_user
+    polls = poll_service.get_polls_for_user
 
-    render json: {polls: format_polls(polls)} #pull categories into separate controller
+    render json: {polls: polls}
   end
 
   def create
-    poll = create_poll
+    poll = poll_service.create_poll(params)
 
     if poll.errors.present?
-      render json: {message: poll.errors.full_messages.join(',')}
+      render json: {message: poll.errors.full_messages.join(',')}, status: :bad_request
     else
       render json: {poll_id: poll.id, message: 'Poll created successfully'}
     end
   end
 
   def destroy
-    Poll.destroy(params[:id])
+    poll = current_user.polls.find_by_id(params[:id])
 
-    render json: {message: "Poll destroyed successfully"}
+    if poll && poll.destroy
+      render json: {message: "Poll destroyed successfully"}
+      return
+    end
+
+    render json: {message: "Error destroying poll"}, status: :not_found
+  end
+
+  private
+
+  def poll_service
+    @poll_service ||= Web::PollService.new(current_user)
   end
 
 end
