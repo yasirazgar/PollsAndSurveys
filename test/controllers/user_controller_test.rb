@@ -1,30 +1,17 @@
-class UserControllerTest < ActiveSupport::TestCase
+require 'test_helper'
+require_relative '../helpers/users_polls_test_helper'
 
-  test "new" do
-    get(sign_up_url, xhr: true)
-    assert_reponse :success
+class UserControllerTest < ActionDispatch::IntegrationTest
+  include UsersPollsTestHelper
+
+  test "polls" do
+    user = users(:yasir)
+    sign_in_as(user)
+
+    get(polls_user_url, xhr: true)
+
+    Web::PollService.any_instance.stubs(:get_users_polls).returns(expected_users_poll)
+    assert_equal({'polls' => expected_users_poll}, json_response)
   end
-
-  test "create" do
-    user_params = {
-      email: 'yasir@pas.com'
-      password: 'Password@1',
-      password_confirmation: 'Password@1',
-      name: 'Yasir'
-    }
-    assert_difference(User.count, 1) do
-      post(user_params, xhr: true)
-    end
-    user = User.find_by_email(user_params[:email])
-    assert_equal(user_params[:name], user.name)
-  end
-
-  test "destroy" do
-    user = FactoryBot.create(:user)
-    assert_difference(User.count, -1) do
-      delete({id: user.id}, xhr: true)
-    end
-  end
-
 
 end
