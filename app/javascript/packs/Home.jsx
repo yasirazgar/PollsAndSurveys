@@ -59,7 +59,7 @@ class Home extends Component {
         user: data.user
       })
 
-      window.localStorage.setItem('user', {name: (data.user.name || data.user.email)})
+      window.localStorage.setItem('user', JSON.stringify({name: (data.user.name || data.user.email)}))
     }
     else{
       this.setState({
