@@ -21,11 +21,14 @@
       -ms-user-select: none !important;
       user-select: none !important;
       list-style: none;
+      .percentage {
+        float: right;
+      }
     }
 
     /* Set all odd list items to a different color (zebra-stripes) */
     li:nth-child(odd) {
-      background: #f9f9f9 !important;
+      background: #F9F9DE !important;
     }
 
     /* Darker background-color on hover */

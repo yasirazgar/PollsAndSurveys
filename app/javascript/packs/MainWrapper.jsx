@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-import Poll from './Polls/Poll'
+import Polls from './Polls/Polls'
+import UserPolls from './Polls/UserPolls'
 import NewPoll from './Polls/NewPoll'
 import Button from './Utils/Button'
 import Input from './Utils/Input'
@@ -15,15 +16,12 @@ class MainWrapper extends Component {
 
     this.state = {
       createPollMode: false,
-      myPollMode: false,
-      polls: []
     };
 
     this.question = null
     this.options = null
     this.hideCreatePollForm = this.hideCreatePollForm.bind(this)
     this.categories = []
-    this.fetchUserPolls = this.fetchUserPolls.bind(this)
   }
 
   setPoll(question, options) {
@@ -33,50 +31,6 @@ class MainWrapper extends Component {
 
   hideCreatePollForm() {
     this.setState({createPollMode: false})
-  }
-
-  fetchUserPolls = () => {
-    let polls;
-    fetch('user/polls', {
-      credentials: 'same-origin',
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content,
-      }
-    }).then(response => {
-      return response.json()
-    }).then(data => {
-      let index = 0
-      polls = data.polls.map((poll) => {
-        return (<Poll key={index += 1} question={poll.question} categories={poll.categories} options={poll.options} />)
-      });
-      window.localStorage.setItem('categories', JSON.stringify(data.categories))
-      this.categories = data.categories
-      this.setState({polls: polls})
-    });
-  }
-
-  componentDidMount() {
-    let polls;
-    fetch('/polls', {
-      credentials: 'same-origin',
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content,
-      }
-    }).then(response => {
-      return response.json()
-    }).then(data => {
-      let index = 0
-      polls = data.polls.map((poll) => {
-        return (<Poll key={index += 1} question={poll.question} categories={poll.categories} options={poll.options} />)
-      });
-      window.localStorage.setItem('categories', JSON.stringify(data.categories))
-      this.categories = data.categories
-      this.setState({polls: polls})
-    });
   }
 
   searchPollHandler = () => {
@@ -92,14 +46,17 @@ class MainWrapper extends Component {
     }, 400);
   }
 
-  setMyPollView = () => {
-
-  }
-
   render() {
-    let newPollForm;
+    let newPollForm, polls;
     if (this.state.createPollMode){
       newPollForm = <NewPoll hideCreatePollForm={this.hideCreatePollForm}/>
+    }
+
+    if (this.props.userPollMode){
+      polls = <UserPolls />
+    }
+    else{
+      polls = <Polls />
     }
 
     return (
@@ -129,7 +86,7 @@ class MainWrapper extends Component {
 
         <div className="main-wrapper__content">
           {newPollForm}
-          {this.state.polls}
+          {polls}
         </div>
       </div>
     );

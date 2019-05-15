@@ -26,7 +26,6 @@ class Poll extends Component {
   }
 
   render() {
-
     return (
       <div className="poll">
         <div className="poll__question">

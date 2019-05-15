@@ -3,9 +3,9 @@ class PollService
     @user = user
   end
 
-  def get_users_polls
+  def get_users_polls # Revisit includes doesn't seem to work
     Poll.where(user: @user)
-        .includes([{poll_answers: :option}, :categories])
+        .includes([:categories, :polls_options])
   end
 
   def get_polls_for_user

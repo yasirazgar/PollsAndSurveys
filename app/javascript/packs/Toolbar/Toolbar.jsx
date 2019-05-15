@@ -8,20 +8,22 @@ import './Toolbar.scss';
 import ProfileIcon from 'user__anonymous.svg'
 
 const Toolbar = props => {
-  let loginOrLogout;
+  let navItems;
+
   if (props.user){
-    loginOrLogout = [
-      <li key="0" className="links" onClick={props.logoutHandler}>Logout</li>,
-      <li key="1"><img className="avatar" src={ProfileIcon} onClick={props.openProfileModal}></img></li>
+    navItems = [
+      <li key="0" className="links" onClick={props.togglePollMode}>My Polls</li>,
+      <li key="1" className="links" onClick={props.logoutHandler}>Logout</li>,
+      <li key="2"><img className="avatar" src={ProfileIcon} onClick={props.openProfileModal}></img></li>
     ]
   }
   else {
-    loginOrLogout = [
-      <li key="0" className="links" onClick={props.openSignInModal}>Sign in</li>,
-      <li key="1" className="links" onClick={props.openSignUpModal}>Sign up</li>,
+    navItems = [
+      <li key="1" className="links" onClick={props.openSignInModal}>Sign in</li>,
+      <li key="2" className="links" onClick={props.openSignUpModal}>Sign up</li>
     ]
-
   }
+
   return (
     <header className="toolbar">
       <nav className="toolbar__navigation">
@@ -32,7 +34,7 @@ const Toolbar = props => {
         <div className="spacer"> </div>
         <div className="toolbar_navigation-items">
           <ul>
-            {loginOrLogout}
+            {navItems}
           </ul>
         </div>
       </nav>
@@ -45,7 +47,8 @@ Toolbar.propTypes = {
   openSignInModal: PropTypes.func,
   openSignUpModal: PropTypes.func,
   logoutHandler: PropTypes.func,
-  sideDrawerToggleClickHandler: PropTypes.func
+  sideDrawerToggleClickHandler: PropTypes.func,
+  togglePollMode: PropTypes.func
 }
 
 export default Toolbar;

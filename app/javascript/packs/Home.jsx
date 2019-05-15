@@ -45,7 +45,8 @@ class Home extends Component {
       showLoader: false,
       signedIn: false,
       user: null,
-      loginButtonEnabled: false
+      loginButtonEnabled: false,
+      userPollMode: false
     };
 
   }
@@ -120,6 +121,10 @@ class Home extends Component {
     return <SignUpModal closeModalHandler={this.closeModalHandler} signUnHandler={this.signInHandler}/>
   }
 
+  togglePollMode = () => {
+    this.setState({userPollMode: !this.state.userPollMode})
+  }
+
 
   render() {
     let modal, backdrop, loader;
@@ -147,11 +152,12 @@ class Home extends Component {
           logoutHandler={this.logoutHandler}
           openSignInModal={this.openModal.bind(this, 'SignIn')}
           openSignUpModal={this.openModal.bind(this, 'SignUp')}
+          togglePollMode={this.togglePollMode.bind(this)}
           user={this.state.user}/>
 
         <SideDrawer open={this.state.sideDrawerOpen} user={this.state.user}/>
 
-        <MainWrapper user={this.state.user}/>
+        <MainWrapper userPollMode={this.state.userPollMode}/>
 
         {backdrop}
 
