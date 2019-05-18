@@ -21,7 +21,7 @@ class PollService
     PollAnswer.where(user: @user).includes(polls_options: [:option, :poll_answers])
   end
 
-  def create_poll(params)
+  def create(params)
     poll_params = params.require(:poll).permit(:question, category_ids: [], options: [])
 
     poll = Poll.new(poll_params.slice(:question, :category_ids))

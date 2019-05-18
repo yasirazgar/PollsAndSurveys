@@ -18,7 +18,7 @@ class Web::PollService < PollService
     polls = super()
   end
 
-  def create_poll(params)
+  def create(params)
     poll = super(params)
   end
 

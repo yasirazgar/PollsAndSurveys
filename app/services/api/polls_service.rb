@@ -18,7 +18,7 @@ class Api::PollsService < PollsService
     polls = super()
   end
 
-  def create_poll
+  def create
     poll = super()
   end
 
