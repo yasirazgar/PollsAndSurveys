@@ -8,16 +8,13 @@ yasir_snake:
   user: yasir
   question: Fav snake
   categories: animals
-  options: python, mamba, cobra, viper
 
 yasir_it:
   user: yasir
   question: Fav programming language
   categories: it, programming_languages
-  options: java, javascript, python, ruby
 
 david_gems:
   user: david
   question: Fav programming gems
   categories: gems
-  options: platinum, dimond, gold, ruby
