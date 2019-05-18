@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 2019_04_18_163352) do
     t.integer "poll_id", null: false
     t.integer "option_id", null: false
     t.index ["option_id"], name: "index_polls_options_on_option_id"
-    t.index ["poll_id", "option_id"], name: "index_polls_options_on_poll_id_and_option_id"
+    t.index ["poll_id", "option_id"], name: "index_polls_options_on_poll_id_and_option_id", unique: true
     t.index ["poll_id"], name: "index_polls_options_on_poll_id"
   end
 
