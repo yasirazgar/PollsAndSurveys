@@ -1,58 +1,33 @@
 require 'test_helper'
+require_relative '../helpers/polls_test_helper'
 
 class PollsControllerTest < ActionDispatch::IntegrationTest
+  include PollsTestHelper
+
+  setup do
+    @yasir = users(:yasir)
+    sign_in_as @yasir
+  end
 
   test "index" do
-    sign_in_as users(:yasir)
-
-    Web::PollService.any_instance.expects(get_users_polls)
+    service_mock.expects(:get_polls_for_user).returns(expected_polls_for_user['polls'])
 
     get(polls_url, xhr: true)
     assert_response :success
+    assert_equal(json_response, expected_polls_for_user)
   end
 
   test "create" do
-    cat = categories(:it)
-    sign_in_as users(:yasir)
+    service_mock.expects(:create).with(santize_create_params(create_params)).returns(polls(:yasir_snake))
 
-    params = {
-      poll: {
-        question: 'My question',
-        options: ['opt1', 'opt2', 'opt3', 'opt4'],
-        category_ids: [cat.id],
-      }
-    }
-
-    assert_difference('Poll.count', 1) do
-      post(polls_url, params: params, xhr: true)
-    end
+    post(polls_url, params: create_params, xhr: true)
     assert_response :success
-    assert 'Poll created successfully', json_response[:message]
-
-    poll = Poll.find_by_question params[:poll][:question]
-    assert poll
-    assert_equal params[:poll][:options].sort, poll.options.map(&:option).sort
-    assert_equal params[:poll][:category_ids], poll.categories.map(&:id)
+    assert_equal({'poll_id' => 1, 'message' => 'Poll created successfully'}, json_response)
   end
 
   test "create-with duplicate question" do
-    cat = categories(:it)
-    user = users(:yasir)
-    sign_in_as user
-    dup_question = 'Fav snake'
-
-    sign_in_as user
-
-    params = {
-      poll: {
-        question: dup_question,
-        options: ['opt1', 'opt2', 'opt3', 'opt4'],
-        category_ids: [cat.id],
-      }
-    }
-
     assert_difference('Poll.count', 0) do
-      post(polls_url, params: params, xhr: true)
+      post(polls_url, params: create_dup_params, xhr: true)
     end
 
     assert_response :bad_request
@@ -60,10 +35,7 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "destroy" do
-    user = users(:yasir)
     poll = polls(:yasir_snake)
-
-    sign_in_as user
 
     assert_difference('Poll.count', -1) do
       delete(poll_url(poll), xhr: true)
@@ -74,8 +46,6 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "destroy - other users polls" do
-    user = users(:yasir)
-    sign_in_as user
     other_user_poll = polls(:david_gems)
 
     assert_difference('Poll.count', 0) do
@@ -85,4 +55,17 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
     assert_response :not_found
     assert 'Error destroying poll', json_response[:message]
   end
+
+  private
+
+  def service_mock
+    service = mock
+    Web::PollService.expects(:new).with(@yasir).returns(service)
+    service
+  end
+
+  def santize_create_params(params)
+    ActionController::Parameters.new(params).require(:poll).permit(:question, category_ids: [], options: [])
+  end
+
 end

@@ -30,7 +30,7 @@ class Web::PollService < PollService
     {
       poll_id: poll.id,
       question: poll.question,
-      categories: poll.categories,
+      categories: poll.categories.pluck(:id, :name),
       options: poll.options.map(&:option)
     }
   end
@@ -60,19 +60,26 @@ class Web::PollService < PollService
       poll_id: poll.id,
       question: poll.question,
       categories: poll.categories.pluck(:id, :name),
-      options: answers_data(poll)
+      options: answer_data(poll)
     }
   end
 
   # convert to query
-  def answers_data(poll)
+  def answer_data(poll)
     total = poll.poll_answers.count
+    return populate_answer_data(poll, total) unless total.zero?
+
+    h = Hash.new { |hash, key| key.is_a?(Array) ? key.each{|h| hash[h]} : hash[key]={percentage: 0, selected: false} }
+    h[poll.options.pluck(:option)]
+    h
+  end
+
+  def populate_answer_data(poll, total)
     data = poll.polls_options.inject({}){ |hash,po|
-      count = po.poll_answers.count
       option = po.option.option
       hash[option] = {
-        selected: false,
-        percentage: ((count.to_f/total.to_f) * 100).round(1)
+        percentage: ((po.poll_answers.count.to_f/total.to_f) * 100).round(1),
+        selected: false
       }
 
       hash

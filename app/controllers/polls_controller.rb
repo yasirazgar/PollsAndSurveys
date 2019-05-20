@@ -6,7 +6,8 @@ class PollsController < ApplicationController
   end
 
   def create
-    poll = poll_service.create(params)
+    poll_params = params.require(:poll).permit(:question, category_ids: [], options: [])
+    poll = poll_service.create(poll_params)
 
     if poll.errors.present?
       render json: {message: poll.errors.full_messages.join(',')}, status: :bad_request

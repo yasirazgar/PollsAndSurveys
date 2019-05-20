@@ -22,11 +22,9 @@ class PollService
   end
 
   def create(params)
-    poll_params = params.require(:poll).permit(:question, category_ids: [], options: [])
-
-    poll = Poll.new(poll_params.slice(:question, :category_ids))
+    poll = Poll.new(params.slice(:question, :category_ids))
     poll.user_id = @user.id
-    poll.options_attributes = poll_params[:options].inject([]) do |opts, opt|
+    poll.options_attributes = params[:options].inject([]) do |opts, opt|
       if (existing_opt = Option.find_by_option(opt))
         poll.options << existing_opt
       else
@@ -36,6 +34,16 @@ class PollService
     end
     poll.save
     poll
+  end
+
+  def destroy(params)
+    poll = @user.polls.find_by_id(params[:id])
+
+    return false unless poll
+
+    poll.destroy
+
+    poll.destroyed?
   end
 
 end
