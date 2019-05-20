@@ -3,7 +3,7 @@ const logoutHandler = () => {
 
     fetch('/logout', {
       credentials: 'same-origin',
-      method: 'GET',
+      method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
         'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content,
