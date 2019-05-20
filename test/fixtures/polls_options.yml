@@ -5,41 +5,41 @@
 # below each fixture, per the syntax in the comments below
 #
 yasir_snake_python:
-  poll: yasir_snake
+  poll_id: 1
   option: python
 yasir_snake_cobra:
-  poll: yasir_snake
+  poll_id: 1
   option: cobra
 yasir_snake_viper:
-  poll: yasir_snake
+  poll_id: 1
   option: viper
 yasir_snake_mamba:
-  poll: yasir_snake
+  poll_id: 1
   option: mamba
 
 yasir_it_python:
-  poll: yasir_it
+  poll_id: 2
   option: python
 yasir_it_ruby:
-  poll: yasir_it
+  poll_id: 2
   option: ruby
 yasir_it_java:
-  poll: yasir_it
+  poll_id: 2
   option: java
 yasir_it_javascript:
-  poll: yasir_it
+  poll_id: 2
   option: javascript
 
 david_gems_platinum:
-  poll: david_gems
+  poll_id: 4
   option: platinum
 david_gems_dimond:
-  poll: david_gems
+  poll_id: 4
   option: dimond
 david_gems_gold:
-  poll: david_gems
+  poll_id: 4
   option: gold
 david_gems_ruby:
-  poll: david_gems
+  poll_id: 4
   option: ruby
 

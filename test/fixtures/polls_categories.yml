@@ -4,22 +4,18 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-it:
-  id: 1
-  name: It
-  aliases: <%= ['Software engineering'] %>
+yasir_snake_animals:
+  poll_id: 1
+  category_id: 3
 
-programming_languages:
-  id: 2
-  name: 'Programming languages'
-  aliases: <%= ['Coding'] %>
+yasir_it_it:
+  poll_id: 2
+  category_id: 1
 
-animals:
-  id: 3
-  name: Animals
-  aliases: <%= ['Snakes'] %>
+yasir_it_programming_languages:
+  poll_id: 2
+  category_id: 2
 
-gems:
-  id: 4
-  name: Gems
-  aliases: <%= ['Precious stones'] %>
+david_gems_gems:
+  poll_id: 4
+  category_id: 4

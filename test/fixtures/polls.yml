@@ -5,16 +5,22 @@
 # below each fixture, per the syntax in the comments below
 #
 yasir_snake:
+  id: 1
   user: yasir
   question: Fav snake
-  categories: animals
 
 yasir_it:
+  id: 2
   user: yasir
   question: Fav programming language
-  categories: it, programming_languages
+
+yasir_no_ans:
+  id: 3
+  user: yasir
+  question: Some dumb question
+  options: crazy, stupid, annoying
 
 david_gems:
+  id: 4
   user: david
-  question: Fav programming gems
-  categories: gems
+  question: Fav gems
