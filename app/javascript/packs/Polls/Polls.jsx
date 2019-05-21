@@ -25,8 +25,6 @@ class Polls extends Component {
       polls = data.polls.map((poll) => {
         return (<Poll key={index += 1} question={poll.question} categories={poll.categories} options={poll.options} />)
       });
-      window.localStorage.setItem('categories', JSON.stringify(data.categories))
-      this.categories = data.categories
       this.setState({polls: polls})
     });
   }

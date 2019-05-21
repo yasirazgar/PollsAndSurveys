@@ -15,7 +15,7 @@ const Select = props => {
 }
 
 Select.propTypes = {
-  options: PropTypes.object
+  options: PropTypes.array
 }
 
 export default Select;

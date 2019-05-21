@@ -7,6 +7,7 @@ import Button from './Utils/Button'
 import Input from './Utils/Input'
 import ToggleSwitch from './Utils/ToggleSwitch'
 import Select from './Utils/Select'
+import fetchCategoriesHandler from './Handlers/fetchCategoriesHandler'
 
 import './MainWrapper.scss'
 
@@ -16,12 +17,21 @@ class MainWrapper extends Component {
 
     this.state = {
       createPollMode: false,
+      categories: []
     };
 
     this.question = null
     this.options = null
     this.hideCreatePollForm = this.hideCreatePollForm.bind(this)
-    this.categories = []
+    this.setCategories = this.setCategories.bind(this)
+  }
+
+  setCategories = (categories) => {
+    this.setState({categories: categories})
+  }
+
+  componentWillMount() {
+    fetchCategoriesHandler(this.setCategories)
   }
 
   setPoll(question, options) {
@@ -69,7 +79,7 @@ class MainWrapper extends Component {
 
               <Input classes="poll-search" placeholder="Search poll" />
 
-              <Select options={this.categories}/>
+              <Select options={this.state.categories}/>
 
               <Select options={[[0,'Age group'], [1,'1-10'], [2,'10-17'], [3,'18+'], [4,'30+'], [5,'40+'], [6,'50+']]}/>
 

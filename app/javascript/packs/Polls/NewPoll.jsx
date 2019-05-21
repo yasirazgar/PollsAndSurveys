@@ -4,6 +4,7 @@ import Input from '../Utils/Input'
 import Select from '../Utils/Select'
 import ModalButtonGroup from '../Utils/ModalButtonGroup'
 import createPollHandler from '../Handlers/createPollHandler'
+import fetchCategoriesHandler from '../Handlers/fetchCategoriesHandler'
 
 import './Poll.scss'
 
@@ -22,27 +23,21 @@ class NewPoll extends Component {
     this.enableSubmitButton = this.enableSubmitButton.bind(this);
     this.categoryChangeHandler = this.categoryChangeHandler.bind(this);
     this.setPollHandler = this.setPollHandler.bind(this);
-    this.categories = JSON.parse(window.localStorage.getItem('categories'))
+    this.setCategories = this.setCategories.bind(this);
+  }
+
+  setCategories = (categories) => {
+    this.setState({categories: categories})
   }
 
   componentDidMount() {
     let categories = window.localStorage.getItem('categories')
     if (!categories){
-      fetch('/categories', {
-        credentials: 'same-origin',
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content,
-        }
-      }).then(response => {
-        return response.json()
-      }).then(data => {
-        let categories = data.categories
-      });
+      fetchCategoriesHandler(this.setCategories)
     }
-    this.setState({categories: categories})
-
+    else {
+      this.setCategories(JSON.parse(categories))
+    }
   }
 
   categoryChangeHandler = (event) => {
@@ -61,7 +56,7 @@ class NewPoll extends Component {
 
   }
 
-  setPollHandler(poll){
+  setPollHandler = (poll) => {
     this.createPollHandler = createPollHandler.bind(this, poll, this.props.hideCreatePollForm)
   }
 
@@ -113,7 +108,7 @@ class NewPoll extends Component {
     this.setState({options: options});
     this.enableSubmitButton(this.state.question, options);
     // this.props.setPoll(this.state.question, options)
-  };
+  }
 
   render() {
     return (
@@ -123,7 +118,7 @@ class NewPoll extends Component {
 
           <Input className="poll-location" placeholder="Location" />
 
-          <Select options={this.categories} onChange={this.categoryChangeHandler}/>
+          <Select options={this.state.categories} onChange={this.categoryChangeHandler}/>
 
           <Select options={[[0,'Age group'], [1,'1-10'], [2,'10-17'], [3,'18+'], [4,'30+'], [5,'40+'], [6,'50+']]}/>
         </div>
