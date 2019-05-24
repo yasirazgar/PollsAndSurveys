@@ -1,4 +1,6 @@
 module UsersPollsTestHelper
+  private
+
   def expected_users_poll
 
     @expected_users_poll ||= [

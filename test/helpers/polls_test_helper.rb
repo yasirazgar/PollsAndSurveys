@@ -1,4 +1,6 @@
 module PollsTestHelper
+  private
+
   def expected_polls_for_user
     {
       'polls' => [
