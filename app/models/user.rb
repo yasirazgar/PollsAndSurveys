@@ -21,6 +21,7 @@ class User < ApplicationRecord
 
 	has_one :details, class_name: 'UserDetails'
 	has_many :polls
+  has_many :poll_answers
 
 	def interests
 		interested_categories.pluck(:name)
@@ -29,5 +30,4 @@ class User < ApplicationRecord
 	def interested_categories
 		Category.where(id: details.category_ids)
 	end
-
 end
