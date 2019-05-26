@@ -1,11 +1,13 @@
 class PollService
+  NEEDED_FOR_ANSWERS = [:polls_options, :categories]
+
   def initialize(user)
     @user = user
   end
 
   def get_users_polls # Revisit includes doesn't seem to work
     Poll.where(user: @user)
-        .includes([:categories, :polls_options])
+        .includes(NEEDED_FOR_ANSWERS)
   end
 
   def get_polls_for_user
@@ -13,12 +15,17 @@ class PollService
     Poll.includes([:categories, :options])
   end
 
-  def get_answers_for_poll(poll)
-    poll.includes(poll_answers: :option)
+  def get_answers_for_poll(poll_id)
+    Poll.includes(NEEDED_FOR_ANSWERS).find_by_id(poll_id)
   end
 
   def get_user_responded_polls
-    PollAnswer.where(user: @user).includes(polls_options: [:option, :poll_answers])
+    @user.poll_answers.includes(poll: NEEDED_FOR_ANSWERS)
+  end
+
+  def answer_poll(poll_id, option_id)
+    po_id = PollsOptions.find_by(poll_id: poll_id, option_id: option_id).id
+    PollAnswer.create(polls_options_id: po_id, user_id: @user.id)
   end
 
   def create(params)

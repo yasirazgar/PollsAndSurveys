@@ -61,6 +61,22 @@ class Web::PollServiceTest < ActiveSupport::TestCase
     assert_poll(poll, params)
   end
 
+  test "get_answers_for_poll" do
+    assert_equal YASIR_SNAKE_ANS, @service.get_answers_for_poll(polls(:yasir_snake)).deep_stringify_keys
+  end
+
+  test "get_user_responded_polls" do
+    assert_equal expected_user_responded_polls, @service.get_user_responded_polls.map(&:deep_stringify_keys)
+  end
+
+  test "answer_poll" do
+    expected_hash = YASIR_NO_ANS_ANS.clone
+
+    expected_hash['options']["Crazy"]['percentage'] = 100
+    expected_hash['options']["Crazy"]['selected'] = true
+    assert_equal expected_hash, @service.answer_poll(3, options(:crazy).id).deep_stringify_keys
+  end
+
   private
 
   def assert_poll(poll, params)

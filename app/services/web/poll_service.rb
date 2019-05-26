@@ -1,26 +1,35 @@
 class Web::PollService < PollService
 
-  def get_users_polls
-    polls = super()
-    format_users_polls(polls)
-  end
-
   def get_polls_for_user
-    polls = super()
+    polls = super
     format_polls(polls)
   end
 
+  def get_users_polls
+    polls = super
+    format_polls_with_answer(polls)
+  end
+
+  def answer_poll(poll_id, option_id)
+    super
+    get_answers_for_poll(poll_id)
+  end
+
   def get_answers_for_poll(poll)
-    polls = super()
+    poll = super
+    format_poll_with_answer(poll)
   end
 
   def get_user_responded_polls
-    polls = super()
+    poll_answers = super
+    poll_answers.map{|pa| format_poll_with_answer(pa.poll)}
   end
 
   def create(params)
-    poll = super(params)
+    poll = super
   end
+
+  private
 
   def format_polls(polls)
     polls.map(&method(:format_poll))
@@ -35,29 +44,12 @@ class Web::PollService < PollService
     }
   end
 
-  def format_poll_with_answer(poll)
-    { poll_id: poll.id,
-      question: poll.question,
-      categories: poll.categories,
-      options: poll.poll_answers.inject({}){|h,a|
-        count = h[a.polls_options.option.option] ||= 0
-        h[a.polls_options.option.option] = count + 1
-        h
-      } # poll.poll_answers.join(:options).group('options.option').count # convert to group query
-    }
-  end
-
   def format_polls_with_answer(polls)
     polls.map(&method(:format_poll_with_answer))
   end
 
-  def format_users_polls(polls)
-    polls.map(&method(:format_user_poll))
-  end
-
-  def format_user_poll(poll)
-    {
-      poll_id: poll.id,
+  def format_poll_with_answer(poll)
+    { poll_id: poll.id,
       question: poll.question,
       categories: poll.categories.pluck(:id, :name),
       options: answer_data(poll)
@@ -67,9 +59,11 @@ class Web::PollService < PollService
   # convert to query
   def answer_data(poll)
     total = poll.poll_answers.count
-    return populate_answer_data(poll, total) unless total.zero?
+    unless total.zero?
+      return populate_answer_data(poll, total)
+    end
 
-    h = Hash.new { |hash, key| key.is_a?(Array) ? key.each{|h| hash[h]} : hash[key]={percentage: 0, selected: false} }
+    h = Hash.new { |hash, key| key.is_a?(Array) ? key.each{|h| hash[h]} : hash[key]={percentage: 0.0, selected: false} }
     h[poll.options.pluck(:option)]
     h
   end
