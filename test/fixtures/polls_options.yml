@@ -42,4 +42,7 @@ david_gems_gold:
 david_gems_ruby:
   poll_id: 4
   option: ruby
+david_gems_emerald:
+  poll_id: 4
+  option: emerald
 
