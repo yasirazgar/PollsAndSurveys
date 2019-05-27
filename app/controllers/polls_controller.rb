@@ -1,4 +1,6 @@
 class PollsController < ApplicationController
+  include PollsConcern
+
   def index
     polls = poll_service.get_polls_for_user
 
@@ -27,10 +29,9 @@ class PollsController < ApplicationController
     render json: {message: "Error destroying poll"}, status: :not_found
   end
 
-  private
+  def answer
+    poll_with_ans = poll_service.answer_poll(params[:id], params[:option_id])
 
-  def poll_service
-    @poll_service ||= Web::PollService.new(current_user)
+    render json: {poll: poll_with_ans, message: "Answer recorded successfully"}
   end
-
 end

@@ -1,5 +1,6 @@
 require 'test_helper'
 require_relative '../helpers/polls_test_helper'
+require_relative '../helpers/users_polls_test_helper'
 
 class PollsControllerTest < ActionDispatch::IntegrationTest
   include PollsTestHelper
@@ -54,6 +55,24 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :not_found
     assert 'Error destroying poll', json_response[:message]
+  end
+
+  test "answer_poll" do
+    poll_hash = UsersPollsTestHelper::YASIR_NO_ANS_ANS.clone
+    poll_hash['options']["Crazy"]['percentage'] = 100
+    poll_hash['options']["Crazy"]['selected'] = true
+
+    expected_response = {
+      'poll' => poll_hash,
+      'message' => 'Answer recorded successfully'
+    }
+
+    assert_difference('PollAnswer.count', 1) do
+      post(answer_poll_url(3, options(:crazy).id), xhr: true)
+    end
+
+    assert_response :success
+    assert_equal expected_response, json_response
   end
 
   private

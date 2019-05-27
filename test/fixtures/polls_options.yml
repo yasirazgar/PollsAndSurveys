@@ -30,6 +30,16 @@ yasir_it_javascript:
   poll_id: 2
   option: javascript
 
+yasir_no_ans_crazy:
+  poll_id: 3
+  option: crazy
+yasir_no_ans_stupid:
+  poll_id: 3
+  option: stupid
+yasir_no_ans_annoying:
+  poll_id: 3
+  option: annoying
+
 david_gems_platinum:
   poll_id: 4
   option: platinum
@@ -45,4 +55,3 @@ david_gems_ruby:
 david_gems_emerald:
   poll_id: 4
   option: emerald
-

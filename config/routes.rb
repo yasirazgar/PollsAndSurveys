@@ -6,9 +6,14 @@ Rails.application.routes.draw do
   resource :user, controller: :user, only: [] do
     collection do
       get 'polls'
+      get 'responded_polls'
     end
   end
-  resources :polls, except: [:new, :update]
+  resources :polls, except: [:new, :update] do
+    member do
+      post ':option_id/answer' => 'polls#answer', :as => 'answer'
+    end
+  end
   resources :categories, only: [:index]
   root to: "home#index"
 end
