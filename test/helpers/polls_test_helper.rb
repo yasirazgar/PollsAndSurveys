@@ -8,25 +8,45 @@ module PollsTestHelper
           'poll_id' => 1,
           'question' => 'Fav snake',
           'categories' => [[3, 'Animals']],
-          'options' => ['Python', 'Cobra', 'Viper', 'Mamba']
+          'options' => [
+            {'option_id' => 1, 'option' => 'Python'},
+            {'option_id' => 2, 'option' => 'Cobra'},
+            {'option_id' => 3,  'option' => 'Viper'},
+            {'option_id' => 4, 'option' => 'Mamba'}
+          ]
         },
         {
           'poll_id' => 2,
           'question' => 'Fav programming language',
           'categories' => [[1, 'It'], [2, 'Programming languages']],
-          'options' => ['Python', 'Ruby', 'Java', 'JavaScript']
+          'options' => [
+            {'option_id' => 1, 'option' => 'Python'},
+            {'option_id' => 5, 'option' => 'Java'},
+            {'option_id' => 6, 'option' => 'JavaScript'},
+            {'option_id' => 7, 'option' => 'Ruby'}
+          ]
         },
         {
           'poll_id' => 3,
           'question' => 'Some dumb question',
           'categories' => [],
-          'options' => ['Crazy', 'Stupid', 'Annoying']
+          'options' => [
+            {'option_id' => 12, 'option' => 'Crazy'},
+            {'option_id' => 13, 'option' => 'Stupid'},
+            {'option_id' => 14, 'option' => 'Annoying'}
+          ]
         },
         {
           'poll_id' => 4,
           'question' => 'Fav gems',
           'categories' => [[4, 'Gems']],
-          'options' => ['Platinum', 'Dimond', 'Gold', 'Ruby']
+          'options' => [
+            {'option_id' => 7,  'option' => 'Ruby'},
+            {'option_id' => 8,  'option' => 'Gold'},
+            {'option_id' => 9,  'option' => 'Dimond'},
+            {'option_id' => 10,  'option' => 'Emerald'},
+            {'option_id' => 11, 'option' => 'Platinum'}
+          ]
         }
       ]
     }
