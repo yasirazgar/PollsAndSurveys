@@ -6,52 +6,52 @@
 #
 yasir_snake_python:
   poll_id: 1
-  option: python
+  option_id: 1
 yasir_snake_cobra:
   poll_id: 1
-  option: cobra
+  option_id: 2
 yasir_snake_viper:
   poll_id: 1
-  option: viper
+  option_id: 3
 yasir_snake_mamba:
   poll_id: 1
-  option: mamba
+  option_id: 4
 
 yasir_it_python:
   poll_id: 2
-  option: python
-yasir_it_ruby:
-  poll_id: 2
-  option: ruby
+  option_id: 1
 yasir_it_java:
   poll_id: 2
-  option: java
+  option_id: 5
 yasir_it_javascript:
   poll_id: 2
-  option: javascript
+  option_id: 6
+yasir_it_ruby:
+  poll_id: 2
+  option_id: 7
 
 yasir_no_ans_crazy:
   poll_id: 3
-  option: crazy
+  option_id: 12
 yasir_no_ans_stupid:
   poll_id: 3
-  option: stupid
+  option_id: 13
 yasir_no_ans_annoying:
   poll_id: 3
-  option: annoying
+  option_id: 14
 
-david_gems_platinum:
-  poll_id: 4
-  option: platinum
-david_gems_dimond:
-  poll_id: 4
-  option: dimond
-david_gems_gold:
-  poll_id: 4
-  option: gold
 david_gems_ruby:
   poll_id: 4
-  option: ruby
+  option_id: 7
+david_gems_gold:
+  poll_id: 4
+  option_id: 8
+david_gems_dimond:
+  poll_id: 4
+  option_id: 9
 david_gems_emerald:
   poll_id: 4
-  option: emerald
+  option_id: 10
+david_gems_platinum:
+  poll_id: 4
+  option_id: 11

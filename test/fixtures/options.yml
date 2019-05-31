@@ -4,33 +4,45 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-
 python:
+  id: 1
   option: Python
 cobra:
+  id: 2
   option: Cobra
 viper:
+  id: 3
   option: Viper
 mamba:
+  id: 4
   option: Mamba
 java:
+  id: 5
   option: Java
 javascript:
+  id: 6
   option: JavaScript
 ruby:
+  id: 7
   option: Ruby
 gold:
+  id: 8
   option: Gold
 dimond:
+  id: 9
   option: Dimond
 emerald:
+  id: 10
   option: Emerald
 platinum:
+  id: 11
   option: Platinum
 crazy:
+  id: 12
   option: Crazy
 stupid:
+  id: 13
   option: Stupid
 annoying:
+  id: 14
   option: Annoying
-
