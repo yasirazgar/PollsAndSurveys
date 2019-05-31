@@ -30,12 +30,12 @@ yasir_it_sundar:
   polls_options: yasir_it_ruby
   user: sundar
 
-david_gems_david:
-  polls_options: david_gems_gold
-  user: david
 david_gems_yasir:
   polls_options: david_gems_ruby
   user: yasir
+david_gems_david:
+  polls_options: david_gems_gold
+  user: david
 david_gems_yaseer:
   polls_options: david_gems_dimond
   user: yaseer
