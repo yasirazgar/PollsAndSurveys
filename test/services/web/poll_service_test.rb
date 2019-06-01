@@ -80,7 +80,7 @@ class Web::PollServiceTest < ActiveSupport::TestCase
   private
 
   def assert_poll(poll, params)
-    assert_equal params[:options].sort, poll.options.map(&:option).sort
+    assert_equal params[:options].sort, poll.options.map(&:name).sort
     assert_equal params[:category_ids].map(&:to_i), poll.category_ids
   end
 end

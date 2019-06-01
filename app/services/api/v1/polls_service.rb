@@ -40,8 +40,8 @@ class Api::V1::PollsService < PollsService
       question: poll.question,
       categories: poll.categories,
       options: poll.poll_answers.inject({}){|h,a|
-        count = h[a.polls_options.option.option] ||= 0
-        h[a.polls_options.option.option] = count + 1
+        count = h[a.polls_options.option.name] ||= 0
+        h[a.polls_options.option.name] = count + 1
         h
       } # poll.poll_answers.join(:options).group('options.option').count # convert to group query
     }
@@ -61,10 +61,10 @@ class Api::V1::PollsService < PollsService
       question: poll.question,
       categories: poll.categories,
       options: poll.poll_answers.inject({}){ |h,ans| # convert to query
-        h[ans.polls_options.option.option] ||= [0, false]
-        count = h[ans.polls_options.option.option][0] + 1
-        h[ans.polls_options.option.option][0] = count
-        h[ans.polls_options.option.option][1] = true if ans.user_id == current_user.id
+        h[ans.polls_options.option.name] ||= [0, false]
+        count = h[ans.polls_options.option.name][0] + 1
+        h[ans.polls_options.option.name][0] = count
+        h[ans.polls_options.option.name][1] = true if ans.user_id == current_user.id
         h
       }
     }
@@ -73,10 +73,10 @@ class Api::V1::PollsService < PollsService
   def user_answer_data(poll)
     total = poll.poll_answers.count
     hash = poll.poll_answers.inject({}){ |h,ans| # convert to query
-      h[ans.polls_options.option.option] ||= [0, false]
-      count = h[ans.polls_options.option.option][0] + 1
-      h[ans.polls_options.option.option][0] = count
-      h[ans.polls_options.option.option][1] = true if ans.user_id == current_user.id
+      h[ans.polls_options.option.name] ||= [0, false]
+      count = h[ans.polls_options.option.name][0] + 1
+      h[ans.polls_options.option.name][0] = count
+      h[ans.polls_options.option.name][1] = true if ans.user_id == current_user.id
       h
     }
     hash.keys.each do |opt|

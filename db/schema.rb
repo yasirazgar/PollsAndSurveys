@@ -23,8 +23,8 @@ ActiveRecord::Schema.define(version: 2019_04_18_163352) do
   end
 
   create_table "options", force: :cascade do |t|
-    t.string "option"
-    t.index ["option"], name: "index_options_on_option"
+    t.string "name"
+    t.index ["name"], name: "index_options_on_name"
   end
 
   create_table "poll_answers", force: :cascade do |t|

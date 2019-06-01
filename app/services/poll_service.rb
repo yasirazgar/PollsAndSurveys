@@ -32,10 +32,10 @@ class PollService
     poll = Poll.new(params.slice(:question, :category_ids))
     poll.user_id = @user.id
     poll.options_attributes = params[:options].inject([]) do |opts, opt|
-      if (existing_opt = Option.find_by_option(opt))
+      if (existing_opt = Option.find_by_name(opt))
         poll.options << existing_opt
       else
-        opts << {option: opt}
+        opts << {name: opt}
       end
       opts
     end

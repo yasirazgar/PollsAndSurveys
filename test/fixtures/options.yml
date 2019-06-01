@@ -6,43 +6,43 @@
 #
 python:
   id: 1
-  option: Python
+  name: Python
 cobra:
   id: 2
-  option: Cobra
+  name: Cobra
 viper:
   id: 3
-  option: Viper
+  name: Viper
 mamba:
   id: 4
-  option: Mamba
+  name: Mamba
 java:
   id: 5
-  option: Java
+  name: Java
 javascript:
   id: 6
-  option: JavaScript
+  name: JavaScript
 ruby:
   id: 7
-  option: Ruby
+  name: Ruby
 gold:
   id: 8
-  option: Gold
+  name: Gold
 dimond:
   id: 9
-  option: Dimond
+  name: Dimond
 emerald:
   id: 10
-  option: Emerald
+  name: Emerald
 platinum:
   id: 11
-  option: Platinum
+  name: Platinum
 crazy:
   id: 12
-  option: Crazy
+  name: Crazy
 stupid:
   id: 13
-  option: Stupid
+  name: Stupid
 annoying:
   id: 14
-  option: Annoying
+  name: Annoying
