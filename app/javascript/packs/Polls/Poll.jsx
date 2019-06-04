@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import Input from '../Utils/Input'
+import Option from './Options/Option'
 
 import './Poll.scss'
 
@@ -14,15 +15,29 @@ class Poll extends Component {
       alreadySelected[0].classList.remove("checked");
     }
     event.target.classList.add('checked');
+
+    const option_id = event.target.attr('option_id');
+    const url = "/polls/" + props.id + "/" + option_id + "/answer"
+    fetch(url, {
+      credentials: 'same-origin',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content,
+      },
+      body: null
+    }).then(fetchPromise).then(callback)
   }
 
-  optionsList = () => {
-    let options = []
+  buildOptionsList = () => {
+    const optionsHash = this.props.options;
+    const options = Object.keys(optionsHash);
 
-    for (let i = 0; i < this.props.options.length; i++) {
-      options.push(<li key={i.toString()} onClick={this.answerPoll}>{this.props.options[i]} </li>)
-    }
-    return options
+    const optionsList = options.map((option) => {
+      return (<Option option={optionsHash[option]} name={option} clickHandler={this.answerPoll}/>)
+    });
+
+    return optionsList;
   }
 
   render() {
@@ -33,7 +48,7 @@ class Poll extends Component {
         </div>
 
         <ul className="poll__options">
-          {this.optionsList()}
+          {this.buildOptionsList()}
         </ul>
       </div>
 

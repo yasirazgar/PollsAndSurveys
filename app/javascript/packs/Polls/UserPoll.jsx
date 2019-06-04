@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import OptionWithAnswer from './Options/OptionWithAnswer'
 import Input from '../Utils/Input'
 
 import './UserPoll.scss'
@@ -18,24 +19,14 @@ class UserPoll extends Component {
   }
 
   buildOptionsList = () => {
-    let optionsList = []
     const optionsHash = this.props.options;
     const options = Object.keys(optionsHash);
-    for (let i = 0; i < options.length; i++) {
-      const option = options[i];
-      const answerPercentage = optionsHash[option]['percentage'];
-      const userSelected = optionsHash[option]['selected'];
-      let klass;
-      if (userSelected){
-        klass = 'checked';
-      }
-      optionsList.push(<li className={klass} style={{width: answerPercentage + '%'}} key={i.toString()} onClick={this.answerPoll} >
-        {option}
-        <span className='percentage'> {answerPercentage + '%'} </span>
-        </li>
-      )
-    }
-    return optionsList
+
+    const optionsList = options.map((option) => {
+      return (<OptionWithAnswer option={optionsHash[option]} name={option} clickHandler={this.answerPoll}/>)
+    });
+
+    return optionsList;
   }
 
   deletePoll = (pollId) => {
