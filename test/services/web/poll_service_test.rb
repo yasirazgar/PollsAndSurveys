@@ -70,7 +70,7 @@ class Web::PollServiceTest < ActiveSupport::TestCase
   end
 
   test "answer_poll" do
-    expected_hash = YASIR_NO_ANS_ANS.clone
+    expected_hash = YASIR_NO_ANS_ANS.deep_dup
 
     expected_hash['options']["Crazy"]['percentage'] = 100
     expected_hash['options']["Crazy"]['selected'] = true

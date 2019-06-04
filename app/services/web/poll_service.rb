@@ -40,7 +40,9 @@ class Web::PollService < PollService
       poll_id: poll.id,
       question: poll.question,
       categories: poll.categories.pluck(:id, :name),
-      options: poll.options.map{|opt| {option_id: opt.id, option: opt.name}}
+      options: poll.options.inject({}){|hash, opt|
+        hash[opt.name]={option_id: opt.id}
+        hash}
     }
   end
 
