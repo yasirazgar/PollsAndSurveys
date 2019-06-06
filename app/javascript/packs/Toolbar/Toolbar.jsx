@@ -6,6 +6,7 @@ import ToggleButton from '../SideDrawer/ToggleButton'
 import './Toolbar.scss';
 
 import ProfileIcon from 'user__anonymous.svg'
+import MegaphoneIcon from 'megaphone.svg'
 
 const Toolbar = props => {
   let navItems;
@@ -30,7 +31,11 @@ const Toolbar = props => {
         <div className="toolbar__toggle-button">
           <ToggleButton clickHandler={props.sideDrawerToggleClickHandler} />
         </div>
-        <div className="toolbar__logo"><a href="/">Logo</a></div>
+        <div className="toolbar__logo">
+          <a href="/">
+            <img style={{ width: '5%', height: 'auto' }}className="logo" src={MegaphoneIcon} ></img>
+          </a>
+        </div>
         <div className="spacer"> </div>
         <div className="toolbar_navigation-items">
           <ul>

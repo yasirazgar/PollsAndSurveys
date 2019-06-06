@@ -10,6 +10,10 @@ const Footer = props => (
   <div className={"footer " + props.classes}>
     <FooterRight />
     <FooterLeft />
+
+    <div>
+      Surveys coming soon
+    </div>
   </div>
 );
 
