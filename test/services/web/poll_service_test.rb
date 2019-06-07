@@ -74,7 +74,21 @@ class Web::PollServiceTest < ActiveSupport::TestCase
 
     expected_hash['options']["Crazy"]['percentage'] = 100
     expected_hash['options']["Crazy"]['selected'] = true
-    assert_equal expected_hash, @service.answer_poll(3, options(:crazy).id).deep_stringify_keys
+    assert_equal expected_hash, @service.answer_poll(3, 12).deep_stringify_keys
+  end
+
+  test "answer_poll - user changes the answer" do
+    expected_hash = YASIR_IT_ANS.deep_dup
+
+    expected_hash['options']["Ruby"]['percentage'] = 50.0
+    expected_hash['options']["Ruby"]['selected'] = false
+    expected_hash['options']["JavaScript"]['percentage'] = 25.0
+    expected_hash['options']["JavaScript"]['selected'] = true
+    assert_equal expected_hash, @service.answer_poll(2, 6).deep_stringify_keys
+  end
+
+  test "answer_poll - user chosses the same answer" do
+    assert_equal YASIR_IT_ANS, @service.answer_poll(2, 7).deep_stringify_keys
   end
 
   private

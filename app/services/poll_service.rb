@@ -25,7 +25,16 @@ class PollService
 
   def answer_poll(poll_id, option_id)
     po_id = PollsOptions.find_by(poll_id: poll_id, option_id: option_id).id
-    PollAnswer.create(polls_options_id: po_id, user_id: @user.id)
+    answer = @user.poll_answers.joins(:poll).where("polls.id = ?", poll_id).take
+    unless answer
+      PollAnswer.create(polls_options_id: po_id, user_id: @user.id)
+      return
+    end
+
+    if answer.polls_options_id != po_id # user responded for same answer
+      answer.polls_options_id = po_id
+      answer.save
+    end
   end
 
   def create(params)

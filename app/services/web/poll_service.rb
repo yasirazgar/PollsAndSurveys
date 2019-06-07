@@ -15,7 +15,7 @@ class Web::PollService < PollService
     get_answers_for_poll(poll_id)
   end
 
-  def get_answers_for_poll(poll)
+  def get_answers_for_poll(poll_id)
     poll = super
     format_poll_with_answer(poll)
   end
