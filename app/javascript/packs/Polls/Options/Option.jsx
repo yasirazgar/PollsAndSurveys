@@ -4,7 +4,6 @@ import answerPoll from '../../Handlers/answerPollHandler';
 
 class Option extends Component {
   render(){
-    console.log(this.props.callback)
     const option_id = this.props.option.option_id;
     const clickHandler = answerPoll.bind(this, this.props.pollId, option_id, this.props.callback);
 

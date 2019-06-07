@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Polls from './Polls/Polls'
 import UserPolls from './Polls/UserPolls'
+import RespondedPolls from './Polls/RespondedPolls'
 import NewPoll from './Polls/NewPoll'
 import Button from './Utils/Button'
 import Input from './Utils/Input'
@@ -12,12 +13,21 @@ import fetchCategoriesHandler from './Handlers/fetchCategoriesHandler'
 import './MainWrapper.scss'
 
 class MainWrapper extends Component {
+
   constructor(props){
     super(props)
 
+    this.polls = 'Polls'
+    this.pollsClass = 'tablinks active'
+    this.myPolls = 'MyPolls'
+    this.myPollsClass = 'tablinks'
+    this.respondedPolls = 'RespondedPolls'
+    this.respondedPollsClass = 'tablinks'
+
     this.state = {
       createPollMode: false,
-      categories: []
+      categories: [],
+      tab: this.polls
     };
 
     this.hideCreatePollForm = this.hideCreatePollForm.bind(this)
@@ -49,17 +59,42 @@ class MainWrapper extends Component {
     }, 400);
   }
 
+  pollsHandler = () => {
+    this.pollsClass = 'tablinks active'
+    this.myPollsClass = 'tablinks'
+    this.respondedPollsClass = 'tablinks'
+    this.setState({tab: this.polls})
+  }
+  getPolls = () => {
+    return <Polls />
+  }
+
+  myPollsHandler = () => {
+    this.pollsClass = 'tablinks'
+    this.myPollsClass = 'tablinks active'
+    this.respondedPollsClass = 'tablinks'
+    this.setState({tab: this.myPolls})
+  }
+  getMyPolls = () => {
+    return <UserPolls />
+  }
+
+  respondedPollsHandler = () => {
+    this.pollsClass = 'tablinks'
+    this.myPollsClass = 'tablinks'
+    this.respondedPollsClass = 'tablinks active'
+    this.setState({tab: this.respondedPolls})
+  }
+  getRespondedPolls = () => {
+    return <RespondedPolls />
+  }
+
   render() {
-    let newPollForm, polls;
+    let newPollForm;
+    const polls = eval('this.'+'get'+ this.state.tab + '()');
+
     if (this.state.createPollMode){
       newPollForm = <NewPoll hideCreatePollForm={this.hideCreatePollForm}/>
-    }
-
-    if (this.props.userPollMode){
-      polls = <UserPolls />
-    }
-    else{
-      polls = <Polls />
     }
 
     return (
@@ -85,8 +120,13 @@ class MainWrapper extends Component {
           <span>
             <Button classes="btn__outer" text="Add new poll" clickHandler={this.setCreatePollView} />
           </span>
-        </div>
 
+        </div>
+        <div class="tab">
+          <Button classes={this.pollsClass} clickHandler={this.pollsHandler} text={this.polls} />
+          <Button classes={this.myPollsClass} clickHandler={this.myPollsHandler} text={this.myPolls} />
+          <Button classes={this.myRespondedPollsClass} clickHandler={this.respondedPollsHandler} text={this.respondedPolls} />
+        </div>
         <div className="main-wrapper__content">
           {newPollForm}
           {polls}
