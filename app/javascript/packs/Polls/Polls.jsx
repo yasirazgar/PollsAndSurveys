@@ -21,9 +21,8 @@ class Polls extends Component {
     }).then(response => {
       return response.json()
     }).then(data => {
-      let index = 0
-      polls = data.polls.map((poll) => {
-        return (<Poll key={index += 1} question={poll.question} categories={poll.categories} options={poll.options} />)
+      polls = data.polls.map((poll, i) => {
+        return (<Poll isWithAnswer={false} key={i} poll={poll}/>)
       });
       this.setState({polls: polls})
     });

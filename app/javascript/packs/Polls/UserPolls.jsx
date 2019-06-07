@@ -10,9 +10,8 @@ class UserPolls extends Component {
   };
 
   buildUserPolls = (polls) => {
-    let index = 0
-    let pollsList = polls.map((poll) => {
-      return (<UserPoll key={index += 1} question={poll.question} categories={poll.categories} options={poll.options} pollId={poll.poll_id}/>)
+    let pollsList = polls.map((poll, i) => {
+      return (<UserPoll key={i} poll={poll} />)
     });
     return pollsList;
   }

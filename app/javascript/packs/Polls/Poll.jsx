@@ -2,56 +2,53 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import Input from '../Utils/Input'
-import Option from './Options/Option'
+import { optionsList, optionsListWithAnswer } from '../Helpers/polls_helper'
 
 import './Poll.scss'
 
-
 // Analyse whether this should be functional and class components
 class Poll extends Component {
-  answerPoll = () => {
-    let alreadySelected = event.target.parentElement.getElementsByClassName("checked");
-    if (alreadySelected.length > 0) {
-      alreadySelected[0].classList.remove("checked");
+  constructor(props){
+    super(props)
+    this.state = {
+      options: this.props.poll.options,
+      isWithAnswer: false,
     }
-    event.target.classList.add('checked');
+    this.setAnswers = this.setAnswers.bind(this);
+    this.buildOptionsList = this.buildOptionsList.bind(this);
 
-    const option_id = event.target.attr('option_id');
-    const url = "/polls/" + props.id + "/" + option_id + "/answer"
-    fetch(url, {
-      credentials: 'same-origin',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content,
-      },
-      body: null
-    }).then(fetchPromise).then(callback)
   }
 
-  buildOptionsList = () => {
-    const optionsHash = this.props.options;
-    const options = Object.keys(optionsHash);
+  setAnswers = (options) => {
+    this.setState({options: options, isWithAnswer: true})
+  }
 
-    const optionsList = options.map((option) => {
-      return (<Option option={optionsHash[option]} name={option} clickHandler={this.answerPoll}/>)
-    });
+  buildOptionsList = (optionsHash, poll_id) => {
+    const names = Object.keys(optionsHash);
+    let list;
 
-    return optionsList;
+    if (this.state.isWithAnswer){
+      list = optionsListWithAnswer(optionsHash, names, poll_id, this.setAnswers)
+    }
+    else {
+      list = optionsList(optionsHash, names, poll_id, this.setAnswers)
+    }
+    return list;
   }
 
   render() {
+    const poll = this.props.poll
+
     return (
       <div className="poll">
         <div className="poll__question">
-          <h2>{this.props.question}</h2>
+          <h2>{poll.question}</h2>
         </div>
 
         <ul className="poll__options">
-          {this.buildOptionsList()}
+          {this.buildOptionsList(this.state.options, poll.poll_id)}
         </ul>
       </div>
-
     );
   }
 }

@@ -1,26 +1,34 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import answerPoll from '../../Handlers/answerPollHandler';
 
-const OptionWithAnswer = (props) => {
-    const answerPercentage = props.option['percentage'];
-    const userSelected = props.option['selected'];
-    const option_id = props.option['option_id'];
+class OptionWithAnswer extends Component {
+  render(){
+    const answerPercentage = this.props.option.percentage;
+    const option_id = this.props.option.option_id;
+    const selected = this.props.option.selected;
     let klass;
-    if (userSelected){
+    if (selected){
       klass = 'checked';
     }
+    const liProps = {
+      className: klass,
+      style: {width: answerPercentage + '%'},
+      onClick: answerPoll.bind(this, this.props.pollId, option_id, this.props.callback)
+    }
 
-  return (
-    <li className={klass} style={{width: answerPercentage + '%'}} option_id={option_id} onClick={props.clickHandler}>
-      {props.name}
-      <span className='percentage'> {answerPercentage + '%'} </span>
-    </li>
-  )
+    return (
+      <li {...liProps}>
+        {this.props.name}
+        <span className='percentage'> {answerPercentage + '%'} </span>
+      </li>
+    )
+  }
 }
 
 OptionWithAnswer.propTypes = {
-  id: PropTypes.string,
-  option: PropTypes.string
+  option: PropTypes.object,
+  name: PropTypes.string,
 }
 
 export default OptionWithAnswer

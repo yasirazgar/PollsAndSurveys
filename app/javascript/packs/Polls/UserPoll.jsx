@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import OptionWithAnswer from './Options/OptionWithAnswer'
+import { optionsListWithAnswer } from '../Helpers/polls_helper'
 import Input from '../Utils/Input'
 
 import './UserPoll.scss'
@@ -10,23 +10,21 @@ import './UserPoll.scss'
 // Analyse whether this should be functional and class components
 // <div style="height:26px;width:40%;background:red;border solid #ddd"></div>
 class UserPoll extends Component {
-  answerPoll = () => {
-    let alreadySelected = event.target.parentElement.getElementsByClassName("checked");
-    if (alreadySelected.length > 0) {
-      alreadySelected[0].classList.remove("checked");
+  constructor(props){
+    super(props)
+    this.state = {
+      options: this.props.poll.options,
     }
-    event.target.classList.add('checked');
+    this.setAnswers = this.setAnswers.bind(this);
   }
 
-  buildOptionsList = () => {
-    const optionsHash = this.props.options;
-    const options = Object.keys(optionsHash);
+  setAnswers = (options) => {
+    this.setState({options: options})
+  }
 
-    const optionsList = options.map((option) => {
-      return (<OptionWithAnswer option={optionsHash[option]} name={option} clickHandler={this.answerPoll}/>)
-    });
-
-    return optionsList;
+  buildOptionsList = (optionsHash, poll_id) => {
+    const names = Object.keys(optionsHash);
+    return optionsListWithAnswer(optionsHash, names, poll_id, this.setAnswers)
   }
 
   deletePoll = (pollId) => {
@@ -51,16 +49,17 @@ class UserPoll extends Component {
 
   render() {
     let deleteButton = (<span className="delete" onClick={this.deletePoll.bind(this, this.props.pollId)}>×</span>)
+    let poll = this.props.poll
 
     return (
       <div className="poll">
-        <span className="delete" onClick={this.deletePoll.bind(this, this.props.pollId)}>×</span>
+        <span className="delete" onClick={this.deletePoll.bind(this, poll.poll_id)}>×</span>
         <div className="poll__question">
-          <h2>{this.props.question}</h2>
+          <h2>{poll.question}</h2>
         </div>
 
         <ul className="poll__options">
-          {this.buildOptionsList()}
+          {this.buildOptionsList(this.state.options, poll.poll_id)}
         </ul>
       </div>
 

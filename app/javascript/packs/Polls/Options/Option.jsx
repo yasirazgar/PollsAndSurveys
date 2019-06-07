@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import answerPoll from '../../Handlers/answerPollHandler';
 
-const Option = props => (
-  <li className={props.option.klass} option_id={props.option.id} onClick={props.clickHandler}> {props.name} </li>
-)
+class Option extends Component {
+  render(){
+    console.log(this.props.callback)
+    const option_id = this.props.option.option_id;
+    const clickHandler = answerPoll.bind(this, this.props.pollId, option_id, this.props.callback);
+
+    return (
+      <li onClick={clickHandler}> {this.props.name} </li>
+    )
+  }
+}
 
 Option.propTypes = {
-  id: PropTypes.function,
-  option: PropTypes.object
+  name: PropTypes.string,
+  option: PropTypes.object,
+  callback: PropTypes.function
 }
 
 export default Option
