@@ -20,8 +20,6 @@ class MainWrapper extends Component {
       categories: []
     };
 
-    this.question = null
-    this.options = null
     this.hideCreatePollForm = this.hideCreatePollForm.bind(this)
     this.setCategories = this.setCategories.bind(this)
   }
@@ -32,11 +30,6 @@ class MainWrapper extends Component {
 
   componentWillMount() {
     fetchCategoriesHandler(this.setCategories)
-  }
-
-  setPoll(question, options) {
-    this.question = question
-    this.options = options
   }
 
   hideCreatePollForm() {

@@ -27,8 +27,8 @@ import './Common.scss'
 import 'whatwg-fetch'
 
 class Home extends Component {
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
 
     this.setLoginFormValidity = this.setLoginFormValidity.bind(this);
     this.signInHandler = signInHandler;
