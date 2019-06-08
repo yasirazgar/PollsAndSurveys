@@ -29,7 +29,6 @@ class UserPolls extends Component {
       return response.json()
     }).then(data => {
       polls = this.buildUserPolls(data.polls)
-      window.localStorage.setItem('categories', JSON.stringify(data.categories))
       this.setState({polls: polls})
     });
   }
