@@ -8,18 +8,22 @@ yasir_snake:
   id: 1
   user: yasir
   question: Fav snake
+  age_group: <%= [1] %>
 
 yasir_it:
   id: 2
   user: yasir
   question: Fav programming language
+  age_group: <%= [3,4,5,6] %>
 
 yasir_no_ans:
   id: 3
   user: yasir
   question: Some dumb question
+  age_group:
 
 david_gems:
   id: 4
   user: david
   question: Fav gems
+  age_group: <%= [3,4,5,6] %>
