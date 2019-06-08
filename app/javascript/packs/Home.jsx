@@ -150,7 +150,7 @@ class Home extends Component {
 
         <SideDrawer open={this.state.sideDrawerOpen} user={this.state.user}/>
 
-        <MainWrapper />
+        <MainWrapper user={this.state.user} />
 
         {backdrop}
 

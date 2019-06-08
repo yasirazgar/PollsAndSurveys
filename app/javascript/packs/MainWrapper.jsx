@@ -91,11 +91,20 @@ class MainWrapper extends Component {
 
   render() {
     let newPollForm;
+    let tabs = [<Button classes={this.pollsClass} clickHandler={this.pollsHandler} text={this.polls} />]
+
     const polls = eval('this.'+'get'+ this.state.tab + '()');
 
     if (this.state.createPollMode){
       newPollForm = <NewPoll hideCreatePollForm={this.hideCreatePollForm}/>
     }
+
+    if (this.props.user){
+      tabs.push(<Button classes={this.myPollsClass} clickHandler={this.myPollsHandler} text={this.myPolls} />)
+      tabs.push(<Button classes={this.myRespondedPollsClass} clickHandler={this.respondedPollsHandler} text={this.respondedPolls} />)
+
+    }
+
 
     return (
       <div className="main-wrapper">
@@ -123,9 +132,7 @@ class MainWrapper extends Component {
 
         </div>
         <div class="tab">
-          <Button classes={this.pollsClass} clickHandler={this.pollsHandler} text={this.polls} />
-          <Button classes={this.myPollsClass} clickHandler={this.myPollsHandler} text={this.myPolls} />
-          <Button classes={this.myRespondedPollsClass} clickHandler={this.respondedPollsHandler} text={this.respondedPolls} />
+          {tabs}
         </div>
         <div className="main-wrapper__content">
           {newPollForm}
