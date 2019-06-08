@@ -1,14 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './Select.scss'
+// import './Select.scss'
 
 const Select = props => {
   let options = []
-  options = props.options.map((object, i) => <option key={i} value={object[0]}> {object[1]} </option>)
+  options = props.options.map((object, i) => {
+    let disabled;
+    if (object[0] == 0){
+      disabled = 'disabled'
+    }
+    return (<option key={i} value={object[0]} disabled={disabled}> {object[1]} </option>);
+  })
 
   return (
-    <select multiple onChange={props.onChange} className="theme-construction">
+    <select multiple onChange={props.onChange} className="theme-construction" size='1'>
       {options}
     </select>
   );

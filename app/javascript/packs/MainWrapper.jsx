@@ -92,6 +92,8 @@ class MainWrapper extends Component {
   render() {
     let newPollForm;
     let tabs = [<Button classes={this.pollsClass} clickHandler={this.pollsHandler} text={this.polls} />]
+    let categories = this.state.categories.slice(0)
+    categories.unshift([0, 'CATEGORIES'])
 
     const polls = eval('this.'+'get'+ this.state.tab + '()');
 
@@ -116,9 +118,9 @@ class MainWrapper extends Component {
 
               <Input classes="poll-search" placeholder="Search poll" />
 
-              <Select options={this.state.categories}/>
+              <Select options={categories}/>
 
-              <Select options={[[0,'Age group'], [1,'1-10'], [2,'10-17'], [3,'18+'], [4,'30+'], [5,'40+'], [6,'50+']]}/>
+              <Select options={[[0,'AGE GROUP'], [1,'1-10'], [2,'10-17'], [3,'18+'], [4,'30+'], [5,'40+'], [6,'50+']]}/>
 
               <Button classes="btn__inner" text="Search" clickHandler={this.searchPollHandler} />
             </div>
