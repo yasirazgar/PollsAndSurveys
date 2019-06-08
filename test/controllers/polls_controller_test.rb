@@ -15,7 +15,10 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
 
     get(polls_url, xhr: true)
     assert_response :success
-    assert_equal(json_response, expected_polls_for_user)
+    assert_equal(
+      json_response,
+      expected_polls_for_user,
+      'Should return polls as json')
   end
 
   test "create" do
@@ -23,38 +26,50 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
 
     post(polls_url, params: create_params, xhr: true)
     assert_response :success
-    assert_equal({'poll_id' => 1, 'message' => 'Poll created successfully'}, json_response)
+    assert_equal(
+      {'poll_id' => 1, 'message' => 'Poll created successfully'},
+      json_response,
+      'Should return poll_id and success message')
   end
 
   test "create-with duplicate question" do
-    assert_difference('Poll.count', 0) do
+    assert_difference('Poll.count', 0, 'Should not create with duplicate question') do
       post(polls_url, params: create_dup_params, xhr: true)
     end
 
     assert_response :bad_request
-    assert 'Question is already used by you', json_response[:message]
+    assert(
+      'Question is already used by you',
+       json_response[:message],
+       'Should return a error message')
   end
 
   test "destroy" do
     poll = polls(:yasir_snake)
 
-    assert_difference('Poll.count', -1) do
+    assert_difference('Poll.count', -1, 'Should destroy the poll') do
       delete(poll_url(poll), xhr: true)
     end
 
     assert_response :success
-    assert 'Poll destroyed successfully', json_response[:message]
+    assert(
+      'Poll destroyed successfully',
+      json_response[:message],
+      'Should return a success message')
   end
 
   test "destroy - other users polls" do
     other_user_poll = polls(:david_gems)
 
-    assert_difference('Poll.count', 0) do
+    assert_difference('Poll.count', 0, 'Should not destroy other users polls') do
       delete(poll_url(other_user_poll), xhr: true)
     end
 
     assert_response :not_found
-    assert 'Error destroying poll', json_response[:message]
+    assert(
+      'Error destroying poll',
+      json_response[:message],
+      'Should return a error message')
   end
 
   test "answer_poll" do
@@ -67,12 +82,15 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
       'message' => 'Answer recorded successfully'
     }
 
-    assert_difference('PollAnswer.count', 1) do
+    assert_difference('PollAnswer.count', 1, 'Should create a new answer') do
       post(answer_poll_url(3, options(:crazy).id), xhr: true)
     end
 
     assert_response :success
-    assert_equal expected_response, json_response
+    assert_equal(
+      expected_response,
+      json_response,
+      'Should record the answer and return the updated polll answers')
   end
 
   private
