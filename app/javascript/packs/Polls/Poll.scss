@@ -76,13 +76,28 @@
     color: white;
     text-align: center;
     input {
-      margin: 0;
+      margin: 5px;
       border: none;
       border-radius: 0;
       width: 75%;
       padding: 10px;
       float: left;
       font-size: 16px;
+    }
+    select {
+      margin: 5px;
+      border: none;
+      border-radius: 0;
+      width: 30%;
+      padding: 10px;
+      font-size: 16px;
+      &.categories {
+        float: left;
+      }
+      &.agegroup {
+        margin-right: 23%;
+        float: right;
+      }
     }
   }
 

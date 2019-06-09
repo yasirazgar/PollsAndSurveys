@@ -12,9 +12,10 @@ const Select = props => {
     }
     return (<option key={i} value={object[0]} disabled={disabled}> {object[1]} </option>);
   })
-
+  let classes = props.classes
+  classes = classes + ' theme-construction'
   return (
-    <select multiple onChange={props.onChange} className="theme-construction" size='1'>
+    <select multiple onChange={props.onChange} className={classes} size='1'>
       {options}
     </select>
   );

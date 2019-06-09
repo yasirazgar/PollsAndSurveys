@@ -16,6 +16,7 @@ class NewPoll extends Component {
       question: '',
       options: [],
       category_ids: [],
+      age_group: [],
       submitEnabled: false,
       categories: []
     };
@@ -51,9 +52,25 @@ class NewPoll extends Component {
     this.setPollHandler({
       question: this.state.question,
       options: this.state.options,
-      category_ids: selected_values
+      category_ids: selected_values,
+      age_group: this.state.age_group
     })
+  }
 
+  ageGroupChangeHandler = (event) => {
+    let selected_values = [...event.target.options].reduce((vals, opt) => {
+      if(opt.selected){
+        vals.push(opt.value)
+      }; return vals
+    }, [])
+
+    this.setState({age_group: selected_values})
+    this.setPollHandler({
+      question: this.state.question,
+      options: this.state.options,
+      category_ids: this.state.category_ids,
+      age_group: selected_values
+    })
   }
 
   setPollHandler = (poll) => {
@@ -66,7 +83,8 @@ class NewPoll extends Component {
       poll = {
         question: question,
         options: options,
-        category_ids: this.state.category_ids
+        category_ids: this.state.category_ids,
+        age_group: this.state.age_group
       }
       this.setState({submitEnabled: true});
     }
@@ -111,16 +129,21 @@ class NewPoll extends Component {
   }
 
   render() {
+    const ageSelectOptions = [[0,'AGE GROUP'], [1,'1-10'], [2,'10-17'], [3,'18-29'], [4,'30-40'], [5,'41-50'], [6,'50+']]
+    let categories = this.state.categories.slice(0)
+    categories.unshift([0, 'CATEGORIES'])
+
     return (
       <div className="poll" id="new-poll">
         <div className="poll-question">
           <Input type="text" className="poll-question-input" placeholder="Ask your question..." onChange={this.setQuestion}/>
 
-          <Input className="poll-location" placeholder="Location" />
+          {/* <Input className="poll-location" placeholder="Location" /> */}
+          <div>
+            <Select classes='categories' options={categories} onChange={this.categoryChangeHandler}/>
 
-          <Select options={this.state.categories} onChange={this.categoryChangeHandler}/>
-
-          <Select options={[[0,'Age group'], [1,'1-10'], [2,'10-17'], [3,'18+'], [4,'30+'], [5,'40+'], [6,'50+']]}/>
+            <Select classes='agegroup' options={ageSelectOptions} onChange={this.ageGroupChangeHandler}/>
+          </div>
         </div>
 
         <ul >
