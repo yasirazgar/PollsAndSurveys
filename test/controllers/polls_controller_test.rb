@@ -93,6 +93,18 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
       'Should record the answer and return the updated polll answers')
   end
 
+  ['polls', 'user_polls', 'user_responded_polls'].each do |type|
+    test "search - #{type}" do
+      params, sanitized_params, expected_response = search_reqs(type)
+      service_mock.expects("search_#{type}").with(sanitized_params[:terms]).returns(expected_response['polls'])
+
+      get(search_polls_url(params), xhr: true)
+      assert_response :success
+      assert_equal(json_response, expected_response,
+        "Should return response based on the params")
+    end
+  end
+
   private
 
   def service_mock

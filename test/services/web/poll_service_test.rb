@@ -114,6 +114,37 @@ class Web::PollServiceTest < ActiveSupport::TestCase
       'Should do nothing and return the same')
   end
 
+
+  test "search - polls - without age_group" do
+    assert_equal(
+      [YASIR_IT, YASIR_SNAKE],
+      @service.search_polls({
+            category_ids: [1,2,3],
+            term: 'Fav'
+      }).map(&:deep_stringify_keys),
+      'Should return polls based on category_ids and search term')
+  end
+
+  test "search - users_polls - without categories" do
+    assert_equal(
+      [],
+      @service.search_users_polls({
+        age_group: [4,5],
+        term: 'Dumb'
+      }).map(&:deep_stringify_keys),
+      'Should return polls based on category_ids and search term')
+  end
+
+  test "search - user_responded_polls - without search term" do
+    assert_equal(
+      [DAVID_GEMS_ANS],
+      @service.search_user_responded_polls({
+        age_group: [4],
+        category_ids: [4]
+      }).map(&:deep_stringify_keys),
+      "Should include common age group (1) in all cases")
+  end
+
   private
 
   def assert_poll(poll, params)

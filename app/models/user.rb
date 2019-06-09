@@ -22,6 +22,7 @@ class User < ApplicationRecord
 	has_one :details, class_name: 'UserDetails'
 	has_many :polls
   has_many :poll_answers
+  has_many :responded_polls, through: :poll_answers, source: :poll
 
 	def interests
 		interested_categories.pluck(:name)

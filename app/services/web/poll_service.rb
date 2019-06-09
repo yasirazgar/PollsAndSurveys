@@ -21,12 +21,27 @@ class Web::PollService < PollService
   end
 
   def get_user_responded_polls
-    poll_answers = super
-    poll_answers.map{|pa| format_poll_with_answer(pa.poll)}
+    polls = super
+    format_polls_with_answer(polls)
   end
 
   def create(params)
     poll = super
+  end
+
+  def search_polls(terms)
+    polls = super
+    format_polls(polls)
+  end
+
+  def search_users_polls(terms)
+    polls = super
+    format_polls_with_answer(polls)
+  end
+
+  def search_user_responded_polls(terms)
+    polls = super
+    format_polls_with_answer(polls)
   end
 
   private

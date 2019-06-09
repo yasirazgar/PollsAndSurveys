@@ -9,19 +9,22 @@ class PollService
     Poll.where(user: @user)
         .includes(NEEDED_FOR_ANSWERS)
   end
+  alias_method :users_polls, :get_users_polls
 
   def get_polls_for_user
     # user_details = @user.details
     Poll.includes([:categories, :options])
   end
+  alias_method :polls_for_user, :get_polls_for_user
 
   def get_answers_for_poll(poll_id)
     Poll.includes(NEEDED_FOR_ANSWERS).find_by_id(poll_id)
   end
 
   def get_user_responded_polls
-    @user.poll_answers.includes(poll: NEEDED_FOR_ANSWERS)
+    @user.responded_polls.includes(NEEDED_FOR_ANSWERS)
   end
+  alias_method :user_responded_polls, :get_user_responded_polls
 
   def answer_poll(poll_id, option_id)
     po_id = PollsOptions.find_by(poll_id: poll_id, option_id: option_id).id
@@ -62,4 +65,32 @@ class PollService
     poll.destroyed?
   end
 
+  def search_polls(terms)
+    polls_rel = polls_for_user
+    search(polls_rel, terms)
+  end
+
+  def search_users_polls(terms)
+    polls_rel = users_polls
+    search(polls_rel, terms)
+  end
+
+  def search_user_responded_polls(terms)
+    polls_rel = user_responded_polls
+    search(polls_rel, terms)
+  end
+
+  private
+
+  def search(polls_rel, terms)
+    if terms[:age_group].present?
+      age_group = terms[:age_group] + [1]
+      polls_rel = polls_rel.where("age_group && Array[?]::Integer[]", age_group)
+    end
+    if terms[:category_ids].present?
+      polls_rel = polls_rel.joins(:categories).where("categories.id IN (?)", terms[:category_ids])
+    end
+    polls_rel = polls_rel.where("polls.question ilike ?", "%#{terms[:term]}%") if terms[:term].present?
+    polls_rel
+  end
 end

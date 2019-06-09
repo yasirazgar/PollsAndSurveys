@@ -13,6 +13,9 @@ Rails.application.routes.draw do
     member do
       post ':option_id/answer' => 'polls#answer', :as => 'answer'
     end
+    collection do
+      get 'search'
+    end
   end
   resources :categories, only: [:index]
   root to: "home#index"

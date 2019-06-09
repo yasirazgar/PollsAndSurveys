@@ -34,4 +34,12 @@ class PollsController < ApplicationController
 
     render json: {poll: poll_with_ans, message: "Answer recorded successfully"}
   end
+
+  def search
+    type = params[:type]
+    polls = poll_service.send('search_'+type, params[:terms])
+
+    render json: {polls: polls}
+  end
+
 end
