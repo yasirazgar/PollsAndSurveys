@@ -23,11 +23,15 @@ class MainWrapper extends Component {
     this.myPollsClass = 'tablinks'
     this.respondedPolls = 'RespondedPolls'
     this.respondedPollsClass = 'tablinks'
+    this.term = null;
+    this.categories = null;
+    this.ageGroup = null;
 
     this.state = {
       createPollMode: false,
       categories: [],
-      tab: this.polls
+      tab: this.polls,
+      polls: []
     };
 
     this.hideCreatePollForm = this.hideCreatePollForm.bind(this)
@@ -39,7 +43,12 @@ class MainWrapper extends Component {
   }
 
   componentWillMount() {
+    /* Fetch categories first */
     fetchCategoriesHandler(this.setCategories)
+  }
+
+  componentDidMount() {
+    this.setState({polls: <Polls />})
   }
 
   hideCreatePollForm() {
@@ -63,69 +72,53 @@ class MainWrapper extends Component {
     this.pollsClass = 'tablinks active'
     this.myPollsClass = 'tablinks'
     this.respondedPollsClass = 'tablinks'
-    this.setState({tab: this.polls})
-  }
-  getPolls = () => {
-    return <Polls />
+    this.setState({polls: <Polls />})
   }
 
   myPollsHandler = () => {
     this.pollsClass = 'tablinks'
     this.myPollsClass = 'tablinks active'
     this.respondedPollsClass = 'tablinks'
-    this.setState({tab: this.myPolls})
-  }
-  getMyPolls = () => {
-    return <UserPolls />
+    this.setState({polls: <UserPolls />})
   }
 
   respondedPollsHandler = () => {
     this.pollsClass = 'tablinks'
     this.myPollsClass = 'tablinks'
     this.respondedPollsClass = 'tablinks active'
-    this.setState({tab: this.respondedPolls})
-  }
-  getRespondedPolls = () => {
-    return <RespondedPolls />
+    this.setState({polls: <RespondedPolls />})
   }
 
   render() {
     let newPollForm;
-    let tabs = [<Button classes={this.pollsClass} clickHandler={this.pollsHandler} text={this.polls} />]
+    const ageSelectOptions = [[0,'AGE GROUP'], [1,'1-10'], [2,'10-17'], [3,'18-29'], [4,'30-40'], [5,'41-50'], [6,'50+']]
     let categories = this.state.categories.slice(0)
     categories.unshift([0, 'CATEGORIES'])
-
-    const polls = eval('this.'+'get'+ this.state.tab + '()');
 
     if (this.state.createPollMode){
       newPollForm = <NewPoll hideCreatePollForm={this.hideCreatePollForm}/>
     }
 
+    let tabs = [<Button classes={this.pollsClass} clickHandler={this.pollsHandler} text={this.polls} />]
     if (this.props.user){
       tabs.push(<Button classes={this.myPollsClass} clickHandler={this.myPollsHandler} text={this.myPolls} />)
-      tabs.push(<Button classes={this.myRespondedPollsClass} clickHandler={this.respondedPollsHandler} text={this.respondedPolls} />)
-
+      tabs.push(<Button classes={this.respondedPollsClass} clickHandler={this.respondedPollsHandler} text={this.respondedPolls} />)
     }
-
-
     return (
       <div className="main-wrapper">
         <div className="main-wrapper-header">
           <div className="main-wrapper-header-content">
-            <div className="add-poll">
+            <div className="search-poll">
 
-              <Input classes="poll-location" placeholder="Location" />
+              {/* <Input classes="poll-location" placeholder="Location" /> */ }
 
               <Input classes="poll-search" placeholder="Search poll" />
 
               <Select options={categories}/>
 
-              <Select options={[[0,'AGE GROUP'], [1,'1-10'], [2,'10-17'], [3,'18+'], [4,'30+'], [5,'40+'], [6,'50+']]}/>
+              <Select options={ageSelectOptions}/>
 
               <Button classes="btn__inner" text="Search" clickHandler={this.searchPollHandler} />
-            </div>
-
-            <div className="search-poll">
             </div>
           </div>
           <span>
@@ -138,7 +131,7 @@ class MainWrapper extends Component {
         </div>
         <div className="main-wrapper__content">
           {newPollForm}
-          {polls}
+          {this.state.polls}
         </div>
       </div>
     );
