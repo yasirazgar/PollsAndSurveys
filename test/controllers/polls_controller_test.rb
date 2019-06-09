@@ -104,7 +104,7 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def santize_create_params(params)
-    ActionController::Parameters.new(params).require(:poll).permit(:question, category_ids: [], options: [])
+    ActionController::Parameters.new(params).require(:poll).permit(:question, category_ids: [], options: [], age_group: [])
   end
 
   def search_reqs(type)

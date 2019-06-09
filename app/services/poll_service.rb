@@ -41,7 +41,11 @@ class PollService
   end
 
   def create(params)
-    poll = Poll.new(params.slice(:question, :category_ids))
+    poll_params = params.slice(:question, :category_ids, :age_group)
+    if poll_params[:age_group]
+      poll_params[:age_group] = (poll_params[:age_group].map(&:to_i) & Poll::AGE_GROUP.keys)
+    end
+    poll = Poll.new(poll_params.slice(:question, :category_ids, :age_group))
     poll.user_id = @user.id
     poll.options_attributes = params[:options].inject([]) do |opts, opt|
       if (existing_opt = Option.find_by_name(opt))

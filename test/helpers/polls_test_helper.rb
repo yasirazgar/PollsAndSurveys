@@ -63,6 +63,7 @@ module PollsTestHelper
         question: 'My question',
         options: ['opt1', 'opt2', 'opt3', 'opt4'],
         category_ids: ['1'],
+        age_group: ['1', '2', '3'],
       }
     }
   end

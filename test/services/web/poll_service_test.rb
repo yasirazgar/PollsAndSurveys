@@ -65,6 +65,21 @@ class Web::PollServiceTest < ActiveSupport::TestCase
     assert_poll(poll, params)
   end
 
+  test "create - with invalid age_group" do
+    poll = nil
+    params = create_params[:poll]
+    params[:age_group] << '100'
+
+    assert_difference('Poll.count', 1, 'Should create a poll') do
+      assert_difference('Option.count', 4) do
+        poll = @service.create(params)
+      end
+    end
+
+    params[:age_group] = params[:age_group] - ['100']
+    assert_poll(poll, params)
+  end
+
   test "get_answers_for_poll" do
     assert_equal(YASIR_SNAKE_ANS, @service.get_answers_for_poll(polls(:yasir_snake)).deep_stringify_keys,
       'Should return the answers for poll')
@@ -138,5 +153,7 @@ class Web::PollServiceTest < ActiveSupport::TestCase
       'Should create options')
     assert_equal(params[:category_ids].map(&:to_i), poll.category_ids,
       'Should set categories')
+    assert_equal(params[:age_group].map(&:to_i), poll.age_group,
+      'Should set age_group')
   end
 end
