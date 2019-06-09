@@ -15,9 +15,7 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
 
     get(polls_url, xhr: true)
     assert_response :success
-    assert_equal(
-      json_response,
-      expected_polls_for_user,
+    assert_equal(expected_polls_for_user, json_response,
       'Should return polls as json')
   end
 
@@ -38,9 +36,7 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :bad_request
-    assert(
-      'Question is already used by you',
-       json_response[:message],
+    assert_equal('Question has already been taken', json_response['message'],
        'Should return a error message')
   end
 
@@ -52,9 +48,7 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
-    assert(
-      'Poll destroyed successfully',
-      json_response[:message],
+    assert_equal('Poll destroyed successfully', json_response['message'],
       'Should return a success message')
   end
 
@@ -66,9 +60,7 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :not_found
-    assert(
-      'Error destroying poll',
-      json_response[:message],
+    assert_equal('Error destroying poll', json_response['message'],
       'Should return a error message')
   end
 
@@ -87,9 +79,7 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
-    assert_equal(
-      expected_response,
-      json_response,
+    assert_equal(expected_response, json_response,
       'Should record the answer and return the updated polll answers')
   end
 
@@ -100,7 +90,7 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
 
       get(search_polls_url(params), xhr: true)
       assert_response :success
-      assert_equal(json_response, expected_response,
+      assert_equal(expected_response, json_response,
         "Should return response based on the params")
     end
   end
@@ -115,6 +105,25 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
 
   def santize_create_params(params)
     ActionController::Parameters.new(params).require(:poll).permit(:question, category_ids: [], options: [])
+  end
+
+  def search_reqs(type)
+    params = {
+      terms: {
+        age_group: ['1'],
+        category_ids: ['1'],
+        term: 'programming'
+      },
+      type: type
+    }
+
+    sanitized_params = ActionController::Parameters.new(params)
+
+    expected_response = {
+      'polls' => [YASIR_SNAKE]
+    }
+
+    [params, sanitized_params, expected_response]
   end
 
 end
