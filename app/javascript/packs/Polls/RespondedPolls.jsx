@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import UserPoll from './UserPoll'
+import Poll from './Poll'
 
 // Analyse whether this should be functional and class components
 class RespondedPolls extends Component {
@@ -9,15 +9,22 @@ class RespondedPolls extends Component {
     polls: []
   };
 
-  buildUserPolls = (polls) => {
-    let pollsList = polls.map((poll, i) => {
-      return (<UserPoll key={i} poll={poll} />)
+  componentWillReceiveProps(nextProps){
+    this.setState({polls: nextProps.polls})
+  }
+
+  buildUserPolls = () => {
+    let pollsList = this.state.polls.map((poll, i) => {
+      return (<Poll isWithAnswer={true} key={i} poll={poll} />)
     });
     return pollsList;
   }
 
   componentDidMount() {
-    let polls;
+    if (this.props.polls){
+      return
+    }
+
     fetch('user/responded_polls', {
       credentials: 'same-origin',
       method: 'GET',
@@ -28,14 +35,12 @@ class RespondedPolls extends Component {
     }).then(response => {
       return response.json()
     }).then(data => {
-      polls = this.buildUserPolls(data.polls)
-      window.localStorage.setItem('categories', JSON.stringify(data.categories))
-      this.setState({polls: polls})
+      this.setState({polls: data.polls})
     });
   }
 
   render() {
-    return this.state.polls;
+    return this.buildUserPolls();
   }
 }
 

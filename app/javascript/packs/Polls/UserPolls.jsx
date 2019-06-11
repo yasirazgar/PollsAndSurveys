@@ -9,15 +9,22 @@ class UserPolls extends Component {
     polls: []
   };
 
-  buildUserPolls = (polls) => {
-    let pollsList = polls.map((poll, i) => {
+  buildUserPolls = () => {
+    const pollsList = this.state.polls.map((poll, i) => {
       return (<UserPoll key={i} poll={poll} />)
     });
     return pollsList;
   }
 
+  componentWillReceiveProps(nextProps){
+    this.setState({polls: nextProps.polls})
+  }
+
   componentDidMount() {
-    let polls;
+    if (this.props.polls){
+      return
+    }
+
     fetch('user/polls', {
       credentials: 'same-origin',
       method: 'GET',
@@ -28,13 +35,13 @@ class UserPolls extends Component {
     }).then(response => {
       return response.json()
     }).then(data => {
+      this.setState({polls: data.polls})
       polls = this.buildUserPolls(data.polls)
-      this.setState({polls: polls})
     });
   }
 
   render() {
-    return this.state.polls;
+    return this.buildUserPolls();
   }
 }
 
