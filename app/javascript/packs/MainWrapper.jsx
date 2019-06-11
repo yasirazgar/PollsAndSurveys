@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 
+import Poll from './Polls/Poll'
 import Polls from './Polls/Polls'
 import UserPolls from './Polls/UserPolls'
 import RespondedPolls from './Polls/RespondedPolls'
 import NewPoll from './Polls/NewPoll'
+import SearchPoll from './Polls/SearchPoll'
 import Button from './Utils/Button'
 import Input from './Utils/Input'
 import ToggleSwitch from './Utils/ToggleSwitch'
@@ -17,29 +19,31 @@ class MainWrapper extends Component {
   constructor(props){
     super(props)
 
-    this.polls = 'Polls'
+    this.pollsTxt = 'polls'
     this.pollsClass = 'tablinks active'
-    this.myPolls = 'MyPolls'
+    this.myPollsTxt = 'user_polls'
     this.myPollsClass = 'tablinks'
-    this.respondedPolls = 'RespondedPolls'
+    this.respondedPollsTxt = 'user_responded_polls'
     this.respondedPollsClass = 'tablinks'
-    this.term = null;
-    this.categories = null;
-    this.ageGroup = null;
 
     this.state = {
       createPollMode: false,
       categories: [],
-      tab: this.polls,
+      tab: this.pollsTxt,
       polls: []
     };
 
     this.hideCreatePollForm = this.hideCreatePollForm.bind(this)
     this.setCategories = this.setCategories.bind(this)
+    this.setPolls = this.setPolls.bind(this)
   }
 
   setCategories = (categories) => {
     this.setState({categories: categories})
+  }
+
+  setPolls = (polls) => {
+    this.setState({polls: polls})
   }
 
   componentWillMount() {
@@ -55,10 +59,6 @@ class MainWrapper extends Component {
     this.setState({createPollMode: false})
   }
 
-  searchPollHandler = () => {
-    alert("Poll searching comming soon")
-  }
-
   setCreatePollView = () => {
     this.setState({createPollMode: true});
     setTimeout(function(){
@@ -72,21 +72,21 @@ class MainWrapper extends Component {
     this.pollsClass = 'tablinks active'
     this.myPollsClass = 'tablinks'
     this.respondedPollsClass = 'tablinks'
-    this.setState({polls: <Polls />})
+    this.setState({tab: this.pollsTxt, polls: <Polls />})
   }
 
   myPollsHandler = () => {
     this.pollsClass = 'tablinks'
     this.myPollsClass = 'tablinks active'
     this.respondedPollsClass = 'tablinks'
-    this.setState({polls: <UserPolls />})
+    this.setState({tab: this.myPollsTxt, polls: <UserPolls />})
   }
 
   respondedPollsHandler = () => {
     this.pollsClass = 'tablinks'
     this.myPollsClass = 'tablinks'
     this.respondedPollsClass = 'tablinks active'
-    this.setState({polls: <RespondedPolls />})
+    this.setState({tab: this.respondedPollsTxt, polls: <RespondedPolls />})
   }
 
   render() {
@@ -99,34 +99,23 @@ class MainWrapper extends Component {
       newPollForm = <NewPoll hideCreatePollForm={this.hideCreatePollForm}/>
     }
 
-    let tabs = [<Button classes={this.pollsClass} clickHandler={this.pollsHandler} text={this.polls} />]
+    let tabs = [<Button classes={this.pollsClass} clickHandler={this.pollsHandler} text={this.pollsTxt} />]
     if (this.props.user){
-      tabs.push(<Button classes={this.myPollsClass} clickHandler={this.myPollsHandler} text={this.myPolls} />)
-      tabs.push(<Button classes={this.respondedPollsClass} clickHandler={this.respondedPollsHandler} text={this.respondedPolls} />)
+      tabs.push(<Button classes={this.myPollsClass} clickHandler={this.myPollsHandler} text={this.myPollsTxt} />)
+      tabs.push(<Button classes={this.respondedPollsClass} clickHandler={this.respondedPollsHandler} text={this.respondedPollsTxt} />)
     }
     return (
       <div className="main-wrapper">
         <div className="main-wrapper-header">
           <div className="main-wrapper-header-content">
-            <div className="search-poll">
-
-              {/* <Input classes="poll-location" placeholder="Location" /> */ }
-
-              <Input classes="poll-search" placeholder="Search poll" />
-
-              <Select options={categories}/>
-
-              <Select options={ageSelectOptions}/>
-
-              <Button classes="btn__inner" text="Search" clickHandler={this.searchPollHandler} />
-            </div>
+            <SearchPoll tab={this.state.tab} callback={this.setPolls}/>
           </div>
           <span>
             <Button classes="btn__outer" text="Add new poll" clickHandler={this.setCreatePollView} />
           </span>
 
         </div>
-        <div class="tab">
+        <div className="tab">
           {tabs}
         </div>
         <div className="main-wrapper__content">

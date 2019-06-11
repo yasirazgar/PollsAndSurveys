@@ -35,6 +35,7 @@ class PollsController < ApplicationController
     render json: {poll: poll_with_ans, message: "Answer recorded successfully"}
   end
 
+  # maybe its good to split this into three separate methods for each type
   def search
     type = params[:type]
     polls = poll_service.send('search_'+type, params[:terms])

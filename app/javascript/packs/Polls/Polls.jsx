@@ -9,8 +9,23 @@ class Polls extends Component {
     polls: []
   };
 
+  buildPolls = () => {
+    const polls = this.state.polls.map((poll, i) => {
+      return (<Poll isWithAnswer={false} key={i} poll={poll}/>)
+    });
+    return polls
+  }
+
+  componentWillReceiveProps(nextProps){
+    this.setState({polls: nextProps.polls})
+  }
+
   componentDidMount() {
-    let polls;
+    /* Dont check state here, as we are setting empty array
+    and if search results send empty array then this condition will fails*/
+    if (this.props.polls){
+      return
+    }
     fetch('/polls', {
       credentials: 'same-origin',
       method: 'GET',
@@ -21,15 +36,12 @@ class Polls extends Component {
     }).then(response => {
       return response.json()
     }).then(data => {
-      polls = data.polls.map((poll, i) => {
-        return (<Poll isWithAnswer={false} key={i} poll={poll}/>)
-      });
-      this.setState({polls: polls})
+      this.setState({polls: data.polls})
     });
   }
 
   render() {
-    return this.state.polls;
+    return this.buildPolls();
   }
 }
 
