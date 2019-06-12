@@ -109,7 +109,7 @@ class SearchPoll extends Component {
   pollsBuilder = (polls) => {
     this.props.callback(<Polls polls={polls} />)
   }
-  user_pollsBuilder = (polls) => {
+  users_pollsBuilder = (polls) => {
     this.props.callback(<UserPolls polls={polls} />)
   }
   user_responded_pollsBuilder = (polls) => {

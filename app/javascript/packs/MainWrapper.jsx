@@ -21,7 +21,7 @@ class MainWrapper extends Component {
 
     this.pollsTxt = 'polls'
     this.pollsClass = 'tablinks active'
-    this.myPollsTxt = 'user_polls'
+    this.myPollsTxt = 'users_polls'
     this.myPollsClass = 'tablinks'
     this.respondedPollsTxt = 'user_responded_polls'
     this.respondedPollsClass = 'tablinks'

@@ -36,7 +36,6 @@ class UserPolls extends Component {
       return response.json()
     }).then(data => {
       this.setState({polls: data.polls})
-      polls = this.buildUserPolls(data.polls)
     });
   }
 
