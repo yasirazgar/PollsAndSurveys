@@ -13,7 +13,7 @@ class OptionWithAnswer extends Component {
     }
     const liProps = {
       className: klass,
-      style: {width: answerPercentage + '%'},
+      style: {width: answerPercentage + 10 + '%'},
       onClick: answerPoll.bind(this, this.props.pollId, option_id, this.props.callback)
     }
 
