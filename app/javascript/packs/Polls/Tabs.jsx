@@ -4,15 +4,17 @@ import Button from '../Utils/Button'
 import Polls from './Polls'
 import UserPolls from './UserPolls'
 import RespondedPolls from './RespondedPolls'
-import {pollsTxt, myPollsTxt, respondedPollsTxt} from '../constants.js'
+import {pollsTxt, myPollsTxt, respondedPollsTxt, tabClass, tabActiveClass} from '../constants.js'
+
+import './Tabs.scss'
 
 class Tabs extends Component {
   constructor(props) {
     super(props);
 
-    this.pollsClass = 'tablinks active'
-    this.myPollsClass = 'tablinks'
-    this.respondedPollsClass = 'tablinks'
+    this.pollsClass = tabActiveClass
+    this.myPollsClass = tabClass
+    this.respondedPollsClass = tabClass
 
     this.state = {
       tab: pollsTxt,
@@ -20,23 +22,35 @@ class Tabs extends Component {
   }
 
   pollsHandler = () => {
-    this.pollsClass = 'tablinks active'
-    this.myPollsClass = 'tablinks'
-    this.respondedPollsClass = 'tablinks'
+    if (this.pollsClass == tabActiveClass){
+      return
+    }
+
+    this.pollsClass = tabActiveClass
+    this.myPollsClass = tabClass
+    this.respondedPollsClass = tabClass
     this.props.callback(pollsTxt, <Polls />)
   }
 
   myPollsHandler = () => {
-    this.pollsClass = 'tablinks'
-    this.myPollsClass = 'tablinks active'
-    this.respondedPollsClass = 'tablinks'
+    if (this.myPollsClass == tabActiveClass){
+      return
+    }
+
+    this.pollsClass = tabClass
+    this.myPollsClass = tabActiveClass
+    this.respondedPollsClass = tabClass
     this.props.callback(myPollsTxt, <UserPolls />)
   }
 
   respondedPollsHandler = () => {
-    this.pollsClass = 'tablinks'
-    this.myPollsClass = 'tablinks'
-    this.respondedPollsClass = 'tablinks active'
+    if (this.respondedPollsClass == tabActiveClass){
+      return
+    }
+
+    this.pollsClass = tabClass
+    this.myPollsClass = tabClass
+    this.respondedPollsClass = tabActiveClass
     this.props.callback(respondedPollsTxt, <RespondedPolls />)
   }
 
@@ -49,7 +63,7 @@ class Tabs extends Component {
     }
 
     return (
-     <div className="tab">
+     <div className="tabs">
        {tabs}
      </div>
     );
