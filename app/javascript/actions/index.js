@@ -2,19 +2,12 @@
 // like app/views/layouts/application.html.erb. All it does is render <div>Hello React</div> at the bottom
 // of the page.
 
-import { combineReducers } from 'redux';
+import pollsRequest from '../apis/pollsRequest'
 
 import { FETCH_POLLS } from '../packs/constants'
 
-const INITIAL_POLLS = []
-const polls = (state=INITIAL_POLLS, action) => {
-  if (action.type === FETCH_POLLS) {
-    return action.payload.data.polls;
-  }
+export const fetchPolls = () => async dispatch => {
+  const response = await pollsRequest.get('/polls');
 
-  return state
+  dispatch({type: FETCH_POLLS, payload: response})
 }
-
-export default combineReducers({
-  polls: polls
-});
