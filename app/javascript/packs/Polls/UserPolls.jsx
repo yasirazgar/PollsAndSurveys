@@ -1,42 +1,22 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { fetchUserPolls } from '../../actions'
 
 import UserPoll from './UserPoll'
 
 // Analyse whether this should be functional and class components
 class UserPolls extends Component {
-  state = {
-    polls: []
-  };
 
   buildUserPolls = () => {
-    const pollsList = this.state.polls.map((poll, i) => {
+    const pollsList = this.props.polls.map((poll, i) => {
       return (<UserPoll key={i} poll={poll} />)
     });
     return pollsList;
   }
 
-  componentWillReceiveProps(nextProps){
-    this.setState({polls: nextProps.polls})
-  }
-
   componentDidMount() {
-    if (this.props.polls){
-      return
-    }
-
-    fetch('user/polls', {
-      credentials: 'same-origin',
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content,
-      }
-    }).then(response => {
-      return response.json()
-    }).then(data => {
-      this.setState({polls: data.polls})
-    });
+    this.props.fetchUserPolls();
   }
 
   render() {
@@ -44,4 +24,8 @@ class UserPolls extends Component {
   }
 }
 
-export default UserPolls
+const mapStateToProps = state => {
+  return { polls: state.polls };
+};
+
+export default connect(mapStateToProps, { fetchUserPolls })(UserPolls)

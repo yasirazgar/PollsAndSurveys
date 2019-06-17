@@ -4,7 +4,7 @@
 
 import { combineReducers } from 'redux';
 
-import { FETCH_POLLS } from '../packs/constants'
+import { FETCH_POLLS, FETCH_USER_POLLS, FETCH_RESPONDED_POLLS } from '../packs/constants'
 
 const INITIAL_POLLS = []
 const polls = (state=INITIAL_POLLS, action) => {
@@ -14,7 +14,24 @@ const polls = (state=INITIAL_POLLS, action) => {
 
   return state
 }
+const users_polls = (state=INITIAL_POLLS, action) => {
+  if (action.type === FETCH_USER_POLLS) {
+    return action.payload.data.polls;
+  }
+
+  return state
+}
+const responded_polls = (state=INITIAL_POLLS, action) => {
+  if (action.type === FETCH_RESPONDED_POLLS) {
+    return action.payload.data.polls;
+  }
+
+  return state
+}
+
 
 export default combineReducers({
-  polls: polls
+  polls: polls,
+  users_polls: polls,
+  responded_polls: polls
 });

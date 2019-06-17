@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchPolls } from '../../actions'
-import { FETCH_POLLS } from '../constants'
-
 
 import Poll from './Poll'
 
