@@ -25,7 +25,7 @@ class UserPolls extends Component {
 }
 
 const mapStateToProps = state => {
-  return { polls: state.polls };
+  return { polls: state.userPolls };
 };
 
 export default connect(mapStateToProps, { fetchUserPolls })(UserPolls)

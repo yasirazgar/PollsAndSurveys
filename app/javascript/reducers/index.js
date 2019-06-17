@@ -14,14 +14,14 @@ const polls = (state=INITIAL_POLLS, action) => {
 
   return state
 }
-const users_polls = (state=INITIAL_POLLS, action) => {
+const usersPolls = (state=INITIAL_POLLS, action) => {
   if (action.type === FETCH_USER_POLLS) {
     return action.payload.data.polls;
   }
 
   return state
 }
-const responded_polls = (state=INITIAL_POLLS, action) => {
+const respondedPolls = (state=INITIAL_POLLS, action) => {
   if (action.type === FETCH_RESPONDED_POLLS) {
     return action.payload.data.polls;
   }
@@ -32,6 +32,6 @@ const responded_polls = (state=INITIAL_POLLS, action) => {
 
 export default combineReducers({
   polls: polls,
-  users_polls: polls,
-  responded_polls: polls
+  userPolls: usersPolls,
+  respondedPolls: respondedPolls
 });
