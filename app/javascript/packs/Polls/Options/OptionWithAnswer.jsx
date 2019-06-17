@@ -11,12 +11,14 @@ class OptionWithAnswer extends Component {
     if (selected){
       klass = 'checked';
     }
-    const liProps = {
+    let liProps = {
       className: klass,
       style: {width: answerPercentage + 10 + '%'},
-      onClick: answerPoll.bind(this, this.props.pollId, option_id, this.props.callback)
     }
-
+    const user = JSON.parse(window.localStorage.getItem('user'));
+    if (user){
+      liProps.onClick = answerPoll.bind(this, this.props.pollId, option_id, this.props.callback)
+    }
     return (
       <li {...liProps}>
         {this.props.name}
