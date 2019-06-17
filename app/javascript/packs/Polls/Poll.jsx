@@ -12,11 +12,10 @@ class Poll extends Component {
     super(props)
     this.state = {
       options: this.props.poll.options,
-      isWithAnswer: false,
+      isWithAnswer: this.props.isWithAnswer,
     }
     this.setAnswers = this.setAnswers.bind(this);
     this.buildOptionsList = this.buildOptionsList.bind(this);
-
   }
 
   setAnswers = (options) => {
