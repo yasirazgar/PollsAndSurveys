@@ -1,10 +1,6 @@
-// Run this example by adding <%= javascript_pack_tag 'hello_react' %> to the head of your layout file,
-// like app/views/layouts/application.html.erb. All it does is render <div>Hello React</div> at the bottom
-// of the page.
-
 import { combineReducers } from 'redux';
 
-import { FETCH_POLLS, FETCH_USER_POLLS, FETCH_RESPONDED_POLLS } from '../packs/constants'
+import { FETCH_POLLS, FETCH_USER_POLLS, FETCH_RESPONDED_POLLS, FETCH_CATEGORIES, POLLS_TAB, USER_POLLS_TAB, RESPONDED_POLLS_TAB, TAB_ACTIVE_CLASS, TAB_CLASS } from '../packs/constants'
 
 const INITIAL_POLLS = []
 const polls = (state=INITIAL_POLLS, action) => {
@@ -12,26 +8,58 @@ const polls = (state=INITIAL_POLLS, action) => {
     return action.payload.data.polls;
   }
 
-  return state
+  return state;
 }
-const usersPolls = (state=INITIAL_POLLS, action) => {
+
+const userPolls = (state=INITIAL_POLLS, action) => {
   if (action.type === FETCH_USER_POLLS) {
     return action.payload.data.polls;
   }
 
-  return state
+  return state;
 }
+
 const respondedPolls = (state=INITIAL_POLLS, action) => {
   if (action.type === FETCH_RESPONDED_POLLS) {
     return action.payload.data.polls;
   }
 
-  return state
+  return state;
+}
+
+const TAB = {
+  selectedTab: POLLS_TAB,
+  pollsClass: TAB_ACTIVE_CLASS,
+  userPollsClass: TAB_CLASS,
+  respondedPollsClass: TAB_CLASS,
+}
+const tab = (state=TAB, action) => {
+  switch(action.type){
+    case FETCH_POLLS:
+      return {...state, selectedTab: POLLS_TAB, pollsClass: TAB_ACTIVE_CLASS, userPollsClass: TAB_CLASS, respondedPollsClass: TAB_CLASS};
+    case FETCH_USER_POLLS:
+      return {...state, selectedTab: USER_POLLS_TAB, pollsClass: TAB_CLASS, userPollsClass: TAB_ACTIVE_CLASS, respondedPollsClass: TAB_CLASS};
+    case FETCH_RESPONDED_POLLS:
+      return {...state, selectedTab: RESPONDED_POLLS_TAB, pollsClass: TAB_CLASS, userPollsClass: TAB_CLASS, respondedPollsClass: TAB_ACTIVE_CLASS};
+    default:
+      return state;
+  }
+}
+
+const INITIAL_CATEGORIES = [[]]
+const categories = (state=INITIAL_CATEGORIES, action) => {
+  if (action.type === FETCH_CATEGORIES) {
+    return action.payload.data.categories;
+  }
+
+  return state;
 }
 
 
 export default combineReducers({
-  polls: polls,
-  userPolls: usersPolls,
-  respondedPolls: respondedPolls
+  polls,
+  userPolls,
+  respondedPolls,
+  tab,
+  categories,
 });

@@ -4,7 +4,7 @@
 
 import pollsRequest from '../apis/pollsRequest'
 
-import { FETCH_POLLS, FETCH_USER_POLLS, FETCH_RESPONDED_POLLS } from '../packs/constants'
+import { FETCH_POLLS, FETCH_USER_POLLS, FETCH_RESPONDED_POLLS, FETCH_CATEGORIES } from '../packs/constants'
 
 export const fetchPolls = () => async dispatch => {
   const response = await pollsRequest.get('/polls');
@@ -22,4 +22,10 @@ export const fetchRespondedPolls = () => async dispatch => {
   const response = await pollsRequest.get('/user/responded_polls');
 
   dispatch({type: FETCH_RESPONDED_POLLS, payload: response})
+}
+
+export const fetchCategories = () => async dispatch => {
+  const response = await pollsRequest.get('/categories');
+
+  dispatch({type: FETCH_CATEGORIES, payload: response})
 }

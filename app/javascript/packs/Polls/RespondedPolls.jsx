@@ -9,14 +9,10 @@ import Poll from './Poll'
 class RespondedPolls extends Component {
 
   buildUserPolls = () => {
-    let pollsList = this.props.polls.map((poll, i) => {
+    const pollsList = this.props.polls.map((poll, i) => {
       return (<Poll isWithAnswer={true} key={i} poll={poll} />)
     });
     return pollsList;
-  }
-
-  componentDidMount() {
-    this.props.fetchRespondedPolls()
   }
 
   render() {
@@ -24,9 +20,5 @@ class RespondedPolls extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return { polls: state.respondedPolls };
-};
-
-export default connect(mapStateToProps, { fetchRespondedPolls })(RespondedPolls)
+export default RespondedPolls
 

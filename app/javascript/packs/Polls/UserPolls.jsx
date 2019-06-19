@@ -15,17 +15,9 @@ class UserPolls extends Component {
     return pollsList;
   }
 
-  componentDidMount() {
-    this.props.fetchUserPolls();
-  }
-
   render() {
     return this.buildUserPolls();
   }
 }
 
-const mapStateToProps = state => {
-  return { polls: state.userPolls };
-};
-
-export default connect(mapStateToProps, { fetchUserPolls })(UserPolls)
+export default UserPolls
