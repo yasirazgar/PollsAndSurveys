@@ -6,6 +6,7 @@ import Button from '../Utils/Button'
 import Polls from './Polls'
 import UserPolls from './UserPolls'
 import RespondedPolls from './RespondedPolls'
+import fetchCategoriesHandler from '../Handlers/fetchCategoriesHandler'
 
 class SearchPoll extends Component {
   constructor(props) {
