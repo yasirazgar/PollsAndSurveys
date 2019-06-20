@@ -39,11 +39,6 @@ class MainWrapper extends Component {
   }
 
   render() {
-    let newPollForm;
-    const ageSelectOptions = [[0,'AGE GROUP'], [1,'1-10'], [2,'10-17'], [3,'18-29'], [4,'30-40'], [5,'41-50'], [6,'50+']]
-    let categories = this.props.categories.slice(0)
-    categories.unshift([0, 'CATEGORIES'])
-
     return (
       <div className="main-wrapper">
         <div className="main-wrapper-header">

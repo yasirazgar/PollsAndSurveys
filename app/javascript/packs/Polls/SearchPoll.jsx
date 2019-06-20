@@ -7,6 +7,7 @@ import Polls from './Polls'
 import UserPolls from './UserPolls'
 import RespondedPolls from './RespondedPolls'
 import fetchCategoriesHandler from '../Handlers/fetchCategoriesHandler'
+import { AGE_SELECT_OPTIONS } from '../constants'
 
 class SearchPoll extends Component {
   constructor(props) {
@@ -122,7 +123,6 @@ class SearchPoll extends Component {
   }
 
   render() {
-    const ageSelectOptions = [[0,'AGE GROUP'], [1,'1-10'], [2,'10-17'], [3,'18-29'], [4,'30-40'], [5,'41-50'], [6,'50+']]
     let categories = this.state.categories.slice(0)
     categories.unshift([0, 'CATEGORIES'])
 
@@ -135,7 +135,7 @@ class SearchPoll extends Component {
 
         <Select multiple={true} options={categories} onChange={this.categoryChangeHandler}/>
 
-        <Select multiple={true} options={ageSelectOptions} onChange={this.ageGroupChangeHandler}/>
+        <Select multiple={true} options={AGE_SELECT_OPTIONS} onChange={this.ageGroupChangeHandler}/>
 
         <Button classes="btn__inner" text="Search" clickHandler={this.searchPollHandler} disabled={!this.state.submitEnabled}/>
       </div>

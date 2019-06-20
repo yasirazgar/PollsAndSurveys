@@ -5,6 +5,7 @@ import Select from '../Utils/Select'
 import ModalButtonGroup from '../Utils/ModalButtonGroup'
 import createPollHandler from '../Handlers/createPollHandler'
 import fetchCategoriesHandler from '../Handlers/fetchCategoriesHandler'
+import { AGE_SELECT_OPTIONS } from '../constants'
 
 import './Poll.scss'
 
@@ -129,7 +130,6 @@ class NewPoll extends Component {
   }
 
   render() {
-    const ageSelectOptions = [[0,'AGE GROUP'], [1,'1-10'], [2,'10-17'], [3,'18-29'], [4,'30-40'], [5,'41-50'], [6,'50+']]
     let categories = this.state.categories.slice(0)
     categories.unshift([0, 'CATEGORIES'])
 
@@ -142,7 +142,7 @@ class NewPoll extends Component {
           <div>
             <Select multiple={true} classes='categories' options={categories} onChange={this.categoryChangeHandler}/>
 
-            <Select multiple={true} classes='agegroup' options={ageSelectOptions} onChange={this.ageGroupChangeHandler}/>
+            <Select multiple={true} classes='agegroup' options={AGE_SELECT_OPTIONS} onChange={this.ageGroupChangeHandler}/>
           </div>
         </div>
 
