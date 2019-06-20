@@ -84,7 +84,7 @@ const mapStateToProps = state => {
       polls
   }
 
-  return { polls: polls, tab: tab, categories: state.categories };
+  return { translations: state.translations, polls: polls, tab: tab, categories: state.categories };
 };
 
 export default connect(mapStateToProps, { fetchCategories })(MainWrapper)
