@@ -140,9 +140,9 @@ class NewPoll extends Component {
 
           {/* <Input className="poll-location" placeholder="Location" /> */}
           <div>
-            <Select classes='categories' options={categories} onChange={this.categoryChangeHandler}/>
+            <Select multiple={true} classes='categories' options={categories} onChange={this.categoryChangeHandler}/>
 
-            <Select classes='agegroup' options={ageSelectOptions} onChange={this.ageGroupChangeHandler}/>
+            <Select multiple={true} classes='agegroup' options={ageSelectOptions} onChange={this.ageGroupChangeHandler}/>
           </div>
         </div>
 

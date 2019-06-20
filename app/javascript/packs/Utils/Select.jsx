@@ -15,7 +15,7 @@ const Select = props => {
   let classes = props.classes
   classes = classes + ' theme-construction'
   return (
-    <select multiple onChange={props.onChange} className={classes} size='1'>
+    <select multiple={props.multiple} onChange={props.onChange} className={classes} size='1'>
       {options}
     </select>
   );

@@ -133,9 +133,9 @@ class SearchPoll extends Component {
 
         <Input classes="poll-search" placeholder="Search poll" onChange={this.questionChangeHandler}/>
 
-        <Select options={categories} onChange={this.categoryChangeHandler}/>
+        <Select multiple={true} options={categories} onChange={this.categoryChangeHandler}/>
 
-        <Select options={ageSelectOptions} onChange={this.ageGroupChangeHandler}/>
+        <Select multiple={true} options={ageSelectOptions} onChange={this.ageGroupChangeHandler}/>
 
         <Button classes="btn__inner" text="Search" clickHandler={this.searchPollHandler} disabled={!this.state.submitEnabled}/>
       </div>
