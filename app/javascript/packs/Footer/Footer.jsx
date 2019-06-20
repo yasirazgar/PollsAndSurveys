@@ -1,24 +1,38 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import FooterLeft from './FooterLeft'
 import FooterRight from './FooterRight'
+import Select from '../Utils/Select'
+import { buildTranslations } from '../../actions'
 
 import './Footer.scss'
 
-const Footer = props => (
-  <div className={"footer " + props.classes}>
-    <FooterRight />
-    <FooterLeft />
+class Footer extends Component {
 
-    <div>
-      Surveys coming soon
-    </div>
-  </div>
-);
+  changeHandler = event => {
+    debugger
+    this.props.buildTranslations(event.target.value)
+  }
+
+  render(){
+    return(
+      <div className={"footer " + this.props.classes}>
+        <FooterRight />
+        <FooterLeft />
+
+        <div>
+          Surveys coming soon
+          <Select options={[['en', 'en'], ['ta', 'ta']]} onChange={this.changeHandler}/>
+        </div>
+      </div>
+    )
+  }
+}
 
 Footer.propTypes = {
   classes: PropTypes.string
 };
 
-export default Footer
+export default connect(null, {buildTranslations})(Footer)
