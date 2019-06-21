@@ -3,11 +3,7 @@
     [
       "@babel/preset-env",
       {
-        "modules": false,
-        "targets": {
-          "browsers": "> 1%",
-          "uglify": true
-        }
+        "modules": false
       }
     ],
     "@babel/react"
