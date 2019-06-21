@@ -2,13 +2,26 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 
 const environment = require('./environment')
 
-environment.loaders.insert('sass', {
-    test: /\.scss$/,
-    use: [
-        "style-loader", // creates style nodes from JS strings
-        "css-loader", // translates CSS into CommonJS
-        "sass-loader" // compiles Sass to CSS
+const postcssPresetEnv = require('postcss-preset-env');
+
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          { loader: 'css-loader', options: { importLoaders: 1 } },
+          { loader: 'postcss-loader', options: {
+            ident: 'postcss',
+            plugins: () => [
+              postcssPresetEnv(/* pluginOptions */)
+            ]
+          } }
+        ]
+      }
     ]
-});
+  }
+}
 
 module.exports = environment.toWebpackConfig()
