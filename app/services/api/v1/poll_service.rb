@@ -1,4 +1,4 @@
-class Api::V1::PollsService < PollsService
+class Api::V1::PollService < PollService
 
   def get_users_polls
     polls = super()
