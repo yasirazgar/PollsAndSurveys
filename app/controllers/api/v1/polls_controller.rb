@@ -1,4 +1,4 @@
-class V1::PollsController < ApplicationController
+class Api::V1::PollsController < ApplicationController
 
   def new
   end

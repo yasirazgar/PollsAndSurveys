@@ -1,4 +1,4 @@
-class V1::SessionsController < ApplicationController
+class Api::V1::SessionsController < ApplicationController
 
   def new
   end
@@ -9,7 +9,7 @@ class V1::SessionsController < ApplicationController
       session[:user_id] = user.id
       redirect_to root_url, notice: "Logged in!"
     else
-      flash.now[:alert] = "Email or password is invalid"      
+      flash.now[:alert] = "Email or password is invalid"
     end
   end
 
