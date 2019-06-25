@@ -28,5 +28,7 @@
   "age": "Age",
   "gender": "Gender",
   "ok": "Ok",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "age_group": "AGE GROUP",
+  "categories": "CATEGORIES"
 }

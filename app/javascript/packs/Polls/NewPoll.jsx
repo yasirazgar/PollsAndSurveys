@@ -87,7 +87,7 @@ class NewPoll extends Component {
     for (let i = 0; i < this.state.options.length; i++) {
       optionsList.push(<li key={i.toString()} >{this.state.options[i]} <span className="close" onClick={this.removeOption.bind(this, i)}>×</span></li>)
     }
-    optionsList.push(<li key={this.state.options.length.toString()}> <input className="poll-option__new" placeholder="Options for you question" /> <span className="add" onClick={this.addOption.bind(this)}>+</span></li>)
+    optionsList.push(<li key={this.state.options.length.toString()}> <input className="poll-option__new" placeholder={this.props.translations.options_placeholder} /> <span className="add" onClick={this.addOption.bind(this)}>+</span></li>)
     return optionsList;
   };
 
@@ -119,7 +119,7 @@ class NewPoll extends Component {
     return (
       <div className="poll" id="new-poll">
         <div className="poll-question">
-          <Input type="text" className="poll-question-input" placeholder="Ask your question..." onChange={this.setQuestion}/>
+          <Input type="text" className="poll-question-input" placeholder={this.props.translations.question_placeholder} onChange={this.setQuestion}/>
 
           {/* <Input className="poll-location" placeholder="Location" /> */}
           <FilterComponents categories={this.props.categories} categoryChangeHandler={this.categoryChangeHandler} ageGroupChangeHandler={this.ageGroupChangeHandler} />
@@ -136,4 +136,10 @@ class NewPoll extends Component {
   }
 }
 
-export default connect()(NewPoll)
+const mapStateToProps = state => {
+  return {
+    translations: state.translations
+  }
+}
+
+export default connect(mapStateToProps)(NewPoll)

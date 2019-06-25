@@ -7,6 +7,7 @@ import FbIcon from 'facebook.svg'
 import TwitterIcon from 'twitter.svg'
 import Select from '../Utils/Select'
 import { buildTranslations } from '../../actions'
+import { LANG_OPTIONS } from '../constants'
 
 class FooterLeft extends Component {
   changeHandler = event => {
@@ -17,22 +18,26 @@ class FooterLeft extends Component {
       <span className="left">
         <div className="tooltip">
           <img src={InstaIcon}></img>
-          <span className="tooltiptext">Tooltip text</span>
+          <span className="tooltiptext">{this.props.translations.instagram}</span>
         </div>
         <div className="tooltip">
           <img src={FbIcon}></img>
-          <span className="tooltiptext">Tooltip text</span>
+          <span className="tooltiptext">{this.props.translations.facebook}</span>
         </div>
         <div className="tooltip">
           <img src={TwitterIcon}></img>
-          <span className="tooltiptext">Tooltip text</span>
+          <span className="tooltiptext">{this.props.translations.twitter}</span>
         </div>
-        <div>
-          <Select options={[['en', 'en'], ['ta', 'ta']]} onChange={this.changeHandler}/>
-        </div>
+        <span>
+          <Select options={ LANG_OPTIONS } onChange={this.changeHandler}/>
+        </span>
       </span>
     )
   }
 }
 
-export default connect(null, {buildTranslations})(FooterLeft)
+const mapStateToProps = state => {
+  return { translations: state.translations };
+};
+
+export default connect(mapStateToProps, {buildTranslations})(FooterLeft)
