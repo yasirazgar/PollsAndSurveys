@@ -23,12 +23,4 @@ class User < ApplicationRecord
 	has_many :polls
   has_many :poll_answers
   has_many :responded_polls, through: :poll_answers, source: :poll
-
-	def interests
-		interested_categories.pluck(:name)
-	end
-
-	def interested_categories
-		Category.where(id: details.category_ids)
-	end
 end

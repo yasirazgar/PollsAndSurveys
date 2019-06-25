@@ -10,10 +10,10 @@ admin = User.create(nick_name: 'collector', name: 'Yasir', email: 'yasir@gmail.c
 user1 = User.create(nick_name: 'azzu', name: 'Azgar', email: 'azgar@gmail.com', password: '@Rac123')
 user2 = User.create(nick_name: 'hawk', name: 'Mohammed', email: 'mohammed@gmail.com', password: '@Rac123')
 
-cat1 = Category.create(name: 'Software', aliases: ['It', 'Information Technology'])
-cat2 = Category.create(name: 'Software Development', aliases: ['It', 'Information Technology', 'Software'])
-cat3 = Category.create(name: 'politics', aliases: ['Elections'])
-cat3 = Category.create(name: 'Gk')
+cat1 = Category.create(code: 'software', aliases: ['it', 'information_technology'])
+cat2 = Category.create(code: 'software_development', aliases: ['it', 'information_technology', 'software'])
+cat3 = Category.create(code: 'politics', aliases: ['elections'])
+cat3 = Category.create(code: 'gk')
 
 opt1 = Option.create(name: 'Java')
 opt2 = Option.create(name: 'JavaScript')
