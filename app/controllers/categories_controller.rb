@@ -1,7 +1,7 @@
 class CategoriesController < ApplicationController
 
   def index
-    render json: {categories: Category.pluck(:id, :name)}
+    render json: {categories: Category.ids_codes}
   end
 
 end

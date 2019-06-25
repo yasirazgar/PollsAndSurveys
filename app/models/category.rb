@@ -16,4 +16,5 @@ class Category < ApplicationRecord
     class_name: 'Poll',
     join_table: 'polls_categories'
 
+  scope :ids_codes, -> { pluck(:id, :name) }
 end

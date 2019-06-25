@@ -54,7 +54,7 @@ class Web::PollService < PollService
     {
       poll_id: poll.id,
       question: poll.question,
-      categories: poll.categories.pluck(:id, :name),
+      categories: poll.categories.ids_codes,
       options: poll.options.inject({}){|hash, opt|
         hash[opt.name]={option_id: opt.id}
         hash}
@@ -68,7 +68,7 @@ class Web::PollService < PollService
   def format_poll_with_answer(poll)
     { poll_id: poll.id,
       question: poll.question,
-      categories: poll.categories.pluck(:id, :name),
+      categories: poll.categories.ids_codes,
       options: answer_data(poll)
     }
   end
