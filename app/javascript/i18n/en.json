@@ -1,5 +1,32 @@
 {
 
-  "hello": "Hello"
-
+  "hello": "Hello",
+  "add_new_poll": "Add new poll",
+  "software": "Software",
+  "software_development": "Software development",
+  "politics": "Politics",
+  "gk": "GK",
+  "surveys_coming_soon": "Surveys coming soon",
+  "instagram": "Instagram",
+  "facebook": "Facebook",
+  "twitter": "Twitter",
+  "about_us": "About us",
+  "contact_us": "Contact us",
+  "carrer": "Carrer",
+  "options_placeholder": "Options for your question",
+  "question_placeholder": "Ask you question",
+  "search_placeholder": "Search poll",
+  "search": "Search",
+  "polls": "Polls",
+  "users_polls": "My polls",
+  "user_responded_polls": "My responded polls",
+  "name": "Name",
+  "email": "Email",
+  "password": "Password",
+  "confirm_password": "Confirm password",
+  "location": "Location",
+  "age": "Age",
+  "gender": "Gender",
+  "ok": "Ok",
+  "cancel": "Cancel"
 }
