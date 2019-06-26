@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Input from '../Utils/Input'
 import Select from '../Utils/Select'
 import ModalButtonGroup from '../Utils/ModalButtonGroup'
+import FilterComponents from './FilterComponents'
 import createPollHandler from '../Handlers/createPollHandler'
 import fetchCategoriesHandler from '../Handlers/fetchCategoriesHandler'
 import { AGE_SELECT_OPTIONS } from '../constants'
 
-import './Poll.scss'
+import './NewPoll.scss'
 
 class NewPoll extends Component {
   constructor(props) {
@@ -19,27 +21,11 @@ class NewPoll extends Component {
       category_ids: [],
       age_group: [],
       submitEnabled: false,
-      categories: []
     };
 
     this.enableSubmitButton = this.enableSubmitButton.bind(this);
     this.categoryChangeHandler = this.categoryChangeHandler.bind(this);
     this.setPollHandler = this.setPollHandler.bind(this);
-    this.setCategories = this.setCategories.bind(this);
-  }
-
-  setCategories = (categories) => {
-    this.setState({categories: categories})
-  }
-
-  componentDidMount() {
-    let categories = window.localStorage.getItem('categories')
-    if (!categories){
-      fetchCategoriesHandler(this.setCategories)
-    }
-    else {
-      this.setCategories(JSON.parse(categories))
-    }
   }
 
   categoryChangeHandler = (event) => {
@@ -130,20 +116,13 @@ class NewPoll extends Component {
   }
 
   render() {
-    let categories = this.state.categories.slice(0)
-    categories.unshift([0, 'CATEGORIES'])
-
     return (
       <div className="poll" id="new-poll">
         <div className="poll-question">
           <Input type="text" className="poll-question-input" placeholder="Ask your question..." onChange={this.setQuestion}/>
 
           {/* <Input className="poll-location" placeholder="Location" /> */}
-          <div>
-            <Select multiple={true} classes='categories' options={categories} onChange={this.categoryChangeHandler}/>
-
-            <Select multiple={true} classes='agegroup' options={AGE_SELECT_OPTIONS} onChange={this.ageGroupChangeHandler}/>
-          </div>
+          <FilterComponents categories={this.props.categories} categoryChangeHandler={this.categoryChangeHandler} ageGroupChangeHandler={this.ageGroupChangeHandler} />
         </div>
 
         <ul >
@@ -157,4 +136,4 @@ class NewPoll extends Component {
   }
 }
 
-export default NewPoll
+export default connect()(NewPoll)

@@ -22,6 +22,10 @@ class MainWrapper extends Component {
     this.searchPollCallback = this.searchPollCallback.bind(this)
   }
 
+  componentDidMount(){
+    this.props.fetchCategories();
+  }
+
   searchPollCallback = (polls) => {
     this.setState({polls: polls})
   }
@@ -43,7 +47,7 @@ class MainWrapper extends Component {
       <div className="main-wrapper">
         <div className="main-wrapper-header">
           <div className="main-wrapper-header-content">
-            <SearchPoll tab={this.props.tab} callback={this.searchPollCallback}/>
+            <SearchPoll categories={this.props.categories} tab={this.props.tab} callback={this.searchPollCallback}/>
           </div>
           <span>
             <Button classes="btn__outer" text="Add new poll" clickHandler={this.setCreatePollView} />
@@ -54,7 +58,7 @@ class MainWrapper extends Component {
           <Tabs user={this.props.user} />
         </div>
         <div className="main-wrapper__content">
-          <NewPoll />
+          <NewPoll categories={this.props.categories}/>
           {this.props.polls}
         </div>
       </div>

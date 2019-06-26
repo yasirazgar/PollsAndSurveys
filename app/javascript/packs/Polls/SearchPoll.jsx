@@ -8,6 +8,7 @@ import UserPolls from './UserPolls'
 import RespondedPolls from './RespondedPolls'
 import fetchCategoriesHandler from '../Handlers/fetchCategoriesHandler'
 import { AGE_SELECT_OPTIONS } from '../constants'
+import FilterComponents from './FilterComponents'
 
 class SearchPoll extends Component {
   constructor(props) {
@@ -20,20 +21,6 @@ class SearchPoll extends Component {
       category_ids: [],
       submitEnabled: false
     };
-  }
-
-  setCategories = (categories) => {
-    this.setState({categories: categories})
-  }
-
-  componentDidMount() {
-    const categories = window.localStorage.getItem('categories')
-    if (!categories){
-      fetchCategoriesHandler(this.setCategories)
-    }
-    else {
-      this.setCategories(JSON.parse(categories))
-    }
   }
 
   searchPollHandler = () => {
@@ -123,9 +110,6 @@ class SearchPoll extends Component {
   }
 
   render() {
-    let categories = this.state.categories.slice(0)
-    categories.unshift([0, 'CATEGORIES'])
-
     return (
       <div className="search-poll">
 
@@ -133,9 +117,7 @@ class SearchPoll extends Component {
 
         <Input classes="poll-search" placeholder="Search poll" onChange={this.questionChangeHandler}/>
 
-        <Select multiple={true} options={categories} onChange={this.categoryChangeHandler}/>
-
-        <Select multiple={true} options={AGE_SELECT_OPTIONS} onChange={this.ageGroupChangeHandler}/>
+        <FilterComponents categories={this.props.categories} categoryChangeHandler={this.categoryChangeHandler} ageGroupChangeHandler={this.ageGroupChangeHandler} />
 
         <Button classes="btn__inner" text="Search" clickHandler={this.searchPollHandler} disabled={!this.state.submitEnabled}/>
       </div>
