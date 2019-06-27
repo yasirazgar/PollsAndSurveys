@@ -50,7 +50,7 @@ class MainWrapper extends Component {
             <SearchPoll categories={this.props.categories} tab={this.props.tab} callback={this.searchPollCallback}/>
           </div>
           <span>
-            <Button classes="btn__outer" text="Add new poll" clickHandler={this.setCreatePollView} />
+            <Button classes="btn__outer" text={this.props.translations.add_new_poll} clickHandler={this.setCreatePollView} />
           </span>
 
         </div>
