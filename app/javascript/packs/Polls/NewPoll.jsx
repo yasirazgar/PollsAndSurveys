@@ -129,7 +129,7 @@ class NewPoll extends Component {
           {this.buildOptionsList()}
         </ul>
 
-        <ModalButtonGroup primaryText="Create" submitHandler={this.createPollHandler} closeModalHandler={this.props.hideCreatePollForm} submitEnabled={this.state.submitEnabled}/>
+        <ModalButtonGroup primaryText={this.props.translations.create} submitHandler={this.createPollHandler} closeModalHandler={this.props.hideCreatePollForm} submitEnabled={this.state.submitEnabled}/>
       </div>
 
     );

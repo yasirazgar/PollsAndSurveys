@@ -7,7 +7,7 @@ import './ModalButtonGroup.scss';
 
 const ModalButtonGroup = props => {
 
-  let primaryText = props.primaryText || props.translations.ok;
+  let primaryText = props.primaryText || props.translations.submit;
   let secondaryText = props.secondaryText || props.translations.cancel;
   let disabled = !props.submitEnabled;
 
