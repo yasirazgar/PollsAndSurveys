@@ -7,4 +7,6 @@ export const FETCH_POLLS = 'FETCH_POLLS'
 export const FETCH_USER_POLLS = 'FETCH_USER_POLLS'
 export const FETCH_RESPONDED_POLLS = 'FETCH_RESPONDED_POLLS'
 export const FETCH_CATEGORIES = 'FETCH_CATEGORIES'
-export const AGE_SELECT_OPTIONS = [[0,'AGE GROUP'], [1,'1-10'], [2,'10-17'], [3,'18-29'], [4,'30-40'], [5,'41-50'], [6,'50+']]
+export const AGE_SELECT_OPTIONS = [[1,'1-10'], [2,'10-17'], [3,'18-29'], [4,'30-40'], [5,'41-50'], [6,'50+']]
+export const BUILD_TRANSLATIONS = 'BUILD_TRANSLATIONS'
+export const LANG_OPTIONS = [['en', 'English'], ['ta', 'தமிழ்']]

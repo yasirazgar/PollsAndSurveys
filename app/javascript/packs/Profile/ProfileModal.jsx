@@ -15,7 +15,7 @@ class ProfileModal extends Component {
     let modalBody = <div className="form profile">
       <ProfileForm />
     </div>
-    let modalFooter = <ModalButtonGroup primary_text="Submit" closeModalHandler={this.props.closeModalHandler} />
+    let modalFooter = <ModalButtonGroup closeModalHandler={this.props.closeModalHandler} />
 
     return (
       <Modal

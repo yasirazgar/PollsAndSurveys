@@ -10,9 +10,10 @@ import thunk from 'redux-thunk';
 
 import Home from './Home.jsx'
 import reducers from '../reducers'
+import { buildTranslations } from '../actions'
 
-// const createStoreWithMiddleware = applyMiddleware()(createStore(reducers));
 const store = createStore(reducers, applyMiddleware(thunk));
+store.dispatch(buildTranslations())
 
 class App extends Component {
   render() {

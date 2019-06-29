@@ -15,7 +15,7 @@ const Footer = props => (
       Surveys coming soon
     </div>
   </div>
-);
+)
 
 Footer.propTypes = {
   classes: PropTypes.string
