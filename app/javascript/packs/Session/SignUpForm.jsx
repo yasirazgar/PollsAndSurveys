@@ -36,11 +36,10 @@ class SignUpForm extends Component {
   render() {
     return (
       <Fragment>
-        <Input name="name" type="email" placeholder="name" setFormValidity={this.setFormValidity}/>
-        <Input name="email" type="password" placeholder="email" setFormValidity={this.setFormValidity}/>
-        <Input name="password" type="password" placeholder="password" setFormValidity={this.setFormValidity}/>
-        <Input name="confirmPassword" type="password" placeholder="confirmPassword" setFormValidity={this.setFormValidity}/>
-
+        <Input name="name" type="text" placeholder={this.props.translations.name} setFormValidity={this.setFormValidity}/>
+        <Input name="email" type="email" placeholder={this.props.translations.email} setFormValidity={this.setFormValidity}/>
+        <Input name="password" type="password" placeholder={this.props.translations.password} setFormValidity={this.setFormValidity}/>
+        <Input name="confirmPassword" type="password" placeholder={this.props.translations.confirm_password} setFormValidity={this.setFormValidity}/>
       </Fragment>
     );
   }
@@ -50,4 +49,9 @@ SignUpForm.propTypes = {
   enableSubmitButton: PropTypes.func
 }
 
-export default SignUpForm
+const mapStateToProps = state => {
+  return {
+    translations: state.translations
+  }
+}
+export default connect(mapStateToProps)(SignUpForm)

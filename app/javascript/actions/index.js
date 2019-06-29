@@ -3,8 +3,9 @@
 // of the page.
 
 import pollsRequest from '../apis/pollsRequest'
+import loadTranslations from '../i18n'
 
-import { FETCH_POLLS, FETCH_USER_POLLS, FETCH_RESPONDED_POLLS, FETCH_CATEGORIES } from '../packs/constants'
+import { FETCH_POLLS, FETCH_USER_POLLS, FETCH_RESPONDED_POLLS, FETCH_CATEGORIES, BUILD_TRANSLATIONS } from '../packs/constants'
 
 export const fetchPolls = () => async dispatch => {
   const response = await pollsRequest.get('/polls');
@@ -29,3 +30,8 @@ export const fetchCategories = () => async dispatch => {
 
   dispatch({type: FETCH_CATEGORIES, payload: response})
 }
+
+export const buildTranslations = (translation = 'en') => ({
+  type: BUILD_TRANSLATIONS,
+  payload: loadTranslations(translation)
+})

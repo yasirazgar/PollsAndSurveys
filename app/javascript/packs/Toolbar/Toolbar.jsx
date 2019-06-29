@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import ToggleButton from '../SideDrawer/ToggleButton'
 
@@ -13,15 +14,14 @@ const Toolbar = props => {
 
   if (props.user){
     navItems = [
-      <li key="0" className="links" onClick={props.togglePollMode}>My Polls</li>,
-      <li key="1" className="links" onClick={props.logoutHandler}>Logout</li>,
+      <li key="1" className="links" onClick={props.logoutHandler}>{props.translations.logout}</li>,
       <li key="2"><img className="avatar" src={ProfileIcon} onClick={props.openProfileModal}></img></li>
     ]
   }
   else {
     navItems = [
-      <li key="1" className="links" onClick={props.openSignInModal}>Sign in</li>,
-      <li key="2" className="links" onClick={props.openSignUpModal}>Sign up</li>
+      <li key="1" className="links" onClick={props.openSignInModal}>{props.translations.signin}</li>,
+      <li key="2" className="links" onClick={props.openSignUpModal}>{props.translations.signup}</li>
     ]
   }
 
@@ -56,4 +56,10 @@ Toolbar.propTypes = {
   togglePollMode: PropTypes.func
 }
 
-export default Toolbar;
+const mapStateToProps = state => {
+  return {
+    translations: state.translations
+  }
+}
+
+export default connect(mapStateToProps)(Toolbar)

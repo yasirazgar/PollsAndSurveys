@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Input from '../Utils/Input'
 import Select from '../Utils/Select'
@@ -115,15 +116,21 @@ class SearchPoll extends Component {
 
         {/* <Input classes="poll-location" placeholder="Location" /> */ }
 
-        <Input classes="poll-search" placeholder="Search poll" onChange={this.questionChangeHandler}/>
+        <Input classes="poll-search" placeholder={this.props.translations.search_placeholder} onChange={this.questionChangeHandler}/>
 
         <FilterComponents categories={this.props.categories} categoryChangeHandler={this.categoryChangeHandler} ageGroupChangeHandler={this.ageGroupChangeHandler} />
 
-        <Button classes="btn__inner" text="Search" clickHandler={this.searchPollHandler} disabled={!this.state.submitEnabled}/>
+        <Button classes="btn__inner" text={this.props.translations.search} clickHandler={this.searchPollHandler} disabled={!this.state.submitEnabled}/>
       </div>
 
     );
   }
 }
 
-export default SearchPoll
+const mapStateToProps = state => {
+  return {
+    translations: state.translations
+  }
+}
+
+export default connect(mapStateToProps)(SearchPoll)

@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { FETCH_POLLS, FETCH_USER_POLLS, FETCH_RESPONDED_POLLS, FETCH_CATEGORIES, POLLS_TAB, USER_POLLS_TAB, RESPONDED_POLLS_TAB, TAB_ACTIVE_CLASS, TAB_CLASS } from '../packs/constants'
+import { FETCH_POLLS, FETCH_USER_POLLS, FETCH_RESPONDED_POLLS, FETCH_CATEGORIES, POLLS_TAB, USER_POLLS_TAB, RESPONDED_POLLS_TAB, TAB_ACTIVE_CLASS, TAB_CLASS, BUILD_TRANSLATIONS } from '../packs/constants'
 
 const INITIAL_POLLS = []
 const polls = (state=INITIAL_POLLS, action) => {
@@ -55,6 +55,14 @@ const categories = (state=INITIAL_CATEGORIES, action) => {
   return state;
 }
 
+const INITIAL_TRANSLATIONS = {}
+const translations = (state=INITIAL_TRANSLATIONS, action) => {
+  if (action.type == BUILD_TRANSLATIONS){
+    return action.payload
+  }
+
+  return state;
+}
 
 export default combineReducers({
   polls,
@@ -62,4 +70,5 @@ export default combineReducers({
   respondedPolls,
   tab,
   categories,
+  translations
 });

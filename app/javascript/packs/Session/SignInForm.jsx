@@ -1,5 +1,6 @@
 
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
@@ -7,8 +8,8 @@ import Input from '../Utils/Input'
 
 const SignInForm = props => (
   <Fragment>
-    <Input name="email" type="email" placeholder="Email" setFormValidity={props.setFormValidity} />
-    <Input name="password" type="password" placeholder="Password" setFormValidity={props.setFormValidity} />
+    <Input name="email" type="email" placeholder={this.props.translations.email} setFormValidity={props.setFormValidity} />
+    <Input name="password" type="password" placeholder={this.props.translations.Password} setFormValidity={props.setFormValidity} />
   </Fragment>
 );
 
@@ -16,4 +17,9 @@ SignInForm.propsType = {
   setFormValidity: PropTypes.func
 }
 
-export default SignInForm
+const mapStateToProps = state => {
+  return {
+    translations: state.translations
+  }
+}
+export default connect(mapStateToProps)(SignInForm)

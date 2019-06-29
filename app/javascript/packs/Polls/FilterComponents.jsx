@@ -1,12 +1,17 @@
 import React,{ Fragment } from 'react';
+import { connect } from 'react-redux';
 
 import Select from '../Utils/Select'
 import { AGE_SELECT_OPTIONS } from '../constants.js'
 
 const FilterComponents = props => {
-  let categories = props.categories.slice(0)
-  categories.unshift([0, 'CATEGORIES'])
-  let ageGroups = AGE_SELECT_OPTIONS
+  let categories = [[0, props.translations.categories]]
+  props.categories.forEach((category) => {
+    categories.push([category[0], props.translations[category[1]]])
+  })
+
+  let ageGroups = [...AGE_SELECT_OPTIONS]
+  ageGroups[0] = [0, props.translations.age_group]
 
   return (
     <Fragment>
@@ -17,4 +22,10 @@ const FilterComponents = props => {
   );
 }
 
-export default FilterComponents;
+const mapStateToProps = state => {
+  return {
+    translations: state.translations
+  }
+}
+
+export default connect(mapStateToProps)(FilterComponents);

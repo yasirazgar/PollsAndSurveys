@@ -11,7 +11,6 @@ const SignInModal = props => {
   </div>;
 
   let modalFooter = <ModalButtonGroup
-    primaryText='Submit'
     submitEnabled={props.submitEnabled}
     closeModalHandler={props.closeModalHandler}
     submitHandler={props.signInHandler}/>

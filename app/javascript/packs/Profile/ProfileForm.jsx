@@ -1,5 +1,6 @@
 
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
@@ -42,14 +43,14 @@ class ProfileForm extends Component {
   render() {
     return (
       <Fragment>
-        <Input name="name" type="text" placeholder="name" setFormValidity={this.setFormValidity}/>
-        <Input name="email" type="email" placeholder="email" setFormValidity={this.setFormValidity}/>
-        <Input name="password" type="password" placeholder="password" setFormValidity={this.setFormValidity}/>
-        <Input name="confirmPassword" type="password" placeholder="confirm_password" setFormValidity={this.setFormValidity}/>
-        <Input name="location" type="text" placeholder="location" setFormValidity={this.setFormValidity}/>
-        <Input name="age" type="text" placeholder="age" setFormValidity={this.setFormValidity}/>
-        <Input name="gender" type="text" placeholder="gender" setFormValidity={this.setFormValidity}/>
-        <Input name="phone" type="text" placeholder="gender" setFormValidity={this.setFormValidity}/>
+        <Input name="name" type="text" placeholder={this.props.translations.name} setFormValidity={this.setFormValidity}/>
+        <Input name="email" type="email" placeholder={this.props.translations.email} setFormValidity={this.setFormValidity}/>
+        <Input name="password" type="password" placeholder={this.props.translations.password} setFormValidity={this.setFormValidity}/>
+        <Input name="confirmPassword" type="password" placeholder={this.props.translations.confirm_password} setFormValidity={this.setFormValidity}/>
+        <Input name="location" type="text" placeholder={this.props.translations.location} setFormValidity={this.setFormValidity}/>
+        <Input name="age" type="text" placeholder={this.props.translations.age} setFormValidity={this.setFormValidity}/>
+        <Input name="gender" type="text" placeholder={this.props.translations.gender} setFormValidity={this.setFormValidity}/>
+        <Input name="phone" type="text" placeholder={this.props.translations.gender} setFormValidity={this.setFormValidity}/>
 
       </Fragment>
     );
@@ -60,4 +61,9 @@ ProfileForm.propTypes = {
   enableSubmitButton: PropTypes.func
 }
 
-export default ProfileForm
+const mapStateToProps = state => {
+  return {
+    translations: state.translations
+  }
+}
+export default connect(mapStateToProps)(ProfileForm)

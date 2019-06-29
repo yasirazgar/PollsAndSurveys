@@ -28,7 +28,6 @@ class SignUpModal extends Component {
       />
     </div>;
     let modalFooter = <ModalButtonGroup
-      primaryText='Submit'
       submitEnabled={this.state.submitEnabled}
       closeModalHandler={this.props.closeModalHandler}
       submitHandler={this.signUpHandler} />
