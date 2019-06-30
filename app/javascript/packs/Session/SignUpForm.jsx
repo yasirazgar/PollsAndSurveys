@@ -1,5 +1,6 @@
 
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 

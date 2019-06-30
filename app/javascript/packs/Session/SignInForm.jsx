@@ -8,8 +8,8 @@ import Input from '../Utils/Input'
 
 const SignInForm = props => (
   <Fragment>
-    <Input name="email" type="email" placeholder={this.props.translations.email} setFormValidity={props.setFormValidity} />
-    <Input name="password" type="password" placeholder={this.props.translations.Password} setFormValidity={props.setFormValidity} />
+    <Input name="email" type="email" placeholder={props.translations.email} setFormValidity={props.setFormValidity} />
+    <Input name="password" type="password" placeholder={props.translations.Password} setFormValidity={props.setFormValidity} />
   </Fragment>
 );
 
