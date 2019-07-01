@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import answerPoll from '../../Handlers/answerPollHandler';
+import { connect } from 'react-redux';
+
+import { answerPoll } from '../../../actions'
+
 
 class OptionWithAnswer extends Component {
   render(){
@@ -11,14 +14,12 @@ class OptionWithAnswer extends Component {
     if (selected){
       klass = 'checked';
     }
-    let liProps = {
+    const liProps = {
       className: klass,
       style: {width: answerPercentage + 10 + '%'},
+      onClick: this.props.answerPoll.bind(this, this.props.pollId, option_id, this.props.callback)
     }
-    const user = JSON.parse(window.localStorage.getItem('user'));
-    if (user){
-      liProps.onClick = answerPoll.bind(this, this.props.pollId, option_id, this.props.callback)
-    }
+
     return (
       <li {...liProps}>
         {this.props.name}
@@ -33,4 +34,4 @@ OptionWithAnswer.propTypes = {
   name: PropTypes.string,
 }
 
-export default OptionWithAnswer
+export default connect(null, { answerPoll })(OptionWithAnswer)

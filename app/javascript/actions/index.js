@@ -5,7 +5,9 @@
 import pollsRequest from '../apis/pollsRequest'
 import loadTranslations from '../i18n'
 
-import { FETCH_POLLS, FETCH_USER_POLLS, FETCH_RESPONDED_POLLS, FETCH_CATEGORIES, BUILD_TRANSLATIONS } from '../packs/constants'
+import { FETCH_POLLS, FETCH_USER_POLLS, FETCH_RESPONDED_POLLS,
+         FETCH_CATEGORIES, BUILD_TRANSLATIONS, ANSWER_POLL
+       } from '../packs/constants'
 
 export const fetchPolls = () => async dispatch => {
   const response = await pollsRequest.get('/polls');
@@ -35,3 +37,10 @@ export const buildTranslations = (translation = 'en') => ({
   type: BUILD_TRANSLATIONS,
   payload: loadTranslations(translation)
 })
+
+export const answerPoll = (poll_id, option_id, callback) => async dispatch => {
+  const url = "/polls/" + poll_id + "/" + option_id + "/answer"
+  const response = await pollsRequest.post(url)
+
+  dispatch({type: ANSWER_POLL, payload: response})
+}

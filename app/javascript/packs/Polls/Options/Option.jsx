@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import answerPoll from '../../Handlers/answerPollHandler';
+import { connect } from 'react-redux';
+import { answerPoll } from '../../../actions'
 
 class Option extends Component {
 
@@ -16,7 +17,7 @@ class Option extends Component {
     const user = JSON.parse(window.localStorage.getItem('user'));
     let clickHandler
     if (user){
-      clickHandler = answerPoll.bind(this, this.props.pollId, option_id, this.props.callback);
+      clickHandler = this.props.answerPoll.bind(this, this.props.pollId, option_id, this.props.callback);
     }
     else{
       clickHandler = this.flashSignInButton
@@ -34,4 +35,4 @@ Option.propTypes = {
   callback: PropTypes.function
 }
 
-export default Option
+export default connect(null, { answerPoll })(Option)
