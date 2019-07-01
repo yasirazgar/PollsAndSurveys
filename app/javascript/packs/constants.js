@@ -1,6 +1,11 @@
 export const POLLS_TAB = 'polls'
-export const USER_POLLS_TAB = 'users_polls'
+export const USER_POLLS_TAB = 'user_polls'
 export const RESPONDED_POLLS_TAB = 'user_responded_polls'
+export const POLLS_MAP = {
+        [POLLS_TAB]: 'polls',
+        [USER_POLLS_TAB]: 'userPolls',
+        [RESPONDED_POLLS_TAB]: 'respondedPolls'
+      }
 export const TAB_CLASS = 'tablinks'
 export const TAB_ACTIVE_CLASS = 'tablinks active'
 export const FETCH_POLLS = 'FETCH_POLLS'

@@ -99,7 +99,7 @@ class SearchPoll extends Component {
   pollsBuilder = (polls) => {
     this.props.callback(<Polls polls={polls} />)
   }
-  users_pollsBuilder = (polls) => {
+  user_pollsBuilder = (polls) => {
     this.props.callback(<UserPolls polls={polls} />)
   }
   user_responded_pollsBuilder = (polls) => {
@@ -129,7 +129,8 @@ class SearchPoll extends Component {
 
 const mapStateToProps = state => {
   return {
-    translations: state.translations
+    translations: state.translations,
+    tab: state.tab.selectedTab
   }
 }
 

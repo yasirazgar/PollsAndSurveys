@@ -2,31 +2,43 @@ import React from 'react';
 import Option from '../Polls/Options/Option'
 import OptionWithAnswer from '../Polls/Options/OptionWithAnswer'
 
-const optionsList = (optionsHash, names, poll_id, callback) => {
+const optionsList = (poll, callback) => {
+  const [options, names, pollId] = getPollAttrs(poll);
+
   const list = names.map((name, i) => {
-    const optionProps = commonOptionsProp(optionsHash, name, poll_id, callback)
+    const optionProps = commonOptionsProp(options, name, pollId, callback)
     return(<Option {...optionProps} />)
   })
   return(list);
 }
 
-const optionsListWithAnswer = (optionsHash, names, poll_id, callback) => {
+const optionsListWithAnswer = (poll, callback) => {
+  const [options, names, pollId] = getPollAttrs(poll);
+
   const list = names.map((name, i) => {
-    const owaProps = commonOptionsProp(optionsHash, name, poll_id, callback)
+    const owaProps = commonOptionsProp(options, name, pollId, callback)
     return(<OptionWithAnswer {...owaProps}/>)
   })
   return(list);
 }
 
-const commonOptionsProp = (optionsHash, name, poll_id, callback) => {
-  const option = optionsHash[name]
+const commonOptionsProp = (options, name, pollId, callback) => {
+  const option = options[name]
   return {
-    pollId: poll_id,
+    pollId: pollId,
     option: option,
     key: option.option_id,
     name: name,
     callback: callback
   }
+}
+
+const getPollAttrs = (poll) => {
+  const options = poll.options;
+  const names = Object.keys(options);
+  const pollId = poll.poll_id;
+
+  return [options, names, pollId]
 }
 
 export {optionsList, optionsListWithAnswer}

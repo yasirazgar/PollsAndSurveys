@@ -12,7 +12,7 @@ const answerPoll = (poll_id, option_id, callback) => {
   .then(response => {
     return response.json()
   }).then(data => {
-    callback(data.poll.options)
+    callback(data.poll, true)
   })
 }
 
