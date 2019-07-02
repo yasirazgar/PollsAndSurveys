@@ -6,20 +6,20 @@
 #
 it:
   id: 1
-  name: It
+  code: It
   aliases: <%= ['Software engineering'] %>
 
 programming_languages:
   id: 2
-  name: 'Programming languages'
+  code: 'Programming languages'
   aliases: <%= ['Coding'] %>
 
 animals:
   id: 3
-  name: Animals
+  code: Animals
   aliases: <%= ['Snakes'] %>
 
 gems:
   id: 4
-  name: Gems
+  code: Gems
   aliases: <%= ['Precious stones'] %>
