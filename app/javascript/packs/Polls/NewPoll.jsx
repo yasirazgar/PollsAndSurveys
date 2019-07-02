@@ -19,7 +19,7 @@ class NewPoll extends Component {
       question: '',
       options: [],
       category_ids: [],
-      age_group: [],
+      age_group_ids: [],
       submitEnabled: false,
     };
 
@@ -40,7 +40,7 @@ class NewPoll extends Component {
       question: this.state.question,
       options: this.state.options,
       category_ids: selected_values,
-      age_group: this.state.age_group
+      age_group_ids: this.state.age_group_ids
     })
   }
 
@@ -51,12 +51,12 @@ class NewPoll extends Component {
       }; return vals
     }, [])
 
-    this.setState({age_group: selected_values})
+    this.setState({age_group_ids: selected_values})
     this.setPollHandler({
       question: this.state.question,
       options: this.state.options,
       category_ids: this.state.category_ids,
-      age_group: selected_values
+      age_group_ids: selected_values
     })
   }
 
@@ -71,7 +71,7 @@ class NewPoll extends Component {
         question: question,
         options: options,
         category_ids: this.state.category_ids,
-        age_group: this.state.age_group
+        age_group_ids: this.state.age_group_ids
       }
       this.setState({submitEnabled: true});
     }

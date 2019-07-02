@@ -25,7 +25,7 @@ opt7 = Option.create(name: 'Black mamba')
 opt8 = Option.create(name: 'Cat')
 opt9 = Option.create(name: 'Dog')
 
-poll1 = Poll.new(question: 'Your fav language', user_id: admin.id, age_group: [3,4,5,6])
+poll1 = Poll.new(question: 'Your fav language', user_id: admin.id, age_group_ids: [3,4,5,6])
 poll1.categories << cat1
 poll1.categories << cat2
 poll1.save
@@ -38,7 +38,7 @@ poll1_ans1 = PollAnswer.create(user_id: admin.id, polls_options_id: poll1_opt1.i
 poll1_ans2 = PollAnswer.create(user_id: user1.id, polls_options_id: poll1_opt2.id)
 poll1_ans1 = PollAnswer.create(user_id: user2.id, polls_options_id: poll1_opt3.id)
 
-poll2 = Poll.new(question: 'Longest Snake', category_ids: [cat3.id], user_id: user1.id, age_group: [1])
+poll2 = Poll.new(question: 'Longest Snake', category_ids: [cat3.id], user_id: user1.id, age_group_ids: [1])
 poll2.categories << cat3
 poll2.save
 
@@ -50,7 +50,7 @@ poll2_ans1 = PollAnswer.create(user_id: admin.id, polls_options_id: poll2_opt1.i
 poll2_ans2 = PollAnswer.create(user_id: user1.id, polls_options_id: poll2_opt2.id)
 poll2_ans3 = PollAnswer.create(user_id: user2.id, polls_options_id: poll2_opt3.id)
 
-poll3 = Poll.create(question: 'What do you like the most', user_id: user2.id, age_group: nil)
+poll3 = Poll.create(question: 'What do you like the most', user_id: user2.id, age_group_ids: nil)
 
 poll3_opt1 = PollsOptions.create(poll_id: poll3.id, option_id: opt3.id)
 poll3_opt2 = PollsOptions.create(poll_id: poll3.id, option_id: opt5.id)

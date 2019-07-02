@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 2019_04_18_163352) do
   create_table "polls", force: :cascade do |t|
     t.integer "user_id", null: false
     t.text "question", null: false
-    t.integer "age_group", array: true
+    t.integer "age_group_ids", array: true
     t.index ["user_id"], name: "index_polls_on_user_id"
   end
 

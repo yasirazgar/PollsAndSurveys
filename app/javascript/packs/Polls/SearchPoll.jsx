@@ -18,13 +18,20 @@ class SearchPoll extends Component {
     this.state = {
       categories: [],
       term: '',
-      age_group: [],
+      age_group_ids: [],
       category_ids: [],
       submitEnabled: false
     };
   }
 
   searchPollHandler = () => {
+    params = {
+      terms:{
+        term: this.state.term,
+        category_ids: this.state.category_ids,
+        age_group_ids: this.state.age_group_ids
+      }
+    }
     let params = ['type='+this.props.tab]
     if(this.state.category_ids.length > 0){
       const cat_params = Object.keys(this.state.category_ids)
@@ -34,9 +41,9 @@ class SearchPoll extends Component {
       params.push(cat_params)
     }
 
-    if(this.state.age_group.length > 0){
-      const age_params = Object.keys(this.state.age_group)
-          .map(ag => 'terms[age_group][]=' + ag)
+    if(this.state.age_group_ids.length > 0){
+      const age_params = Object.keys(this.state.age_group_ids)
+          .map(ag => 'terms[age_group_ids][]=' + ag)
           .join('&');
 
       params.push(cat_params)
@@ -48,7 +55,7 @@ class SearchPoll extends Component {
       params.push(term_params)
     }
 
-    // const url = '/polls/search' + '?type=polls&terms[category_ids][]=1&terms[category_ids][]=2&terms[age_group][]=1&terms[age_group][]=2&terms[term]=fav';
+    // const url = '/polls/search' + '?type=polls&terms[category_ids][]=1&terms[category_ids][]=2&terms[age_group_ids][]=1&terms[age_group_ids][]=2&terms[term]=fav';
     const url = '/polls/search?' + params.join('&')
 
     fetch(url, {
@@ -68,7 +75,7 @@ class SearchPoll extends Component {
   questionChangeHandler = (event) => {
     const term = event.target.value
     let attrs = {term: term}
-    attrs.submitEnabled = ((term.length > 0) || (this.state.age_group.length > 0) || (this.state.category_ids.length > 0))
+    attrs.submitEnabled = ((term.length > 0) || (this.state.age_group_ids.length > 0) || (this.state.category_ids.length > 0))
     this.setState(attrs)
   }
 
@@ -80,7 +87,7 @@ class SearchPoll extends Component {
     }, [])
 
     let attrs = {category_ids: selected_values}
-    attrs.submitEnabled = ((selected_values.length > 0) || (this.state.age_group.length > 0) || (this.state.term.length > 0))
+    attrs.submitEnabled = ((selected_values.length > 0) || (this.state.age_group_ids.length > 0) || (this.state.term.length > 0))
     this.setState(attrs)
   }
 
@@ -91,7 +98,7 @@ class SearchPoll extends Component {
       }; return vals
     }, [])
 
-    let attrs = {age_group: selected_values}
+    let attrs = {age_group_ids: selected_values}
     attrs.submitEnabled = ((selected_values.length > 0) || (this.state.category_ids.length > 0) || (this.state.term.length > 0))
     this.setState(attrs)
   }

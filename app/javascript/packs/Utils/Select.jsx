@@ -7,7 +7,7 @@ const Select = props => {
   let options = []
   options = props.options.map((object, i) => {
     let disabled;
-    if (object[0] == 0){
+    if (object[0] == -1){
       disabled = 'disabled'
     }
     return (<option key={i} value={object[0]} disabled={disabled}> {object[1]} </option>);

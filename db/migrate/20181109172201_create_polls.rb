@@ -3,7 +3,7 @@ class CreatePolls < ActiveRecord::Migration[5.2]
     create_table :polls do |t|
     	t.integer :user_id, null: false
       t.text :question, null: false
-      t.integer :age_group, array: true
+      t.integer :age_group_ids, array: true
     end
 
     add_index :polls, :user_id

@@ -8,7 +8,7 @@ class PollsController < ApplicationController
   end
 
   def create
-    poll_params = params.require(:poll).permit(:question, category_ids: [], options: [], age_group: [])
+    poll_params = params.require(:poll).permit(:question, category_ids: [], options: [], age_group_ids: [])
     poll = poll_service.create(poll_params)
 
     if poll.errors.present?

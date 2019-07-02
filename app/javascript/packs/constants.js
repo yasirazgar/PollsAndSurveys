@@ -3,7 +3,7 @@ export const USER_POLLS_TAB = 'user_polls'
 export const RESPONDED_POLLS_TAB = 'user_responded_polls'
 export const TAB_CLASS = 'tablinks'
 export const TAB_ACTIVE_CLASS = 'tablinks active'
-export const AGE_SELECT_OPTIONS = [[1,'1-10'], [2,'10-17'], [3,'18-29'], [4,'30-40'], [5,'41-50'], [6,'50+']]
+export const AGE_SELECT_OPTIONS = [[0, 'all'][1,'5-10'], [2,'11-17'], [3,'18-29'], [4,'30-40'], [5,'41-50'], [6,'50+']]
 export const LANG_OPTIONS = [['en', 'English'], ['ta', 'தமிழ்']]
 export const POLLS_MAP = {
         [POLLS_TAB]: 'polls',
