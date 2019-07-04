@@ -1,7 +1,6 @@
 import React, { Component  } from 'react';
 import PropTypes from 'prop-types';
 
-import Input from '../Utils/Input'
 import { optionsListWithAnswer } from '../Helpers/polls_helper'
 
 import './Poll.scss'

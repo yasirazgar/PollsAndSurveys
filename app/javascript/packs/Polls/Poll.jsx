@@ -2,37 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import Input from '../Utils/Input'
 import { optionsList, optionsListWithAnswer } from '../Helpers/polls_helper'
 
 import './Poll.scss'
 
 class Poll extends Component {
-  // constructor(props){
-  //   super(props)
-  //   this.state = {
-  //     poll: this.props.poll,
-  //     isWithAnswer: false
-  //   }
-  //   this.setAnswers = this.setAnswers.bind(this);
-  //   this.buildOptionsList = this.buildOptionsList.bind(this);
-  // }
-
-  // setAnswers = (poll, isWithAnswer) => {
-  //   this.setState({poll: poll, isWithAnswer: isWithAnswer})
-  // }
-
-  // buildOptionsList = () => {
-  //   let options;
-  //   if(this.state.isWithAnswer){
-  //     options = optionsListWithAnswer(this.state.poll, this.setAnswers);
-  //   }
-  //   else {
-  //     options = optionsList(this.state.poll, this.setAnswers);
-  //   }
-  //   return options;
-  // }
-
   render() {
     let options, poll
     if(this.props.currentPoll){

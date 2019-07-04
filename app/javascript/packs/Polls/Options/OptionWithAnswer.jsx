@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import { answerPoll } from '../../../actions'
 
-
 class OptionWithAnswer extends Component {
   render(){
     const answerPercentage = this.props.option.percentage;

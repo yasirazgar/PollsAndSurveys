@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { optionsListWithAnswer } from '../Helpers/polls_helper'
-import Input from '../Utils/Input'
 
 import './UserPoll.scss'
 

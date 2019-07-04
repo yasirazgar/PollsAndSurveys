@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Input from '../Utils/Input'
-import Select from '../Utils/Select'
 import Button from '../Utils/Button'
 import FilterComponents from './FilterComponents'
 import { searchPoll } from '../../actions'

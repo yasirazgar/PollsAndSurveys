@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchPolls, fetchUserPolls, fetchRespondedPolls } from '../../actions'
 
+import { fetchPolls, fetchUserPolls, fetchRespondedPolls } from '../../actions'
 import Button from '../Utils/Button'
-import Polls from './Polls'
-import UserPolls from './UserPolls'
-import RespondedPolls from './RespondedPolls'
 import {POLLS_TAB, USER_POLLS_TAB, RESPONDED_POLLS_TAB, TAB_CLASS, TAB_ACTIVE_CLASS} from '../constants.js'
 
 import './Tabs.scss'

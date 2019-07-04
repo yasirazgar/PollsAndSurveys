@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 
 import ToggleButton from '../SideDrawer/ToggleButton'
 
-import './Toolbar.scss';
-
 import ProfileIcon from 'user__anonymous.svg'
 import MegaphoneIcon from 'megaphone.svg'
+
+import './Toolbar.scss';
 
 const Toolbar = props => {
   let navItems;

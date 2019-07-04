@@ -5,7 +5,6 @@ import NewPoll from './Polls/NewPoll'
 import SearchPoll from './Polls/SearchPoll'
 import Tabs from './Polls/Tabs'
 import Button from './Utils/Button'
-import Select from './Utils/Select'
 import { fetchCategories } from '../actions'
 import { connect } from 'react-redux';
 

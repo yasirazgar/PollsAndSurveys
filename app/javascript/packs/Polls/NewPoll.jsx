@@ -6,8 +6,6 @@ import Select from '../Utils/Select'
 import ModalButtonGroup from '../Utils/ModalButtonGroup'
 import FilterComponents from './FilterComponents'
 import createPollHandler from '../Handlers/createPollHandler'
-import fetchCategoriesHandler from '../Handlers/fetchCategoriesHandler'
-import { AGE_SELECT_OPTIONS } from '../constants'
 
 import './NewPoll.scss'
 
@@ -131,7 +129,6 @@ class NewPoll extends Component {
 
         <ModalButtonGroup primaryText={this.props.translations.create} submitHandler={this.createPollHandler} closeModalHandler={this.props.hideCreatePollForm} submitEnabled={this.state.submitEnabled}/>
       </div>
-
     );
   }
 }
