@@ -21,8 +21,6 @@ import logoutHandler from './Handlers/logoutHandler';
 import './Tooltip.scss'
 import './Common.scss'
 
-import 'whatwg-fetch'
-
 class Home extends Component {
   constructor(props){
     super(props);
