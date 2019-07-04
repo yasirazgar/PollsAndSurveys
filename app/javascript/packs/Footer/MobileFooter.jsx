@@ -5,7 +5,7 @@ import FooterRight from './FooterRight'
 
 import './Footer.scss'
 
-const MobileFooter = props => (
+const MobileFooter = () => (
   <div className="footer__mobile">
     <FooterRight />
     <FooterLeft />
