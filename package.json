@@ -25,7 +25,7 @@
     "@babel/plugin-transform-runtime": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
     "autoprefixer": "^9.6.0",
-    "babel-jest": "^24.7.1",
+    "babel-jest": "^24.8.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "cssnano": "^4.1.10",
     "enzyme": "^3.9.0",
@@ -38,20 +38,6 @@
     "sugarss": "^2.0.0",
     "webpack-cli": "^3.3.0",
     "webpack-dev-server": "^3.7.2"
-  },
-  "jest": {
-    "roots": [
-      "test/javascript/packs"
-    ],
-    "moduleDirectories": [
-      "node_modules",
-      "app/javascript"
-    ],
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/test/javascript/__mocks__/fileMock.js",
-      "\\.(css|scss|less)$": "identity-obj-proxy"
-    },
-    "setupTestFrameworkScriptFile": "./test/javascript/setupTests.js"
   },
   "scripts": {
     "test": "jest"
