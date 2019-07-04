@@ -4,12 +4,8 @@ import { connect } from 'react-redux';
 import Input from '../Utils/Input'
 import Select from '../Utils/Select'
 import Button from '../Utils/Button'
-import Polls from './Polls'
-import UserPolls from './UserPolls'
-import RespondedPolls from './RespondedPolls'
-import fetchCategoriesHandler from '../Handlers/fetchCategoriesHandler'
-import { AGE_SELECT_OPTIONS } from '../constants'
 import FilterComponents from './FilterComponents'
+import { searchPoll } from '../../actions'
 
 class SearchPoll extends Component {
   constructor(props) {
@@ -25,51 +21,15 @@ class SearchPoll extends Component {
   }
 
   searchPollHandler = () => {
-    params = {
-      terms:{
+    const params = {
+      type: this.props.tab,
+      terms: {
         term: this.state.term,
         category_ids: this.state.category_ids,
         age_group_ids: this.state.age_group_ids
       }
     }
-    let params = ['type='+this.props.tab]
-    if(this.state.category_ids.length > 0){
-      const cat_params = Object.keys(this.state.category_ids)
-          .map(c => 'terms[category_ids][]=' + c)
-          .join('&');
-
-      params.push(cat_params)
-    }
-
-    if(this.state.age_group_ids.length > 0){
-      const age_params = Object.keys(this.state.age_group_ids)
-          .map(ag => 'terms[age_group_ids][]=' + ag)
-          .join('&');
-
-      params.push(cat_params)
-    }
-
-    if(this.state.term.length > 0){
-      const term_params = 'terms[term]=' + this.state.term
-
-      params.push(term_params)
-    }
-
-    // const url = '/polls/search' + '?type=polls&terms[category_ids][]=1&terms[category_ids][]=2&terms[age_group_ids][]=1&terms[age_group_ids][]=2&terms[term]=fav';
-    const url = '/polls/search?' + params.join('&')
-
-    fetch(url, {
-      credentials: 'same-origin',
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content,
-      }
-    }).then(response => {
-      return response.json()
-    }).then(data => {
-      this.buildPolls(data.polls)
-    });
+    this.props.searchPoll(params)
   }
 
   questionChangeHandler = (event) => {
@@ -103,20 +63,6 @@ class SearchPoll extends Component {
     this.setState(attrs)
   }
 
-  pollsBuilder = (polls) => {
-    this.props.callback(<Polls polls={polls} />)
-  }
-  user_pollsBuilder = (polls) => {
-    this.props.callback(<UserPolls polls={polls} />)
-  }
-  user_responded_pollsBuilder = (polls) => {
-    this.props.callback(<RespondedPolls polls={polls} />)
-  }
-
-  buildPolls = (polls) => {
-    this[this.props.tab+'Builder'](polls)
-  }
-
   render() {
     return (
       <div className="search-poll">
@@ -141,4 +87,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(SearchPoll)
+export default connect(mapStateToProps, { searchPoll })(SearchPoll)

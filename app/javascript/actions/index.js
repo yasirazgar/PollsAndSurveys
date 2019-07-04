@@ -6,7 +6,8 @@ import pollsRequest from '../apis/pollsRequest'
 import loadTranslations from '../i18n'
 
 import { FETCH_POLLS, FETCH_USER_POLLS, FETCH_RESPONDED_POLLS,
-         FETCH_CATEGORIES, BUILD_TRANSLATIONS, ANSWER_POLL
+         FETCH_CATEGORIES, BUILD_TRANSLATIONS, ANSWER_POLL,
+         SEARCH_POLL
        } from '../packs/constants'
 
 export const fetchPolls = () => async dispatch => {
@@ -43,4 +44,10 @@ export const answerPoll = (poll_id, option_id, callback) => async dispatch => {
   const response = await pollsRequest.post(url)
 
   dispatch({type: ANSWER_POLL, payload: response})
+}
+
+export const searchPoll = (data) => async dispatch => {
+  const response = await pollsRequest.get('/polls/search', {params: data})
+
+  dispatch({type: SEARCH_POLL, payload: response})
 }

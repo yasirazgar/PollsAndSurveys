@@ -89,6 +89,7 @@ class PollService
   # Guess its time to pull this into a query builder ?
   def search(polls_rel, terms)
     # If the age_group is empty or contains only group - All then dont filter based on age_group
+    terms = ((String === terms) ? JSON.parse(terms) : terms).with_indifferent_access # why is this happening, analyze
     if (age_group = terms[:age_group_ids]).present?
       age_group = age_group.map(&:to_i)
       age_all = Poll::Age::GROUPING.key(Poll::Age::ALL)

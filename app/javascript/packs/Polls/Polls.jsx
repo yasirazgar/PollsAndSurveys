@@ -18,7 +18,7 @@ class Polls extends Component {
   componentDidMount = () =>  this.props.fetchPolls();
 
   render() {
-    const polls = this.props[POLLS_MAP[this.props.selectedTab]]
+    const polls = this.props.searchPoll || this.props[POLLS_MAP[this.props.selectedTab]]
     const PollsComponent = pollsComponentsMap[this.props.selectedTab]
 
     return (
@@ -34,7 +34,8 @@ const mapStateToProps = state => {
     polls: state.polls,
     userPolls: state.userPolls,
     respondedPolls: state.respondedPolls,
-    selectedTab: state.tab.selectedTab
+    selectedTab: state.tab.selectedTab,
+    searchPoll: state.searchPoll,
   };
 };
 
