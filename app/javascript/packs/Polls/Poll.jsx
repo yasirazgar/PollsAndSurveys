@@ -6,29 +6,27 @@ import { optionsList, optionsListWithAnswer } from '../Helpers/polls_helper'
 
 import './Poll.scss'
 
-class Poll extends Component {
-  render() {
-    let options, poll
-    if(this.props.currentPoll){
-      poll = this.props.currentPoll
-      options = optionsListWithAnswer(poll);
-    }
-    else {
-      poll = this.props.poll
-      options = optionsList(poll);
-    }
-    return (
-      <div className="poll">
-        <div className="poll__question">
-          <h2>{poll.question}</h2>
-        </div>
-
-        <ul className="poll__options">
-          {options}
-        </ul>
-      </div>
-    );
+const Poll = props => {
+  let options, poll
+  if(props.currentPoll){
+    poll = props.currentPoll
+    options = optionsListWithAnswer(poll);
   }
+  else {
+    poll = props.poll
+    options = optionsList(poll);
+  }
+  return (
+    <div className="poll">
+      <div className="poll__question">
+        <h2>{poll.question}</h2>
+      </div>
+
+      <ul className="poll__options">
+        {options}
+      </ul>
+    </div>
+  );
 }
 
 Poll.propTypes = {

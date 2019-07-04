@@ -7,21 +7,19 @@ import {POLLS_TAB, USER_POLLS_TAB, RESPONDED_POLLS_TAB, TAB_CLASS, TAB_ACTIVE_CL
 
 import './Tabs.scss'
 
-class Tabs extends Component {
-  render() {
-    let tabs = [<Button classes={this.props.pollsClass} clickHandler={this.props.fetchPolls} text={this.props.translations[POLLS_TAB]} />]
+const Tabs = (props) =>  {
+  let tabs = [<Button classes={props.pollsClass} clickHandler={props.fetchPolls} text={props.translations[POLLS_TAB]} />]
 
-    if (this.props.user){
-      tabs.push(<Button classes={this.props.userPollsClass} clickHandler={this.props.fetchUserPolls} text={this.props.translations[USER_POLLS_TAB]} />)
-      tabs.push(<Button classes={this.props.respondedPollsClass} clickHandler={this.props.fetchRespondedPolls} text={this.props.translations[RESPONDED_POLLS_TAB]} />)
-    }
-
-    return (
-     <div className="tabs">
-       {tabs}
-     </div>
-    );
+  if (props.user){
+    tabs.push(<Button classes={props.userPollsClass} clickHandler={props.fetchUserPolls} text={props.translations[USER_POLLS_TAB]} />)
+    tabs.push(<Button classes={props.respondedPollsClass} clickHandler={props.fetchRespondedPolls} text={props.translations[RESPONDED_POLLS_TAB]} />)
   }
+
+  return (
+   <div className="tabs">
+     {tabs}
+   </div>
+  );
 }
 
 const mapStateToProps = state => {
