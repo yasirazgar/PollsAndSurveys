@@ -104,13 +104,13 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def santize_create_params(params)
-    ActionController::Parameters.new(params).require(:poll).permit(:question, category_ids: [], options: [], age_group: [])
+    ActionController::Parameters.new(params).require(:poll).permit(:question, category_ids: [], options: [], age_group_ids: [])
   end
 
   def search_reqs(type)
     params = {
       terms: {
-        age_group: ['1'],
+        age_group_ids: ['1'],
         category_ids: ['1'],
         term: 'programming'
       },

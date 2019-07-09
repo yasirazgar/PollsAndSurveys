@@ -41,11 +41,11 @@ class PollService
   end
 
   def create(params)
-    poll_params = params.slice(:question, :category_ids, :age_group)
-    if poll_params[:age_group]
-      poll_params[:age_group] = (poll_params[:age_group].map(&:to_i) & Poll::AGE_GROUP.keys)
+    poll_params = params.slice(:question, :category_ids, :age_group_ids)
+    if poll_params[:age_group_ids]
+      poll_params[:age_group_ids] = (poll_params[:age_group_ids].map(&:to_i) & Poll::Age::GROUPING.keys)
     end
-    poll = Poll.new(poll_params.slice(:question, :category_ids, :age_group))
+    poll = Poll.new(poll_params.slice(:question, :category_ids, :age_group_ids))
     poll.user_id = @user.id
     poll.options_attributes = params[:options].inject([]) do |opts, opt|
       if (existing_opt = Option.find_by_name(opt))
@@ -86,15 +86,25 @@ class PollService
 
   private
 
+  # Guess its time to pull this into a query builder ?
   def search(polls_rel, terms)
-    if terms[:age_group].present?
-      age_group = terms[:age_group] + [1]
-      polls_rel = polls_rel.where("age_group && Array[?]::Integer[]", age_group)
+    # If the age_group is empty or contains only group - All then dont filter based on age_group
+    terms = ((String === terms) ? JSON.parse(terms) : terms).with_indifferent_access # why is this happening, analyze
+    if (age_group = terms[:age_group_ids]).present?
+      age_group = age_group.map(&:to_i)
+      age_all = Poll::Age::GROUPING.key(Poll::Age::ALL)
+      unless age_group.include?(age_all)
+        age_group << age_all # include age_group - All, for all.
+        polls_rel = polls_rel.where("age_group_ids && Array[?]::Integer[]", age_group)
+      end
     end
     if terms[:category_ids].present?
       polls_rel = polls_rel.joins(:categories).where("categories.id IN (?)", terms[:category_ids])
     end
-    polls_rel = polls_rel.where("polls.question ilike ?", "%#{terms[:term]}%") if terms[:term].present?
+    if terms[:term].present?
+      polls_rel = polls_rel.where("polls.question ilike ?", "%#{terms[:term]}%")
+    end
+
     polls_rel
   end
 end

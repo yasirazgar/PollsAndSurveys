@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 
 import ToggleButton from '../SideDrawer/ToggleButton'
 
-import './Toolbar.scss';
-
 import ProfileIcon from 'user__anonymous.svg'
 import MegaphoneIcon from 'megaphone.svg'
+
+import './Toolbar.scss';
 
 const Toolbar = props => {
   let navItems;
@@ -20,8 +20,8 @@ const Toolbar = props => {
   }
   else {
     navItems = [
-      <li key="1" className="links" onClick={props.openSignInModal}>{props.translations.signin}</li>,
-      <li key="2" className="links" onClick={props.openSignUpModal}>{props.translations.signup}</li>
+      <li key="1" className="links signin" onClick={props.openSignInModal}>{props.translations.signin}</li>,
+      <li key="2" className="links signup" onClick={props.openSignUpModal}>{props.translations.signup}</li>
     ]
   }
 
@@ -33,7 +33,7 @@ const Toolbar = props => {
         </div>
         <div className="toolbar__logo">
           <a href="/">
-            <img style={{ width: '5%', height: 'auto' }}className="logo" src={MegaphoneIcon} ></img>
+            <img style={{ width: '5%', height: 'auto' }} className="logo" src={MegaphoneIcon} ></img>
           </a>
         </div>
         <div className="spacer"> </div>

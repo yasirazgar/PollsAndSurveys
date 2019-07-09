@@ -6,8 +6,6 @@ import Select from '../Utils/Select'
 import ModalButtonGroup from '../Utils/ModalButtonGroup'
 import FilterComponents from './FilterComponents'
 import createPollHandler from '../Handlers/createPollHandler'
-import fetchCategoriesHandler from '../Handlers/fetchCategoriesHandler'
-import { AGE_SELECT_OPTIONS } from '../constants'
 
 import './NewPoll.scss'
 
@@ -19,7 +17,7 @@ class NewPoll extends Component {
       question: '',
       options: [],
       category_ids: [],
-      age_group: [],
+      age_group_ids: [],
       submitEnabled: false,
     };
 
@@ -40,7 +38,7 @@ class NewPoll extends Component {
       question: this.state.question,
       options: this.state.options,
       category_ids: selected_values,
-      age_group: this.state.age_group
+      age_group_ids: this.state.age_group_ids
     })
   }
 
@@ -51,12 +49,12 @@ class NewPoll extends Component {
       }; return vals
     }, [])
 
-    this.setState({age_group: selected_values})
+    this.setState({age_group_ids: selected_values})
     this.setPollHandler({
       question: this.state.question,
       options: this.state.options,
       category_ids: this.state.category_ids,
-      age_group: selected_values
+      age_group_ids: selected_values
     })
   }
 
@@ -71,7 +69,7 @@ class NewPoll extends Component {
         question: question,
         options: options,
         category_ids: this.state.category_ids,
-        age_group: this.state.age_group
+        age_group_ids: this.state.age_group_ids
       }
       this.setState({submitEnabled: true});
     }
@@ -131,7 +129,6 @@ class NewPoll extends Component {
 
         <ModalButtonGroup primaryText={this.props.translations.create} submitHandler={this.createPollHandler} closeModalHandler={this.props.hideCreatePollForm} submitEnabled={this.state.submitEnabled}/>
       </div>
-
     );
   }
 }

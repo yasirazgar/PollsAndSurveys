@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { optionsListWithAnswer } from '../Helpers/polls_helper'
-import Input from '../Utils/Input'
 
 import './UserPoll.scss'
 
@@ -13,7 +12,7 @@ class UserPoll extends Component {
   constructor(props){
     super(props)
     this.state = {
-      options: this.props.poll.options,
+      poll: this.props.poll,
     }
     this.setAnswers = this.setAnswers.bind(this);
   }
@@ -22,10 +21,7 @@ class UserPoll extends Component {
     this.setState({options: options})
   }
 
-  buildOptionsList = (optionsHash, poll_id) => {
-    const names = Object.keys(optionsHash);
-    return optionsListWithAnswer(optionsHash, names, poll_id, this.setAnswers)
-  }
+  buildOptionsList = () => optionsListWithAnswer(this.state.poll, this.setAnswers);
 
   deletePoll = (pollId) => {
     url = '/polls/' + pollId
@@ -59,7 +55,7 @@ class UserPoll extends Component {
         </div>
 
         <ul className="poll__options">
-          {this.buildOptionsList(this.state.options, poll.poll_id)}
+          {this.buildOptionsList()}
         </ul>
       </div>
 

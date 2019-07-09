@@ -1,55 +1,32 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-import Input from '../Utils/Input'
 import { optionsList, optionsListWithAnswer } from '../Helpers/polls_helper'
 
 import './Poll.scss'
 
-// Analyse whether this should be functional and class components
-class Poll extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      options: this.props.poll.options,
-      isWithAnswer: this.props.isWithAnswer,
-    }
-    this.setAnswers = this.setAnswers.bind(this);
-    this.buildOptionsList = this.buildOptionsList.bind(this);
+const Poll = props => {
+  let options, poll
+  if(props.currentPoll){
+    poll = props.currentPoll
+    options = optionsListWithAnswer(poll);
   }
-
-  setAnswers = (options) => {
-    this.setState({options: options, isWithAnswer: true})
+  else {
+    poll = props.poll
+    options = optionsList(poll);
   }
-
-  buildOptionsList = (optionsHash, poll_id) => {
-    const names = Object.keys(optionsHash);
-    let list;
-
-    if (this.state.isWithAnswer){
-      list = optionsListWithAnswer(optionsHash, names, poll_id, this.setAnswers)
-    }
-    else {
-      list = optionsList(optionsHash, names, poll_id, this.setAnswers)
-    }
-    return list;
-  }
-
-  render() {
-    const poll = this.props.poll
-
-    return (
-      <div className="poll">
-        <div className="poll__question">
-          <h2>{poll.question}</h2>
-        </div>
-
-        <ul className="poll__options">
-          {this.buildOptionsList(this.state.options, poll.poll_id)}
-        </ul>
+  return (
+    <div className="poll">
+      <div className="poll__question">
+        <h2>{poll.question}</h2>
       </div>
-    );
-  }
+
+      <ul className="poll__options">
+        {options}
+      </ul>
+    </div>
+  );
 }
 
 Poll.propTypes = {
@@ -58,4 +35,10 @@ Poll.propTypes = {
   categories: PropTypes.array
 }
 
-export default Poll
+const mapStateToProps = state => {
+  return {
+    currentPoll: state.currentPoll
+  };
+};
+
+export default connect(mapStateToProps)(Poll)

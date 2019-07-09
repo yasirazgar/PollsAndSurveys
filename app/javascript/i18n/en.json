@@ -23,7 +23,7 @@
   "search_placeholder": "Search poll",
   "search": "Search",
   "polls": "Polls",
-  "users_polls": "My polls",
+  "user_polls": "My polls",
   "user_responded_polls": "My responded polls",
   "name": "Name",
   "email": "Email",
@@ -35,6 +35,7 @@
   "ok": "Ok",
   "cancel": "Cancel",
   "age_group": "AGE GROUP",
+  "all": "All",
   "categories": "CATEGORIES",
   "create": "Create"
 }

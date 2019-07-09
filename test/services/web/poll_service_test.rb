@@ -68,7 +68,7 @@ class Web::PollServiceTest < ActiveSupport::TestCase
   test "create - with invalid age_group" do
     poll = nil
     params = create_params[:poll]
-    params[:age_group] << '100'
+    params[:age_group_ids] << '100'
 
     assert_difference('Poll.count', 1, 'Should create a poll') do
       assert_difference('Option.count', 4) do
@@ -76,7 +76,7 @@ class Web::PollServiceTest < ActiveSupport::TestCase
       end
     end
 
-    params[:age_group] = params[:age_group] - ['100']
+    params[:age_group_ids] = params[:age_group_ids] - ['100']
     assert_poll(poll, params)
   end
 
@@ -115,8 +115,7 @@ class Web::PollServiceTest < ActiveSupport::TestCase
       'Should do nothing and return the same')
   end
 
-
-  test "search - polls - without age_group" do
+  test "search - polls - age_group - empty" do
     assert_equal(
       [YASIR_IT, YASIR_SNAKE],
       @service.search_polls({
@@ -126,11 +125,21 @@ class Web::PollServiceTest < ActiveSupport::TestCase
       'Should return polls based on category_ids and search term')
   end
 
+  test "search - polls - age_group - with all" do
+    assert_equal(
+      [YASIR_SNAKE, YASIR_IT , DAVID_GEMS],
+      @service.search_polls({
+            age_group_ids: [Poll::Age::GROUPING.key(Poll::Age::ALL)],
+            term: 'Fav'
+      }).map(&:deep_stringify_keys),
+      'Should return polls for all age_group with term Fav in question')
+  end
+
   test "search - users_polls - without categories" do
     assert_equal(
       [],
       @service.search_users_polls({
-        age_group: [4,5],
+        age_group_ids: [4,5],
         term: 'Dumb'
       }).map(&:deep_stringify_keys),
       'Should return polls based on category_ids and search term')
@@ -140,7 +149,7 @@ class Web::PollServiceTest < ActiveSupport::TestCase
     assert_equal(
       [DAVID_GEMS_ANS],
       @service.search_user_responded_polls({
-        age_group: [4],
+        age_group_ids: [1],
         category_ids: [4]
       }).map(&:deep_stringify_keys),
       "Should include common age group (1) in all cases")
@@ -153,7 +162,7 @@ class Web::PollServiceTest < ActiveSupport::TestCase
       'Should create options')
     assert_equal(params[:category_ids].map(&:to_i), poll.category_ids,
       'Should set categories')
-    assert_equal(params[:age_group].map(&:to_i), poll.age_group,
+    assert_equal(params[:age_group_ids].map(&:to_i), poll.age_group_ids,
       'Should set age_group')
   end
 end
