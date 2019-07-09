@@ -1,30 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Home renders correctly 1`] = `
-<div
-  style={
+exports[`App renders correctly 1`] = `
+<Provider
+  store={
     Object {
-      "height": "100%",
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
     }
   }
 >
-  <Toolbar
-    sideDrawerToggleClickHandler={[Function]}
-  />
-  <SideDrawer
-    open={false}
-  />
-  ;
-  <main
-    style={
-      Object {
-        "marginTop": "113px",
-      }
-    }
-  >
-    <p>
-       Main content 
-    </p>
-  </main>
-</div>
+  <Home />
+</Provider>
 `;

@@ -1,16 +1,16 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import Home from 'packs/Home';
+import App from 'packs/App';
 
-describe("Home", () => {
+describe("App", () => {
   it("renders correctly", () => {
-    const wrapper = shallow(<Home />);
+    const wrapper = shallow(<App />);
 
     expect(wrapper).toMatchSnapshot();
   });
 
   it("sets state sideDrawerOpen to true on clicking sideDrawer toggle-button", () => {
-    const wrapper = mount(<Home />);
+    const wrapper = mount(<App />);
 
     wrapper.find('.toggle-button').first().simulate('click');
 

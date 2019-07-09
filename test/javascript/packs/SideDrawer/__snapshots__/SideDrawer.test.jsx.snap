@@ -4,21 +4,32 @@ exports[`SideDrawer renders correctly 1`] = `
 <nav
   className="side-drawer"
 >
-  <ul>
-    <li>
-      <img
-        className="avatar"
-        src="test-file-stub"
+  <div
+    className="wrapper"
+  >
+    <Button
+      classes="other"
+      clickHandler={[Function]}
+      key="0"
+      text="SignIn"
+    />
+    ,
+    <Button
+      classes="other"
+      clickHandler={[Function]}
+      key="1"
+      text="SignUp"
+    />
+    <div
+      className="signin form"
+    >
+      <Connect(SignInForm) />
+      <Button
+        text="Login"
       />
-    </li>
-    <li>
-      <a
-        href="/"
-      >
-        Logout/Login
-      </a>
-    </li>
-  </ul>
+    </div>
+    <Footer />
+  </div>
 </nav>
 `;
 
@@ -26,20 +37,31 @@ exports[`SideDrawer renders correctly with props, open: true 1`] = `
 <nav
   className="side-drawer open"
 >
-  <ul>
-    <li>
-      <img
-        className="avatar"
-        src="test-file-stub"
+  <div
+    className="wrapper"
+  >
+    <Button
+      classes="other"
+      clickHandler={[Function]}
+      key="0"
+      text="SignIn"
+    />
+    ,
+    <Button
+      classes="other"
+      clickHandler={[Function]}
+      key="1"
+      text="SignUp"
+    />
+    <div
+      className="signin form"
+    >
+      <Connect(SignInForm) />
+      <Button
+        text="Login"
       />
-    </li>
-    <li>
-      <a
-        href="/"
-      >
-        Logout/Login
-      </a>
-    </li>
-  </ul>
+    </div>
+    <Footer />
+  </div>
 </nav>
 `;
