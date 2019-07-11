@@ -10,12 +10,13 @@ const Select = props => {
     if (object[0] == -1){
       disabled = 'disabled'
     }
+
     return (<option key={i} value={object[0]} disabled={disabled}> {object[1]} </option>);
   })
   let classes = props.classes
   classes = classes + ' theme-construction'
   return (
-    <select multiple={props.multiple} onChange={props.onChange} className={classes} size='1'>
+    <select multiple={props.multiple} onChange={props.onChange} className={classes} value={props.selectedValue} size='1'>
       {options}
     </select>
   );

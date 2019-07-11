@@ -6,12 +6,16 @@ import InstaIcon from 'instagram.svg'
 import FbIcon from 'facebook.svg'
 import TwitterIcon from 'twitter.svg'
 import Select from '../Utils/Select'
-import { buildTranslations } from '../../actions'
+import { buildTranslations, updateLocale } from '../../actions'
 import { LANG_OPTIONS } from '../constants'
 
 class FooterLeft extends Component {
   changeHandler = event => {
-    this.props.buildTranslations(event.target.value)
+    const locale = event.target.value;
+
+    this.props.updateLocale(locale)
+    this.props.buildTranslations(locale)
+    window.localStorage.setItem('locale', locale)
   }
   render(){
     return(
@@ -29,7 +33,7 @@ class FooterLeft extends Component {
           <span className="tooltiptext">{this.props.translations.twitter}</span>
         </div>
         <span>
-          <Select options={ LANG_OPTIONS } onChange={this.changeHandler}/>
+          <Select options={ LANG_OPTIONS } onChange={this.changeHandler} selectedValue={window.localStorage.getItem('locale')}/>
         </span>
       </span>
     )
@@ -40,4 +44,4 @@ const mapStateToProps = state => {
   return { translations: state.translations };
 };
 
-export default connect(mapStateToProps, {buildTranslations})(FooterLeft)
+export default connect(mapStateToProps, { buildTranslations, updateLocale })(FooterLeft)

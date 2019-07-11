@@ -34,10 +34,14 @@ export const fetchCategories = () => async dispatch => {
   dispatch({type: FETCH_CATEGORIES, payload: response})
 }
 
-export const buildTranslations = (translation = 'en') => ({
+export const buildTranslations = (locale = 'en') => ({
   type: BUILD_TRANSLATIONS,
-  payload: loadTranslations(translation)
+  payload: loadTranslations(locale)
 })
+
+export const updateLocale = new_locale => async dispatch => {
+  await pollsRequest.patch('/user/update_locale', {locale: new_locale});
+}
 
 export const answerPoll = (poll_id, option_id, callback) => async dispatch => {
   const url = "/polls/" + poll_id + "/" + option_id + "/answer"

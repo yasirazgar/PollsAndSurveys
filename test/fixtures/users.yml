@@ -8,6 +8,7 @@ yasir:
   email: yasir@pas.com
   nick_name: yasirpas
   admin: true
+  locale: ta
 
 yaseer:
   name: Yaseer
@@ -15,6 +16,7 @@ yaseer:
   email: yaseer@pas.com
   nick_name: yaseerpas
   admin: true
+  locale: en
 
 david:
   name: David
@@ -22,6 +24,7 @@ david:
   email: david@pas.com
   nick_name: davidpas
   admin: false
+  locale: en
 
 sundar:
   name: Sundar
@@ -29,3 +32,4 @@ sundar:
   email: sundar@pas.com
   nick_name: sundarpas
   admin: false
+  locale: ta

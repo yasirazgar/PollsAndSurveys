@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   post "login", to: "sessions#create", as: "login"
   delete "logout", to: "sessions#destroy", as: "logout"
   resources :users, only: [:create, :destroy, :update]
-  resource :user, controller: :user, only: [] do
+  resource :user, controller: :user do
+    patch 'update_profile'
+    patch 'update_locale'
     collection do
       get 'polls'
       get 'responded_polls'
