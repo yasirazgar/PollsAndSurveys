@@ -8,6 +8,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :uid
       t.string :provider
       t.string :token
+      t.string :locale, null: false, default: :en
       t.boolean :admin
 
       t.timestamps

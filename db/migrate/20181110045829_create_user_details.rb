@@ -11,7 +11,8 @@ class CreateUserDetails < ActiveRecord::Migration[5.2]
     end
   end
 
+  # rake db:migrate:down VERSION=20181110045829
   def down
-  	drop_tables(:user_details)
+  	drop_table(:user_details)
   end
 end

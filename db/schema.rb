@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(version: 2019_04_18_163352) do
     t.string "uid"
     t.string "provider"
     t.string "token"
+    t.string "locale", default: "en", null: false
     t.boolean "admin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
