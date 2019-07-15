@@ -29,15 +29,16 @@
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
 
-en:
-  models:
-    poll: 'Poll'
-  attributes:
-    poll:
-      question: 'Question'
-  errors:
+ta:
+  activerecord:
     models:
+      poll: 'கருத்து கணிப்பு'
+    attributes:
       poll:
-        attributes:
-          question:
-            taken: 'has been already taken by you'
+        question: 'கேள்வி'
+    errors:
+      models:
+        poll:
+          attributes:
+            question:
+              taken: 'ஏற்கனவே நீங்கள் எடுத்துள்ளீர்கள்'
