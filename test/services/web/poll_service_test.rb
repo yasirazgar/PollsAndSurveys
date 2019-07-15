@@ -16,6 +16,17 @@ class Web::PollServiceTest < ActiveSupport::TestCase
       'Should return polls created by the user')
   end
 
+  test "get_polls" do
+    assert_equal(
+      [
+        YASIR_SNAKE,
+        YASIR_IT,
+        YASIR_NO_ANS,
+        DAVID_GEMS
+      ], @service.class.get_polls.map(&:deep_stringify_keys),
+      'Should return polls created by the user')
+  end
+
   test "polls_for_user" do
     assert_equal([YASIR_IT], @service.get_polls_for_user.map(&:deep_stringify_keys),
       'Should return polls for user based on users fields')

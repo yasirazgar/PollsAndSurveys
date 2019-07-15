@@ -11,6 +11,12 @@ class PollService
   end
   alias_method :users_polls, :get_users_polls
 
+  def self.get_polls
+    # user_details = @user.details
+    Poll.includes([:categories, :options])
+  end
+  # alias_method :polls, :get_polls
+
   def get_polls_for_user
     user_details = @user.details
 

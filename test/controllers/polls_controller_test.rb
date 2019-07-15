@@ -8,6 +8,13 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @yasir = users(:yasir)
     sign_in_as @yasir
+  test "index - without signin" do
+    Web::PollService.expects(:get_polls).returns(expected_polls_for_user['polls'])
+
+    get(polls_url, xhr: true)
+    assert_response :success
+    assert_equal(expected_polls_for_user, json_response,
+      'Should return polls as json')
   end
 
   test "index" do
