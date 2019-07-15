@@ -7,7 +7,8 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     @yasir = users(:yasir)
-    sign_in_as @yasir
+  end
+
   test "index - without signin" do
     Web::PollService.expects(:get_polls).returns(expected_polls_for_user['polls'])
 
@@ -20,7 +21,7 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
   test "index" do
     service_mock.expects(:get_polls_for_user).returns(expected_polls_for_user['polls'])
 
-    get(polls_url, xhr: true)
+    get(polls_url, headers: { "Authorization" => token_for_user(@yasir) }, xhr: true)
     assert_response :success
     assert_equal(expected_polls_for_user, json_response,
       'Should return polls as json')
@@ -29,17 +30,17 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
   test "create" do
     service_mock.expects(:create).with(santize_create_params(create_params)).returns(polls(:yasir_snake))
 
-    post(polls_url, params: create_params, xhr: true)
+    post(polls_url, params: create_params, headers: { "Authorization" => token_for_user(@yasir) }, xhr: true)
     assert_response :success
     assert_equal(
-      {'poll_id' => 1, 'message' => 'Poll created successfully'},
+      {'poll_id' => 1},
       json_response,
       'Should return poll_id and success message')
   end
 
   test "create-with duplicate question" do
     assert_difference('Poll.count', 0, 'Should not create with duplicate question') do
-      post(polls_url, params: create_dup_params, xhr: true)
+      post(polls_url, params: create_dup_params, headers: { "Authorization" => token_for_user(@yasir) }, xhr: true)
     end
 
     assert_response :bad_request
@@ -51,24 +52,20 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
     poll = polls(:yasir_snake)
 
     assert_difference('Poll.count', -1, 'Should destroy the poll') do
-      delete(poll_url(poll), xhr: true)
+      delete(poll_url(poll), headers: { "Authorization" => token_for_user(@yasir) }, xhr: true)
     end
 
     assert_response :success
-    assert_equal('Poll destroyed successfully', json_response['message'],
-      'Should return a success message')
   end
 
   test "destroy - other users polls" do
     other_user_poll = polls(:david_gems)
 
     assert_difference('Poll.count', 0, 'Should not destroy other users polls') do
-      delete(poll_url(other_user_poll), xhr: true)
+      delete(poll_url(other_user_poll), headers: { "Authorization" => token_for_user(@yasir) }, xhr: true)
     end
 
     assert_response :not_found
-    assert_equal('Error destroying poll', json_response['message'],
-      'Should return a error message')
   end
 
   test "answer_poll" do
@@ -76,17 +73,12 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
     poll_hash['options']["Crazy"]['percentage'] = 100
     poll_hash['options']["Crazy"]['selected'] = true
 
-    expected_response = {
-      'poll' => poll_hash,
-      'message' => 'Answer recorded successfully'
-    }
-
     assert_difference('PollAnswer.count', 1, 'Should create a new answer') do
-      post(answer_poll_url(3, options(:crazy).id), xhr: true)
+      post(answer_poll_url(3, options(:crazy).id), headers: { "Authorization" => token_for_user(@yasir) }, xhr: true)
     end
 
     assert_response :success
-    assert_equal(expected_response, json_response,
+    assert_equal({'poll' => poll_hash}, json_response,
       'Should record the answer and return the updated polll answers')
   end
 
@@ -95,7 +87,7 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
       params, sanitized_params, expected_response = search_reqs(type)
       service_mock.expects("search_#{type}").with(sanitized_params[:terms]).returns(expected_response['polls'])
 
-      get(search_polls_url(params), xhr: true)
+      get(search_polls_url(params), headers: { "Authorization" => token_for_user(@yasir) }, xhr: true)
       assert_response :success
       assert_equal(expected_response, json_response,
         "Should return response based on the params")
