@@ -7,6 +7,8 @@ import ToggleButton from '../SideDrawer/ToggleButton'
 import ProfileIcon from 'user__anonymous.svg'
 import MegaphoneIcon from 'megaphone.svg'
 
+import { logout } from '../../actions'
+
 import './Toolbar.scss';
 
 const Toolbar = props => {
@@ -14,7 +16,7 @@ const Toolbar = props => {
 
   if (props.user){
     navItems = [
-      <li key="1" className="links" onClick={props.logoutHandler}>{props.translations.logout}</li>,
+      <li key="1" className="links" onClick={props.logout}>{props.translations.logout}</li>,
       <li key="2"><img className="avatar" src={ProfileIcon} onClick={props.openProfileModal}></img></li>
     ]
   }
@@ -62,4 +64,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(Toolbar)
+export default connect(mapStateToProps, { })(Toolbar)

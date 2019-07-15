@@ -1,8 +1,13 @@
 class PollsController < ApplicationController
+  skip_before_action :authenticate_request
   include PollsConcern
 
   def index
-    polls = poll_service.get_polls_for_user
+    if current_user
+      polls = poll_service.get_polls_for_user
+    else
+      polls = Web::PollService.get_polls
+    end
 
     render json: {polls: polls}
   end
@@ -14,7 +19,7 @@ class PollsController < ApplicationController
     if poll.errors.present?
       render json: {message: poll.errors.full_messages.join(',')}, status: :bad_request
     else
-      render json: {poll_id: poll.id, message: 'Poll created successfully'}
+      render json: {poll_id: poll.id}
     end
   end
 
@@ -22,17 +27,17 @@ class PollsController < ApplicationController
     poll = current_user.polls.find_by_id(params[:id])
 
     if poll && poll.destroy
-      render json: {message: "Poll destroyed successfully"}
+      render json: {}
       return
     end
 
-    render json: {message: "Error destroying poll"}, status: :not_found
+    render json: {}, status: :not_found
   end
 
   def answer
     poll_with_ans = poll_service.answer_poll(params[:id], params[:option_id])
 
-    render json: {poll: poll_with_ans, message: "Answer recorded successfully"}
+    render json: {poll: poll_with_ans}
   end
 
   # maybe its good to split this into three separate methods for each type

@@ -8,6 +8,7 @@ export default axios.create({
   baseURL: 'http://localhost:5000',
   headers: {
     'Content-Type': 'application/json',
-    'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content,
+    // 'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content,
+    'Authorization': `Bearer ${window.localStorage.getItem('jwt')}`
   }
 });

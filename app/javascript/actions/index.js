@@ -7,7 +7,7 @@ import loadTranslations from '../i18n'
 
 import { FETCH_POLLS, FETCH_USER_POLLS, FETCH_RESPONDED_POLLS,
          FETCH_CATEGORIES, BUILD_TRANSLATIONS, ANSWER_POLL,
-         SEARCH_POLL
+         SEARCH_POLL, LOGIN
        } from '../packs/constants'
 
 export const fetchPolls = () => async dispatch => {
@@ -50,8 +50,18 @@ export const answerPoll = (poll_id, option_id, callback) => async dispatch => {
   dispatch({type: ANSWER_POLL, payload: response})
 }
 
-export const searchPoll = (data) => async dispatch => {
+export const searchPoll = data => async dispatch => {
   const response = await pollsRequest.get('/polls/search', {params: data})
 
   dispatch({type: SEARCH_POLL, payload: response})
+}
+
+export const login = data => async dispatch => {
+  const response = await pollsRequest.get('/login', {params: data})
+
+  dispatch({type: LOGIN, payload: response})
+}
+
+export const logout = () => {
+  window.localStorage.removeItem('jwt')
 }

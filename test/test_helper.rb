@@ -11,15 +11,9 @@ class ActiveSupport::TestCase
     @json_response ||= JSON.parse(@response.body)
   end
 
-  # Add more helper methods to be used by all tests here...
-end
-
-module SignInHelper
-  def sign_in_as(user)
-    post login_url(email: user.email, password: 'passworD%1')
+  def token_for_user(user)
+    "Bearer #{JsonWebToken.encode(user_id: user.id)}"
   end
-end
 
-class ActionDispatch::IntegrationTest
-  include SignInHelper
+  # Add more helper methods to be used by all tests here...
 end

@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import { FETCH_POLLS, FETCH_USER_POLLS, FETCH_RESPONDED_POLLS,
          FETCH_CATEGORIES, POLLS_TAB, USER_POLLS_TAB,
          RESPONDED_POLLS_TAB, TAB_ACTIVE_CLASS, TAB_CLASS,
-         BUILD_TRANSLATIONS, ANSWER_POLL, SEARCH_POLL
+         BUILD_TRANSLATIONS, ANSWER_POLL, SEARCH_POLL, LOGIN
        } from '../packs/constants'
 
 const INITIAL_POLLS = []
@@ -84,6 +84,14 @@ const searchPoll = (state=null, action) => {
   return state;
 }
 
+const login = (state=null, action) => {
+  if (action.type == LOGIN){
+    return action.payload.data.user
+  }
+
+  return state;
+}
+
 export default combineReducers({
   polls,
   userPolls,
@@ -92,5 +100,6 @@ export default combineReducers({
   categories,
   translations,
   currentPoll,
-  searchPoll
+  searchPoll,
+  user: login
 });
