@@ -1,4 +1,4 @@
-require 'test_helper'
+ require 'test_helper'
 require_relative '../../helpers/users_polls_test_helper'
 require_relative '../../helpers/polls_test_helper'
 
@@ -17,7 +17,18 @@ class Web::PollServiceTest < ActiveSupport::TestCase
   end
 
   test "polls_for_user" do
-    assert_equal(expected_polls_for_user['polls'], @service.get_polls_for_user.map(&:deep_stringify_keys),
+    assert_equal([YASIR_IT], @service.get_polls_for_user.map(&:deep_stringify_keys),
+      'Should return polls for user based on users fields')
+  end
+
+  test "polls_for_user - with category_ids" do
+    assert_equal([YASIR_IT], @service.get_polls_for_user.map(&:deep_stringify_keys),
+      'Should return polls for user based on users fields')
+  end
+
+  test "polls_for_user - with age_group_ids and category_ids" do
+    UserDetails.any_instance.expects(:age_group).returns(1)
+    assert_equal([YASIR_SNAKE, YASIR_IT, DAVID_GEMS], @service.get_polls_for_user.map(&:deep_stringify_keys),
       'Should return polls for user based on users fields')
   end
 
@@ -115,9 +126,9 @@ class Web::PollServiceTest < ActiveSupport::TestCase
       'Should do nothing and return the same')
   end
 
-  test "search - polls - age_group - empty" do
+  test "searcher - polls - age_group - empty" do
     assert_equal(
-      [YASIR_IT, YASIR_SNAKE],
+      [YASIR_SNAKE, YASIR_IT],
       @service.search_polls({
             category_ids: [1,2,3],
             term: 'Fav'

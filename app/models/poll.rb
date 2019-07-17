@@ -21,6 +21,14 @@ class Poll < ApplicationRecord
       5 => '41 - 50',
       6 => '50+'
     } # Make sure this is in sync with constants.js #AGE_SELECT_OPTIONS
+    RANGE = {
+      1 => (5..10),
+      2 => (11..17),
+      3 => (18..29),
+      4 => (30..40),
+      5 => (41..50),
+      6 => (51..130)
+    } # Make sure keys of grouping and range are same
   end
 
 	belongs_to :user

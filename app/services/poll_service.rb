@@ -12,8 +12,26 @@ class PollService
   alias_method :users_polls, :get_users_polls
 
   def get_polls_for_user
-    # user_details = @user.details
-    Poll.includes([:categories, :options])
+    user_details = @user.details
+
+    polls_rel = Poll.includes([:categories, :options])
+    qry = ""
+    binds = []
+
+    age_group = user_details.age_group
+    if age_group.present?
+      qry << "age_group_ids && Array[?]::Integer[]"
+      binds << [age_group]
+    end
+
+    category_ids = user_details.category_ids
+    if category_ids.present?
+      polls_rel = polls_rel.joins(:categories)
+      qry << "OR categories.id IN (?)"
+      binds << category_ids
+    end
+
+    polls_rel.where(qry, *binds)
   end
   alias_method :polls_for_user, :get_polls_for_user
 
@@ -70,7 +88,7 @@ class PollService
   end
 
   def search_polls(terms)
-    polls_rel = polls_for_user
+    polls_rel = Poll
     search(polls_rel, terms)
   end
 
@@ -90,6 +108,7 @@ class PollService
   def search(polls_rel, terms)
     # If the age_group is empty or contains only group - All then dont filter based on age_group
     terms = ((String === terms) ? JSON.parse(terms) : terms).with_indifferent_access # why is this happening, analyze
+
     if (age_group = terms[:age_group_ids]).present?
       age_group = age_group.map(&:to_i)
       age_all = Poll::Age::GROUPING.key(Poll::Age::ALL)
@@ -105,6 +124,6 @@ class PollService
       polls_rel = polls_rel.where("polls.question ilike ?", "%#{terms[:term]}%")
     end
 
-    polls_rel
+    polls_rel.distinct
   end
 end

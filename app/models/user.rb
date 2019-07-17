@@ -23,4 +23,6 @@ class User < ApplicationRecord
 	has_many :polls
   has_many :poll_answers
   has_many :responded_polls, through: :poll_answers, source: :poll
+
+  delegate :age, :age_group, to: :details, allow_nil: true
 end
