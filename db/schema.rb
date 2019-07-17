@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 2019_04_18_163352) do
     t.string "avatar"
     t.string "location"
     t.integer "category_ids", array: true
+    t.date "birth_date"
   end
 
   create_table "users", force: :cascade do |t|
