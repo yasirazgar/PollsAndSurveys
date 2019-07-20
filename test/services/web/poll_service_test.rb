@@ -32,6 +32,14 @@ class Web::PollServiceTest < ActiveSupport::TestCase
       'Should return polls for user based on users fields')
   end
 
+  test "polls_for_user - without user_details" do
+    user = users(:sundar)
+    service = Web::PollService.new(user)
+
+    assert_equal(expected_polls_for_user['polls'], service.get_polls_for_user.map(&:deep_stringify_keys),
+      'Should return all polls there are no parameters for filtering')
+  end
+
   test "destroy" do
     poll = polls(:yasir_snake)
     assert_difference('Poll.count', -1, 'Should destroy the respective poll') do

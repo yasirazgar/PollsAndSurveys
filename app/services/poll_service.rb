@@ -15,6 +15,9 @@ class PollService
     user_details = @user.details
 
     polls_rel = Poll.includes([:categories, :options])
+
+    return polls_rel unless user_details # currently not creating user details by default
+
     qry = ""
     binds = []
 
