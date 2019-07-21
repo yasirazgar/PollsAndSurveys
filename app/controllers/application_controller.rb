@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   end
 
   def fetch_user_from_token
-    (token = jwt) &&
+    (token = jwt.presence) &&
       (user_id = JsonWebToken.decode(token)[:user_id]) &&
       (User.find_by_id(user_id))
   end
