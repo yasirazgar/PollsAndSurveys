@@ -12,7 +12,6 @@ class PollService
   alias_method :users_polls, :get_users_polls
 
   def self.get_polls
-    # user_details = @user.details
     Poll.includes([:categories, :options])
   end
   # alias_method :polls, :get_polls
@@ -97,7 +96,7 @@ class PollService
   end
 
   def search_polls(terms)
-    polls_rel = Poll
+    polls_rel = Poll.get_polls
     search(polls_rel, terms)
   end
 

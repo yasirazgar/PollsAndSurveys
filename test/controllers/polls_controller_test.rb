@@ -11,20 +11,22 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
 
   test "index - without signin" do
     Web::PollService.expects(:get_polls).returns(expected_polls_for_user['polls'])
+    Web::PollService.expects(:get_polls_for_user).never
 
     get(polls_url, xhr: true)
     assert_response :success
     assert_equal(expected_polls_for_user, json_response,
-      'Should return polls as json')
+      'Should return polls as json without any filteration')
   end
 
   test "index" do
     service_mock.expects(:get_polls_for_user).returns(expected_polls_for_user['polls'])
+    Web::PollService.expects(:get_polls).never
 
     get(polls_url, headers: { "Authorization" => token_for_user(@yasir) }, xhr: true)
     assert_response :success
     assert_equal(expected_polls_for_user, json_response,
-      'Should return polls as json')
+      'Should return polls based on users preference, as json')
   end
 
   test "create" do
