@@ -9,6 +9,6 @@ export default axios.create({
   headers: {
     'Content-Type': 'application/json',
     // 'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content,
-    'Authorization': `Bearer ${window.localStorage.getItem('jwt')}`
+    'Authorization': window.localStorage.getItem('jwt') ? `Bearer ${window.localStorage.getItem('jwt')}` : ''
   }
 });
