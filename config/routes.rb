@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   # post "login", to: "sessions#create", as: "login"
   # delete "logout", to: "sessions#destroy", as: "logout"
   post "login", to: "authentication#create", as: "login"
-  delete "logout", to: "authentication#destroy", as: "logout"
+  # delete "logout", to: "authentication#destroy", as: "logout"
   resources :users, only: [:create, :destroy, :update]
   resource :user, controller: :user do
     patch 'update_profile'

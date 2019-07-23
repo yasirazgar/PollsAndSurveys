@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
 
 import Toolbar from './Toolbar/Toolbar';
 import SideDrawer from './SideDrawer/SideDrawer'
@@ -11,11 +12,10 @@ import Modal from './Utils/Modal'
 import Input from './Utils/Input'
 import Loader from './Utils/Loader'
 import ProfileModal from './Profile/ProfileModal'
-import SignInModal from './Session/SignInModal'
 import SignUpModal from './Session/SignUpModal'
+import SignInModal from './Session/SignInModal'
 
 import signUpHandler from './Handlers/signUpHandler';
-import signInHandler from './Handlers/signInHandler';
 import logoutHandler from './Handlers/logoutHandler';
 
 import './Tooltip.scss'
@@ -26,7 +26,7 @@ class Home extends Component {
     super(props);
 
     this.setLoginFormValidity = this.setLoginFormValidity.bind(this);
-    this.signInHandler = signInHandler;
+    // this.signInHandler = signInHandler.bind(this);
     this.modal = null;
     this.email = null;
     this.emailValid = false;
@@ -49,7 +49,6 @@ class Home extends Component {
     if(data.user) {
       this.setState({
         signedIn: true,
-        signInModalOpen: false,
         modalOpen: false,
         user: data.user
       })
@@ -58,7 +57,6 @@ class Home extends Component {
     }
     else{
       this.setState({
-        signInModalOpen: false,
         modalOpen: false,
       })
       alert("Invalid");
@@ -76,7 +74,6 @@ class Home extends Component {
     this[key] = Input_value;
     this[key + "Valid"] = isValid;
     this.formValid = this.emailValid && this.passwordValid
-    this.setSignInModal()
     if (this.formValid != this.state.loginButtonEnabled){
       this.setState({loginButtonEnabled: this.formValid});
     }
@@ -105,22 +102,16 @@ class Home extends Component {
     this.setState({modalOpen: true});
   };
 
-  setSignInModal = () => {
-    this.loginSucessCallback = this.loginSucessCallback.bind(this)
-    let handler = signInHandler.bind(this, this['email'], this['password'], this.loginSucessCallback);
-    return <SignInModal submitEnabled={this.state.loginButtonEnabled} closeModalHandler={this.closeModalHandler} signInHandler={handler} setFormValidity={this.setLoginFormValidity}/>
-  }
-
   setSignUpModal = () => {
-    return <SignUpModal closeModalHandler={this.closeModalHandler} signUnHandler={this.signInHandler}/>
+    return null
   }
 
   render() {
     let modal, backdrop, loader;
 
-    if(this.modal && this.state.modalOpen){
-      modal = this["set"+this.modal+"Modal"]()
-    }
+    // if(this.modal && this.state.modalOpen){
+    //   modal = this["set"+this.modal+"Modal"]()
+    // }
 
     if (this.state.sideDrawerOpen) {
       this.backdrop = <Backdrop backdropClickHandler={this.backdropClickHandler} />;
@@ -133,13 +124,14 @@ class Home extends Component {
     return (
       <div style={{height: '100%'}}>
 
+        <SignInModal />
+
         {loader}
 
         <Toolbar
           sideDrawerToggleClickHandler={this.sideDrawerToggleClickHandler}
           openProfileModal={this.openModal.bind(this, 'Profile')}
           logoutHandler={this.logoutHandler}
-          openSignInModal={this.openModal.bind(this, 'SignIn')}
           openSignUpModal={this.openModal.bind(this, 'SignUp')}
           user={this.state.user}/>
 
@@ -157,5 +149,7 @@ class Home extends Component {
     );
   }
 }
-
+const mapStateToProps = () => {
+  return {};
+}
 export default Home

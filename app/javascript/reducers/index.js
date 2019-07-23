@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form'
 
 import { FETCH_POLLS, FETCH_USER_POLLS, FETCH_RESPONDED_POLLS,
          FETCH_CATEGORIES, POLLS_TAB, USER_POLLS_TAB,
          RESPONDED_POLLS_TAB, TAB_ACTIVE_CLASS, TAB_CLASS,
-         BUILD_TRANSLATIONS, ANSWER_POLL, SEARCH_POLL, LOGIN
+         BUILD_TRANSLATIONS, ANSWER_POLL, SEARCH_POLL, LOGIN,
+         LOGOUT, AVAILABLE_MODALS, AVAILABLE_BUTTONS
        } from '../packs/constants'
 
 const INITIAL_POLLS = []
@@ -84,15 +86,48 @@ const searchPoll = (state=null, action) => {
   return state;
 }
 
-const login = (state=null, action) => {
-  if (action.type == LOGIN){
-    return action.payload.data.user
+const initialToken = window.localStorage.getItem('jwt')
+const token = (state=initialToken, action) => {
+  switch(action.type) {
+    case LOGIN:
+      return action.payload.data.jwt;
+    case LOGOUT:
+      return null;
+    default:
+      return state;
+  }
+}
+
+const initialUser = JSON.parse(window.localStorage.getItem('user'))
+const user = (state=initialUser, action) => {
+  switch(action.type) {
+    case LOGIN:
+      return action.payload.data.user;
+    case LOGOUT:
+      return null;
+    default:
+      return state;
+  }
+}
+
+const modal = (state=null, action) => {
+  if (AVAILABLE_MODALS.includes(action.type)) {
+    return action.payload
   }
 
-  return state;
+  return state
+}
+
+const enabledModalButton = (state=null, action) => {
+  if (AVAILABLE_BUTTONS.includes(action.type)) {
+    return action.payload
+  }
+
+  return state
 }
 
 export default combineReducers({
+  form: formReducer,
   polls,
   userPolls,
   respondedPolls,
@@ -101,5 +136,8 @@ export default combineReducers({
   translations,
   currentPoll,
   searchPoll,
-  user: login
+  user,
+  token,
+  modal,
+  enabledModalButton
 });
