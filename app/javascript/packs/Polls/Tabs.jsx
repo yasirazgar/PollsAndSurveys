@@ -29,7 +29,8 @@ const mapStateToProps = state => {
     userPollsClass: state.tab.userPollsClass,
     respondedPollsClass: state.tab.respondedPollsClass,
     translations: state.translations,
-    user: state.user
+    user: state.user,
+    user: state.jwt,
   }
 }
 

@@ -114,6 +114,10 @@ const modal = (state=null, action) => {
   if (AVAILABLE_MODALS.includes(action.type)) {
     return action.payload
   }
+  if(action.type == LOGIN){
+    // close modal after login
+    return null;
+  }
 
   return state
 }
@@ -121,6 +125,10 @@ const modal = (state=null, action) => {
 const enabledModalButton = (state=null, action) => {
   if (AVAILABLE_BUTTONS.includes(action.type)) {
     return action.payload
+  }
+  if(action.type == LOGIN){
+    // close modal after login
+    return null;
   }
 
   return state
