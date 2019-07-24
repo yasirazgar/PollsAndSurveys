@@ -95,9 +95,8 @@ export const toggleProfileButton = enabled => ({
 })
 
 export const logout = () => {
-  // debugger
   window.localStorage.removeItem('jwt')
   window.localStorage.removeItem('user')
   // document.location.href="/"
-  return({type: LOGIN})
+  return({type: LOGOUT})
 }
