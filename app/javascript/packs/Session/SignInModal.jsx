@@ -1,7 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { submit, isValid, isPristine, isSubmitting } from 'redux-form';
 
 import Modal from '../Utils/Modal';
 import ModalButtonGroup from '../Utils/ModalButtonGroup';

@@ -6,43 +6,42 @@ import PropTypes from 'prop-types';
 
 import Input from '../Utils/Input'
 
+import { SIGNUP_FAILURE, SIGNUP_FORM, EMAIL_REGEX, PASSWORD_REGEX } from '../constants'
+
+
 class SignUpForm extends Component {
   constructor(props){
     super(props)
-
-    this.email = null
-    this.password = null
-    this.confirmPassword = null
-    this.emailValid = false
-    this.passwordValid = false
-    this.confirmPasswordValid = false
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  setFormValidity = (key, value, isValid) => {
-    this[key+'Valid'] = isValid;
-    this[key] = value;
-
-    if (this.emailValid && this.passwordValid && passwordsMatch()) {
-      this.props.enableSubmitButton(true);
-    }
-    else {
-      this.props.enableSubmitButton(false);
-    }
+ handleSubmit(event) {
+    event.preventDefault();
+    alert('A name was submitted: ' );
   }
+  render(){
+    const { errors, translations, setFormValidity } = this.props
 
-  passwordsMatch = () => {
-    this.confirmPassword == this.password
-  }
-
-  render() {
     return (
-      <Fragment>
-        <Input name="name" type="text" placeholder={this.props.translations.name} setFormValidity={this.setFormValidity}/>
-        <Input name="email" type="email" placeholder={this.props.translations.email} setFormValidity={this.setFormValidity}/>
-        <Input name="password" type="password" placeholder={this.props.translations.password} setFormValidity={this.setFormValidity}/>
-        <Input name="confirmPassword" type="password" placeholder={this.props.translations.confirm_password} setFormValidity={this.setFormValidity}/>
-      </Fragment>
+
+      <form onSubmit={this.handleSubmit} id={SIGNUP_FORM}>
+
+        <input
+          name="name" type="text" placeholder={translations.name} required/>
+        <input
+          name="nickName" type="text" placeholder={translations.name} required/>
+        <input
+          name="email" type="email" placeholder={translations.email} setFormValidity={setFormValidity}
+          required />
+        <input
+          name="password" type="password" placeholder={translations.password} setFormValidity={setFormValidity}
+          required pattern={PASSWORD_REGEX}/>
+        <input
+          name="confirmPassword" type="password" placeholder={translations.confirm_password} setFormValidity={setFormValidity}
+          required pattern={PASSWORD_REGEX}/>
+      </form>
     );
+
   }
 }
 
@@ -52,7 +51,8 @@ SignUpForm.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    translations: state.translations
+    translations: state.translations,
+    errors: state.errors
   }
 }
 export default connect(mapStateToProps)(SignUpForm)

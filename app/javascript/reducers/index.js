@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { reducer as formReducer } from 'redux-form'
 
 import { FETCH_POLLS, FETCH_USER_POLLS, FETCH_RESPONDED_POLLS,
          FETCH_CATEGORIES, POLLS_TAB, USER_POLLS_TAB,
@@ -145,7 +144,6 @@ const errors = (state={}, action) => {
 }
 
 export default combineReducers({
-  form: formReducer,
   polls,
   userPolls,
   respondedPolls,
