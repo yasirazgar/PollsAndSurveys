@@ -96,7 +96,7 @@ class PollService
   end
 
   def search_polls(terms)
-    polls_rel = Poll.get_polls
+    polls_rel = PollService.get_polls
     search(polls_rel, terms)
   end
 
