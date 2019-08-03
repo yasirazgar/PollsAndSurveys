@@ -4,6 +4,7 @@
 
 import pollsRequest from '../apis/pollsRequest'
 import loadTranslations from '../i18n'
+import { userService } from '../services/user'
 
 import { FETCH_POLLS, FETCH_USER_POLLS, FETCH_RESPONDED_POLLS,
          FETCH_CATEGORIES, BUILD_TRANSLATIONS, ANSWER_POLL,
@@ -73,15 +74,7 @@ export const login = data => async dispatch => {
     response = error.response;
   }
 
-  if (response.status === 200){
-    window.localStorage.setItem('jwt', response.data.jwt)
-    window.localStorage.setItem('user', JSON.stringify(response.data.user))
-
-    dispatch({type: LOGIN, payload: response});
-  }
-  else {
-    dispatch({type: LOGIN_FAILURE, payload: response.data.error});
-  }
+  userService.login(dispatch, response)
 }
 
 export const signup = data => async dispatch => {
@@ -92,20 +85,7 @@ export const signup = data => async dispatch => {
   } catch (error) {
     response = error.response;
   }
-
-  if (response.status === 200){
-    dispatch({type: SIGNIN_MODAL, payload: SIGNIN_MODAL});
-  }
-  else {
-    dispatch({type: SIGNUP_FAILURE, payload: response.data.error});
-  }
-
-  // response = error.response;
-  // console.log(userService)
-  // userService.signup(response, dispatch);
-  // const response = await pollsRequest.post('/users', data)
-
-  // dispatch({type: SIGNUP, payload: response})
+  userService.signup(dispatch, response)
 }
 
 export const raiseModalError = (errror, modal) => {
@@ -140,8 +120,5 @@ export const toggleProfileButton = enabled => ({
 })
 
 export const logout = () => {
-  window.localStorage.removeItem('jwt')
-  window.localStorage.removeItem('user')
-  // document.location.href="/"
-  return({type: LOGOUT})
+  return userService.logout();
 }
