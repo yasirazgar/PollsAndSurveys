@@ -7,7 +7,6 @@ import SideDrawer from './SideDrawer/SideDrawer'
 import Backdrop from './Backdrop/Backdrop'
 import MainWrapper from './MainWrapper'
 import Footer from './Footer/Footer'
-import Loader from './Utils/Loader'
 import ProfileModal from './Profile/ProfileModal'
 import SignUpModal from './Session/SignUpModal'
 import SignInModal from './Session/SignInModal'
@@ -36,20 +35,14 @@ class Home extends Component {
   };
 
   render() {
-    let backdrop, loader;
+    let backdrop;
 
     if (this.state.sideDrawerOpen) {
-      this.backdrop = <Backdrop backdropClickHandler={this.backdropClickHandler} />;
+      backdrop = <Backdrop backdropClickHandler={this.backdropClickHandler} />;
     };
-
-    if (this.state.showLoader) {
-      this.loader = <Loader />
-    }
 
     return (
       <div style={{height: '100%'}}>
-
-        {loader}
 
         <Toolbar sideDrawerToggleClickHandler={this.sideDrawerToggleClickHandler} />
 

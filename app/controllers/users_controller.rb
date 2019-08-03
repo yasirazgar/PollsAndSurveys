@@ -6,7 +6,7 @@ class UsersController < ApplicationController
     if user.errors.blank?
       render json: {name: user.name, message: 'Regsitration successfully'}
     else
-      render json: {error: 'Error in Regsitration' + user.errors.full_messages.join('')}, status: :bad_request
+      render json: {error: 'Error in Regsitration' + user.errors.full_messages.join(', ')}, status: :bad_request
     end
   end
 
@@ -19,6 +19,6 @@ class UsersController < ApplicationController
   private
 
   def create_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :name, :nick_name, :locale)
+    params.require(:user).permit(:email, :password, :password_confirmation, :name, :nick_name, :locale, :password_confirmation)
   end
 end

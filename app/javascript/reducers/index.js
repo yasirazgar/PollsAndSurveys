@@ -5,7 +5,7 @@ import { FETCH_POLLS, FETCH_USER_POLLS, FETCH_RESPONDED_POLLS,
          RESPONDED_POLLS_TAB, TAB_ACTIVE_CLASS, TAB_CLASS,
          BUILD_TRANSLATIONS, ANSWER_POLL, SEARCH_POLL, LOGIN,
          LOGOUT, SIGNUP, AVAILABLE_MODALS, AVAILABLE_BUTTONS,
-         MODAL_ERRORS
+         MODAL_ERRORS, TOGGLE_LOADER
        } from '../packs/constants'
 
 const INITIAL_POLLS = []
@@ -128,7 +128,6 @@ const enabledModalButton = (state=null, action) => {
   }
   if([LOGIN, SIGNUP].includes(action.type)){
     // disable  modal after login
-    // disable modal  after login
     return null;
   }
 
@@ -137,9 +136,22 @@ const enabledModalButton = (state=null, action) => {
 
 const modalErrors = (state=[], action) => {
   if(MODAL_ERRORS.includes(action.type)){
-    return [action.payload]
+    return [action.payload];
   }
-  return state;
+  if(AVAILABLE_MODALS.includes(action.type)){
+    // when new modal opens make sure old errors are not shown
+    return [];
+  }
+  else {
+    return state;
+  }
+}
+
+const showLoader = (state=false, action) => {
+  if(action.type == TOGGLE_LOADER){
+    return action.payload;
+  }
+  return false; // hide for all other actions
 }
 
 export default combineReducers({
@@ -155,5 +167,6 @@ export default combineReducers({
   token,
   modal,
   enabledModalButton,
-  modalErrors
+  modalErrors,
+  showLoader
 });

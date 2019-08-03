@@ -9,7 +9,7 @@ import { FETCH_POLLS, FETCH_USER_POLLS, FETCH_RESPONDED_POLLS,
          FETCH_CATEGORIES, BUILD_TRANSLATIONS, ANSWER_POLL,
          SEARCH_POLL, LOGIN, LOGOUT, SIGNUP, SIGNUP_MODAL, SIGNIN_MODAL,
          PROFILE_MODAL, SIGNUP_BUTTON, SIGNIN_BUTTON, PROFILE_BUTTON,
-         LOGIN_FAILURE, SINGUP_FAILURE
+         LOGIN_FAILURE, SIGNUP_FAILURE, TOGGLE_LOADER
        } from '../packs/constants'
 
 const handleUnauthorizedRequest = (response) => {
@@ -79,7 +79,7 @@ export const login = data => async dispatch => {
 
     dispatch({type: LOGIN, payload: response});
   }
-  else{
+  else {
     dispatch({type: LOGIN_FAILURE, payload: response.data.error});
   }
 }
@@ -87,11 +87,19 @@ export const login = data => async dispatch => {
 export const signup = data => async dispatch => {
   let response;
   try {
-     response = await pollsRequest.post('/users', data)
+    response = await pollsRequest.post('/users', {user: data})
     console.log(response);
   } catch (error) {
     response = error.response;
   }
+
+  if (response.status === 200){
+    dispatch({type: SIGNIN_MODAL, payload: SIGNIN_MODAL});
+  }
+  else {
+    dispatch({type: SIGNUP_FAILURE, payload: response.data.error});
+  }
+
   // response = error.response;
   // console.log(userService)
   // userService.signup(response, dispatch);
@@ -99,6 +107,17 @@ export const signup = data => async dispatch => {
 
   // dispatch({type: SIGNUP, payload: response})
 }
+
+export const raiseModalError = (errror, modal) => {
+  if(MODAL_ERRORS.includes(modal)){
+    dispatch({type: modal, payload: error});
+  }
+  return
+}
+
+export const toggleLoader = show => ({
+  type: TOGGLE_LOADER, payload: show
+})
 
 export const toggleSignUpModal = opened => ({
   type: SIGNUP_MODAL, payload: (opened ? SIGNUP_MODAL : null)

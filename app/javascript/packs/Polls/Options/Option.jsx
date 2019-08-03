@@ -36,4 +36,10 @@ Option.propTypes = {
   callback: PropTypes.function
 }
 
-export default connect(null, { answerPoll })(Option)
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
+}
+
+export default connect(mapStateToProps, { answerPoll })(Option)

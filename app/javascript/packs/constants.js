@@ -12,7 +12,9 @@ export const POLLS_MAP = {
         [RESPONDED_POLLS_TAB]: 'respondedPolls'
       }
 export const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-export const PASSWORD_REGEX = "^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$"
+// export const PASSWORD_REGEX = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/
+// export const PASSWORD_REGEX = new RegExp("(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}", 'g')
+export const PASSWORD_REGEX = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/
 
 // Actions - pull into separate file under constants
 export const FETCH_POLLS = 'FETCH_POLLS'
@@ -28,6 +30,7 @@ export const SIGNUP = 'SIGNUP'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
 export const SIGNUP_FAILURE = 'SIGNUP_FAILURE'
 export const MODAL_ERRORS = [LOGIN_FAILURE, SIGNUP_FAILURE]
+export const TOGGLE_LOADER = 'TOGGLE_LOADER'
 
 // export const UPDATE_LOCALE = 'UPDATE_LOCALE'
 export const PROFILE_FORM = 'PROFILE_FORM'

@@ -1,44 +1,64 @@
-
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
-import Input from '../Utils/Input'
+import { signup, raiseModalError, toggleLoader } from '../../actions'
 
 import { SIGNUP_FAILURE, SIGNUP_FORM, EMAIL_REGEX, PASSWORD_REGEX } from '../constants'
-
 
 class SignUpForm extends Component {
   constructor(props){
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+
+    this.state = {
+      email: null,
+      password: null,
+      password_confirmation: null,
+      name: null,
+      nick_name: null
+    }
   }
 
- handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
-    alert('A name was submitted: ' );
+    this.props.toggleLoader(true);
+    this.props.signup({
+      email: this.state.email,
+      password: this.state.password,
+      password_confirmation: this.state.password_confirmation,
+      name: this.state.name,
+      nick_name: this.state.nick_name
+    })
   }
+
+  handleChange = (event) => {
+    this.setState({[event.target.name]: event.target.value});
+  }
+
   render(){
     const { errors, translations, setFormValidity } = this.props
 
     return (
 
       <form onSubmit={this.handleSubmit} id={SIGNUP_FORM}>
-
         <input
-          name="name" type="text" placeholder={translations.name} required/>
-        <input
-          name="nickName" type="text" placeholder={translations.name} required/>
-        <input
-          name="email" type="email" placeholder={translations.email} setFormValidity={setFormValidity}
+          name="name" type="text" placeholder={translations.name} onChange={this.handleChange}
           required />
         <input
-          name="password" type="password" placeholder={translations.password} setFormValidity={setFormValidity}
-          required pattern={PASSWORD_REGEX}/>
+          name="nick_name" type="text" placeholder={translations.name} onChange={this.handleChange}
+          required />
         <input
-          name="confirmPassword" type="password" placeholder={translations.confirm_password} setFormValidity={setFormValidity}
-          required pattern={PASSWORD_REGEX}/>
+          name="email" type="email" placeholder={translations.email} onChange={this.handleChange}
+          required />
+        <input
+          name="password" type="password" placeholder={translations.password} onChange={this.handleChange}
+          required pattern ="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" />
+        <input
+          name="password_confirmation" type="password" placeholder={translations.confirm_password} onChange={this.handleChange}
+          required pattern ="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" />
       </form>
     );
 
@@ -55,4 +75,4 @@ const mapStateToProps = state => {
     errors: state.errors
   }
 }
-export default connect(mapStateToProps)(SignUpForm)
+export default connect(mapStateToProps, {signup, raiseModalError, toggleLoader})(SignUpForm)

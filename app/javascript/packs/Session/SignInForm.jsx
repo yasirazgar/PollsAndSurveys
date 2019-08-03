@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
-import { login } from '../../actions'
+import { login, toggleLoader } from '../../actions'
 import { SIGNIN_FORM, PASSWORD_REGEX } from '../constants'
 
 class SignInForm extends Component{
@@ -20,6 +20,7 @@ class SignInForm extends Component{
 
   handleSubmit = (event) => {
     event.preventDefault();
+    toggleLoader(true);
     this.props.login({email: this.state.email, password: this.state.password});
   }
 
@@ -39,11 +40,10 @@ class SignInForm extends Component{
         <input
           name="password" type="password" placeholder={translations.password}
           onChange={this.handleChange}
-          required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$"/>
+          required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"/>
       </form>
     )
   }
-
 }
 
 SignInForm.propsType = {
@@ -56,4 +56,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default SignInForm = connect(mapStateToProps, { login })(SignInForm)
+export default SignInForm = connect(mapStateToProps, { login, toggleLoader })(SignInForm)
