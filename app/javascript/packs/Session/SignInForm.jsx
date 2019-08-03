@@ -2,34 +2,48 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import { reduxForm, Field } from 'redux-form';
-
-import Input from '../Utils/Input'
 
 import { toggleSignInButton, login } from '../../actions'
-import { SIGN_IN_FORM } from '../constants'
-import { required, email, maxLength15, minLength2 } from '../Helpers/validation_helper'
-import renderField from '../Helpers/renderField'
+import { SIGNIN_FORM, PASSWORD_REGEX } from '../constants'
 
-let SignInForm = props => {
-  const { handleSubmit, login, pristine, reset, submitting } = props
+class SignInForm extends Component{
+  constructor(props){
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <Field
-        name="email"
-        type="email"
-        component={renderField}
-        validate={[required, email]}
-      />
-      <Field
-        name="password"
-        type="password"
-        component={renderField}
-        validate={[required, maxLength15, minLength2]}
-      />
-    </form>
-  )
+    this.state = {
+      email: null,
+      password: null
+    }
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    this.props.login({email: this.state.email, password: this.state.password});
+  }
+
+  handleChange = (event) => {
+    this.setState({[event.target.name]: event.target.value});
+  }
+
+  render(){
+    const { translations } = this.props
+
+    return (
+      <form onSubmit={this.handleSubmit} id={SIGNIN_FORM}>
+        <input
+          name="email" type="email" placeholder={translations.email}
+          onChange={this.handleChange}
+          required />
+        <input
+          name="password" type="password" placeholder={translations.password}
+          onChange={this.handleChange}
+          required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$"/>
+      </form>
+    )
+  }
+
 }
 
 SignInForm.propsType = {
@@ -42,7 +56,4 @@ const mapStateToProps = state => {
   }
 }
 
-SignInForm = connect(mapStateToProps)(SignInForm)
-export default reduxForm({
-  form: SIGN_IN_FORM // a unique identifier for this form
-})(SignInForm)
+export default SignInForm = connect(mapStateToProps, { login })(SignInForm)

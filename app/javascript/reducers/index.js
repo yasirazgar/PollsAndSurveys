@@ -5,7 +5,8 @@ import { FETCH_POLLS, FETCH_USER_POLLS, FETCH_RESPONDED_POLLS,
          FETCH_CATEGORIES, POLLS_TAB, USER_POLLS_TAB,
          RESPONDED_POLLS_TAB, TAB_ACTIVE_CLASS, TAB_CLASS,
          BUILD_TRANSLATIONS, ANSWER_POLL, SEARCH_POLL, LOGIN,
-         LOGOUT, AVAILABLE_MODALS, AVAILABLE_BUTTONS
+         LOGOUT, SIGNUP, AVAILABLE_MODALS, AVAILABLE_BUTTONS,
+         AVAILABLE_ERRORS
        } from '../packs/constants'
 
 const INITIAL_POLLS = []
@@ -114,24 +115,33 @@ const modal = (state=null, action) => {
   if (AVAILABLE_MODALS.includes(action.type)) {
     return action.payload
   }
-  if(action.type == LOGIN){
+  if([LOGIN, SIGNUP].includes(action.type)){
     // close modal after login
     return null;
   }
 
-  return state
+  return state;
 }
 
 const enabledModalButton = (state=null, action) => {
   if (AVAILABLE_BUTTONS.includes(action.type)) {
     return action.payload
   }
-  if(action.type == LOGIN){
-    // close modal after login
+  if([LOGIN, SIGNUP].includes(action.type)){
+    // disable  modal after login
+    // disable modal  after login
     return null;
   }
 
-  return state
+  return state;
+}
+
+const errors = (state={}, action) => {
+  if(AVAILABLE_ERRORS.includes(action.type)){
+    return {...state, [action.type]: action.payload}
+  }
+  return state;
+
 }
 
 export default combineReducers({
@@ -147,5 +157,6 @@ export default combineReducers({
   user,
   token,
   modal,
-  enabledModalButton
+  enabledModalButton,
+  errors
 });

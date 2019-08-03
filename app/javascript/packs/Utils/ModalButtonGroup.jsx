@@ -13,7 +13,7 @@ const ModalButtonGroup = props => {
 
   return (
     <div className="btn-group">
-      <Button classes="primary" text={primaryText} clickHandler={props.submitHandler} disabled={disabled}/>
+      <Button classes="primary" text={primaryText} clickHandler={props.submitHandler} disabled={disabled} form={props.form}/>
       <Button classes="secondary" text={secondaryText} clickHandler={props.closeModalHandler} />
     </div>
   )
