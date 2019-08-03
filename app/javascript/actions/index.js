@@ -7,8 +7,9 @@ import loadTranslations from '../i18n'
 
 import { FETCH_POLLS, FETCH_USER_POLLS, FETCH_RESPONDED_POLLS,
          FETCH_CATEGORIES, BUILD_TRANSLATIONS, ANSWER_POLL,
-         SEARCH_POLL, LOGIN, LOGOUT, SIGN_UP_MODAL, SIGN_IN_MODAL,
-         PROFILE_MODAL, SIGN_UP_BUTTON, SIGN_IN_BUTTON, PROFILE_BUTTON
+         SEARCH_POLL, LOGIN, LOGOUT, SIGNUP, SIGNUP_MODAL, SIGNIN_MODAL,
+         PROFILE_MODAL, SIGNUP_BUTTON, SIGNIN_BUTTON, PROFILE_BUTTON,
+         LOGIN_FAILURE, SINGUP_FAILURE
        } from '../packs/constants'
 
 const handleUnauthorizedRequest = (response) => {
@@ -63,32 +64,52 @@ export const searchPoll = data => async dispatch => {
   dispatch({type: SEARCH_POLL, payload: response})
 }
 
+// pull login/signup and related things into separate service
 export const login = data => async dispatch => {
-  const response = await pollsRequest.post('/login', {email: data.email, password: data.password})
+  const response = await pollsRequest.post('/login', data)
 
   if (response.data.jwt){
     window.localStorage.setItem('jwt', response.data.jwt)
     window.localStorage.setItem('user', JSON.stringify(response.data.user))
-  }
 
-  dispatch({type: LOGIN, payload: response})
+    dispatch({type: LOGIN, payload: response});
+  }
+  else{
+    dispatch({type: LOGIN_FAILURE, payload: response.error});
+  }
+}
+
+export const signup = data => async dispatch => {
+  let response;
+  try {
+     response = await pollsRequest.post('/users', data)
+    console.log(response);
+  } catch (error) {
+    response = error.response;
+  }
+  // response = error.response;
+  // console.log(userService)
+  // userService.signup(response, dispatch);
+  // const response = await pollsRequest.post('/users', data)
+
+  // dispatch({type: SIGNUP, payload: response})
 }
 
 export const toggleSignUpModal = opened => ({
-  type: SIGN_UP_MODAL, payload: (opened ? SIGN_UP_MODAL : null)
+  type: SIGNUP_MODAL, payload: (opened ? SIGNUP_MODAL : null)
 })
 export const toggleSignInModal = opened => ({
-  type: SIGN_IN_MODAL, payload: (opened ? SIGN_IN_MODAL : null)
+  type: SIGNIN_MODAL, payload: (opened ? SIGNIN_MODAL : null)
 })
 export const toggleProfileModal = opened => ({
   type: PROFILE_MODAL, payload: (opened ? PROFILE_MODAL : null)
 })
 
 export const toggleSignUpButton = enabled => ({
-  type: SIGN_UP_BUTTON, payload: (enabled ? SIGN_UP_BUTTON : null)
+  type: SIGNUP_BUTTON, payload: (enabled ? SIGNUP_BUTTON : null)
 })
 export const toggleSignInButton = enabled => ({
-  type: SIGN_IN_BUTTON, payload: (enabled ? SIGN_IN_BUTTON : null)
+  type: SIGNIN_BUTTON, payload: (enabled ? SIGNIN_BUTTON : null)
 })
 export const toggleProfileButton = enabled => ({
   type: PROFILE_BUTTON, payload: (enabled ? PROFILE_BUTTON : null)

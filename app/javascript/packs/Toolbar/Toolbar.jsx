@@ -7,7 +7,7 @@ import ToggleButton from '../SideDrawer/ToggleButton'
 import ProfileIcon from 'user__anonymous.svg'
 import MegaphoneIcon from 'megaphone.svg'
 
-import { logout, toggleSignInModal } from '../../actions'
+import { logout, toggleSignInModal, toggleSignUpModal } from '../../actions'
 
 import './Toolbar.scss';
 
@@ -23,7 +23,7 @@ const Toolbar = props => {
   else {
     navItems = [
       <li key="1" className="links signin" onClick={props.toggleSignInModal.bind(this, true)}>{props.translations.signin}</li>,
-      <li key="2" className="links signup" onClick={props.openSignUpModal}>{props.translations.signup}</li>
+      <li key="2" className="links signup" onClick={props.toggleSignUpModal.bind(this, true)}>{props.translations.signup}</li>
     ]
   }
 
@@ -65,4 +65,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, { logout, toggleSignInModal })(Toolbar)
+export default connect(mapStateToProps, { logout, toggleSignInModal, toggleSignUpModal })(Toolbar)
