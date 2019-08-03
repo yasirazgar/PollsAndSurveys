@@ -66,16 +66,21 @@ export const searchPoll = data => async dispatch => {
 
 // pull login/signup and related things into separate service
 export const login = data => async dispatch => {
-  const response = await pollsRequest.post('/login', data)
+  let response, error;
+  try {
+    response = await pollsRequest.post('/login', data);
+  } catch (error) {
+    response = error.response;
+  }
 
-  if (response.data.jwt){
+  if (response.status === 200){
     window.localStorage.setItem('jwt', response.data.jwt)
     window.localStorage.setItem('user', JSON.stringify(response.data.user))
 
     dispatch({type: LOGIN, payload: response});
   }
   else{
-    dispatch({type: LOGIN_FAILURE, payload: response.error});
+    dispatch({type: LOGIN_FAILURE, payload: response.data.error});
   }
 }
 

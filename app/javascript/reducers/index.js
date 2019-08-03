@@ -5,7 +5,7 @@ import { FETCH_POLLS, FETCH_USER_POLLS, FETCH_RESPONDED_POLLS,
          RESPONDED_POLLS_TAB, TAB_ACTIVE_CLASS, TAB_CLASS,
          BUILD_TRANSLATIONS, ANSWER_POLL, SEARCH_POLL, LOGIN,
          LOGOUT, SIGNUP, AVAILABLE_MODALS, AVAILABLE_BUTTONS,
-         AVAILABLE_ERRORS
+         MODAL_ERRORS
        } from '../packs/constants'
 
 const INITIAL_POLLS = []
@@ -135,12 +135,11 @@ const enabledModalButton = (state=null, action) => {
   return state;
 }
 
-const errors = (state={}, action) => {
-  if(AVAILABLE_ERRORS.includes(action.type)){
-    return {...state, [action.type]: action.payload}
+const modalErrors = (state=[], action) => {
+  if(MODAL_ERRORS.includes(action.type)){
+    return [action.payload]
   }
   return state;
-
 }
 
 export default combineReducers({
@@ -156,5 +155,5 @@ export default combineReducers({
   token,
   modal,
   enabledModalButton,
-  errors
+  modalErrors
 });

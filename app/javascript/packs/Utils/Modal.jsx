@@ -1,5 +1,5 @@
-
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
@@ -34,6 +34,12 @@ class Modal extends Component {
               <h2>{this.props.modalHeader}</h2>
             </div>
             <div className="modal__body">
+              <span className="error-message">
+                <ul>
+                  {this.props.errors.map((error) => (<li> {error} </li>))}
+                </ul>
+              </span>
+
               {this.props.modalBody}
             </div>
             <div className="modal__footer">
@@ -55,4 +61,9 @@ Modal.propTypes = {
   modalBody: PropTypes.element
 }
 
-export default Modal
+const mapStateToProps = state => {
+  return {
+    errors: state.modalErrors
+  }
+}
+export default connect(mapStateToProps)(Modal)

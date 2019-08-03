@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
-import { toggleSignInButton, login } from '../../actions'
+import { login } from '../../actions'
 import { SIGNIN_FORM, PASSWORD_REGEX } from '../constants'
 
 class SignInForm extends Component{
