@@ -45,6 +45,9 @@ class SideDrawer extends Component {
   }
 
   render () {
+    // !!! disabling for now, sends an login request from somewhere find and fix
+    return false;
+
     let classes = 'side-drawer';
     if (this.props.open) {
       classes = classes + ' open';

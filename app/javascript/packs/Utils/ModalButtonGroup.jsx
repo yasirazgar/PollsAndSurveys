@@ -11,10 +11,10 @@ const ModalButtonGroup = props => {
   let secondaryText = props.secondaryText || props.translations.cancel;
   let disabled = !props.submitEnabled;
 
+  // <Button classes="secondary" text={secondaryText} clickHandler={props.closeModalHandler} />
   return (
     <div className="btn-group">
-      <Button classes="primary" text={primaryText} clickHandler={props.submitHandler} disabled={disabled}/>
-      <Button classes="secondary" text={secondaryText} clickHandler={props.closeModalHandler} />
+      <Button classes="primary" text={primaryText} clickHandler={props.submitHandler} disabled={disabled} form={props.form}/>
     </div>
   )
 };

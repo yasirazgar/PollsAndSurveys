@@ -32,10 +32,12 @@
   "location": "Location",
   "age": "Age",
   "gender": "Gender",
-  "ok": "Ok",
-  "cancel": "Cancel",
   "age_group": "AGE GROUP",
-  "all": "All",
   "categories": "CATEGORIES",
-  "create": "Create"
+  "create": "Create",
+  "password_error": "Invalid password",
+  "email_error": "Invalid email",
+  "all": "All",
+  "ok": "Ok",
+  "cancel": "Cancel"
 }

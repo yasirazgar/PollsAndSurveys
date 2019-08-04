@@ -1,12 +1,19 @@
 import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
+const regexs = {
+  email: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+  password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/
+}
+const errors = {
+  email: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+  password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/
+}
 class Input extends Component {
   constructor(props) {
     super(props);
 
-    this.emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-    this.passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/
     this.state = {
       errorMessage: null
     };
@@ -15,11 +22,7 @@ class Input extends Component {
   }
 
   validateWithRegex = (event) => {
-    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/
-    const emailError = 'Invalid email'
-    const passwordError = 'Invalid password'
-    const regex = eval(this.props.type+'Regex');
+    const regex = regexs[this.props.type]
     const value = event.target.value;
 
     if (!regex){
@@ -37,8 +40,8 @@ class Input extends Component {
         }
       }
       else{
-        if (this.valid != valid){
-          this.setState({errorMessage: eval(this.props.type+'Error')});
+        if (this.props.type && (this.valid != valid)){
+          this.setState({errorMessage: this.props.translations[this.props.type + '_error']});
         }
       }
       this.valid = valid
@@ -85,4 +88,10 @@ Input.propTypes = {
 
 }
 
-export default Input;
+const mapStateToProps = state => {
+  return {
+    translations: state.translations
+  }
+}
+
+export default connect(mapStateToProps)(Input);

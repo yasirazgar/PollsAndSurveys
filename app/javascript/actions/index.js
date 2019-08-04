@@ -4,11 +4,20 @@
 
 import pollsRequest from '../apis/pollsRequest'
 import loadTranslations from '../i18n'
+import { userService } from '../services/user'
 
 import { FETCH_POLLS, FETCH_USER_POLLS, FETCH_RESPONDED_POLLS,
          FETCH_CATEGORIES, BUILD_TRANSLATIONS, ANSWER_POLL,
-         SEARCH_POLL
+         SEARCH_POLL, LOGIN, LOGOUT, SIGNUP, SIGNUP_MODAL, SIGNIN_MODAL,
+         PROFILE_MODAL, SIGNUP_BUTTON, SIGNIN_BUTTON, PROFILE_BUTTON,
+         LOGIN_FAILURE, SIGNUP_FAILURE, TOGGLE_LOADER
        } from '../packs/constants'
+
+const handleUnauthorizedRequest = (response) => {
+  if (response.status === 401){
+    logout();
+  }
+}
 
 export const fetchPolls = () => async dispatch => {
   const response = await pollsRequest.get('/polls');
@@ -50,8 +59,66 @@ export const answerPoll = (poll_id, option_id, callback) => async dispatch => {
   dispatch({type: ANSWER_POLL, payload: response})
 }
 
-export const searchPoll = (data) => async dispatch => {
+export const searchPoll = data => async dispatch => {
   const response = await pollsRequest.get('/polls/search', {params: data})
 
   dispatch({type: SEARCH_POLL, payload: response})
+}
+
+// pull login/signup and related things into separate service
+export const login = data => async dispatch => {
+  let response, error;
+  try {
+    response = await pollsRequest.post('/login', data);
+  } catch (error) {
+    response = error.response;
+  }
+
+  userService.login(dispatch, response)
+}
+
+export const signup = data => async dispatch => {
+  let response;
+  try {
+    response = await pollsRequest.post('/users', {user: data})
+    console.log(response);
+  } catch (error) {
+    response = error.response;
+  }
+  userService.signup(dispatch, response)
+}
+
+export const raiseModalError = (errror, modal) => {
+  if(MODAL_ERRORS.includes(modal)){
+    dispatch({type: modal, payload: error});
+  }
+  return
+}
+
+export const toggleLoader = show => ({
+  type: TOGGLE_LOADER, payload: show
+})
+
+export const toggleSignUpModal = opened => ({
+  type: SIGNUP_MODAL, payload: (opened ? SIGNUP_MODAL : null)
+})
+export const toggleSignInModal = opened => ({
+  type: SIGNIN_MODAL, payload: (opened ? SIGNIN_MODAL : null)
+})
+export const toggleProfileModal = opened => ({
+  type: PROFILE_MODAL, payload: (opened ? PROFILE_MODAL : null)
+})
+
+export const toggleSignUpButton = enabled => ({
+  type: SIGNUP_BUTTON, payload: (enabled ? SIGNUP_BUTTON : null)
+})
+export const toggleSignInButton = enabled => ({
+  type: SIGNIN_BUTTON, payload: (enabled ? SIGNIN_BUTTON : null)
+})
+export const toggleProfileButton = enabled => ({
+  type: PROFILE_BUTTON, payload: (enabled ? PROFILE_BUTTON : null)
+})
+
+export const logout = () => {
+  return userService.logout();
 }

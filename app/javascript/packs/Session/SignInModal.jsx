@@ -1,35 +1,46 @@
 import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import Modal from '../Utils/Modal';
 import ModalButtonGroup from '../Utils/ModalButtonGroup';
 import SignInForm from './SignInForm';
 
+import { login, toggleSignInModal } from '../../actions'
+import { SIGNIN_MODAL, SIGNIN_BUTTON, SIGNIN_FORM } from '../constants'
+
 const SignInModal = props => {
-  let modalBody = <div className="form sign-in">
-    <SignInForm setFormValidity={props.setFormValidity}/>
+  if (props.modal != SIGNIN_MODAL){
+    return null;
+  }
+  const close = () => props.dispatch(toggleSignInModal(false));
+
+  const modalBody = <div className="form sign-in">
+    <SignInForm />
   </div>;
 
-  let modalFooter = <ModalButtonGroup
-    submitEnabled={props.submitEnabled}
-    closeModalHandler={props.closeModalHandler}
-    submitHandler={props.signInHandler}/>
+  const modalFooter = <ModalButtonGroup
+    form={SIGNIN_FORM}
+    submitEnabled={true}
+    closeModalHandler={close}
+    />
 
   return (
     <Modal
-      closeModalHandler={props.closeModalHandler}
-      modalHeader='Sign in'
+      closeModalHandler={close}
+      modalHeader={props.translations.signin}
       modalBody={modalBody}
       modalFooter={modalFooter}
     />
   )
 };
 
-SignInModal.propTypes = {
-  setFormValidity: PropTypes.func,
-  submitEnabled: PropTypes.func,
-  signInHandler: PropTypes.func,
-  closeModalHandler: PropTypes.func
+const mapStateToProps = state => {
+  return {
+    enabledModalButton: state.enabledModalButton,
+    modal: state.modal,
+    translations: state.translations
+  };
 }
 
-export default SignInModal;
+export default connect(mapStateToProps)(SignInModal);

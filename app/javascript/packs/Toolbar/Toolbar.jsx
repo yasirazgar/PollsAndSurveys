@@ -7,6 +7,8 @@ import ToggleButton from '../SideDrawer/ToggleButton'
 import ProfileIcon from 'user__anonymous.svg'
 import MegaphoneIcon from 'megaphone.svg'
 
+import { logout, toggleSignInModal, toggleSignUpModal } from '../../actions'
+
 import './Toolbar.scss';
 
 const Toolbar = props => {
@@ -14,14 +16,14 @@ const Toolbar = props => {
 
   if (props.user){
     navItems = [
-      <li key="1" className="links" onClick={props.logoutHandler}>{props.translations.logout}</li>,
+      <li key="1" className="links" onClick={props.logout}>{props.translations.logout}</li>,
       <li key="2"><img className="avatar" src={ProfileIcon} onClick={props.openProfileModal}></img></li>
     ]
   }
   else {
     navItems = [
-      <li key="1" className="links signin" onClick={props.openSignInModal}>{props.translations.signin}</li>,
-      <li key="2" className="links signup" onClick={props.openSignUpModal}>{props.translations.signup}</li>
+      <li key="1" className="links signin" onClick={props.toggleSignInModal.bind(this, true)}>{props.translations.signin}</li>,
+      <li key="2" className="links signup" onClick={props.toggleSignUpModal.bind(this, true)}>{props.translations.signup}</li>
     ]
   }
 
@@ -58,8 +60,9 @@ Toolbar.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    translations: state.translations
+    translations: state.translations,
+    user: state.user
   }
 }
 
-export default connect(mapStateToProps)(Toolbar)
+export default connect(mapStateToProps, { logout, toggleSignInModal, toggleSignUpModal })(Toolbar)

@@ -1,16 +1,11 @@
-
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
 import './Modal.scss'
 
-class Modal extends Component {
-  state = {
-    open: false
-  };
-
-  render() {
+const Modal = ({errors, modalHeader, modalBody, modalFooter, closeModalHandler}) => {
 /*<aside className="c-modal-cover">
           <div className="c-modal">
             <div className="c-modal__header">
@@ -25,27 +20,32 @@ class Modal extends Component {
           </div>
         </aside>
         */
-    return ReactDOM.createPortal(
-      <Fragment>
-        <div className="modal-cover">
-          <div className="modal">
-            <div className="modal__header">
-              <span className="close" onClick={this.props.closeModalHandler}>&times;</span>
-              <h2>{this.props.modalHeader}</h2>
-            </div>
-            <div className="modal__body">
-              {this.props.modalBody}
-            </div>
-            <div className="modal__footer">
-              {this.props.modalFooter}
-            </div>
-
+  return ReactDOM.createPortal(
+    <Fragment>
+      <div className="modal-cover">
+        <div className="modal">
+          <div className="modal__header">
+            <span className="close" onClick={closeModalHandler}>&times;</span>
+            <center><h2>{modalHeader}</h2></center>
           </div>
+          <div className="modal__body">
+            <span className="error-message">
+              <ul>
+                {errors.map((error) => (<li> {error} </li>))}
+              </ul>
+            </span>
+
+            {modalBody}
+          </div>
+          <div className="modal__footer">
+            {modalFooter}
+          </div>
+
         </div>
-      </Fragment>,
-      document.body
-    );
-  }
+      </div>
+    </Fragment>,
+    document.body
+  );
 }
 
 Modal.propTypes = {
@@ -55,4 +55,9 @@ Modal.propTypes = {
   modalBody: PropTypes.element
 }
 
-export default Modal
+const mapStateToProps = state => {
+  return {
+    errors: state.modalErrors
+  }
+}
+export default connect(mapStateToProps)(Modal)

@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import Modal from '../Utils/Modal';
 import ProfileForm from './ProfileForm'
 
 import ModalButtonGroup from '../Utils/ModalButtonGroup';
 
-const ProfileModal = () => {
+import { PROFILE_MODAL, PROFILE_BUTTON, } from '../constants';
+
+const ProfileModal = (props) => {
+  if (props.modal != PROFILE_MODAL){
+    return null;
+  }
   let modalBody = <div className="form profile">
     <ProfileForm />
   </div>
@@ -26,4 +32,11 @@ ProfileModal.propTypes = {
   closeModalHandler: PropTypes.func
 }
 
-export default ProfileModal;
+const mapStateToProps = state => {
+  return {
+    enabledModalButton: state.enabledModalButton,
+    modal: state.modal,
+  };
+}
+
+export default connect(mapStateToProps)(ProfileModal);

@@ -9,8 +9,19 @@ const Button = props => {
     classes += props.classes
   }
 
+  let buttonProps = {
+    disabled: props.disabled,
+    clickHandler: props.submitHandler,
+    className: classes,
+    onClick: props.clickHandler
+  }
+  if (props.form){
+    buttonProps['form'] = props.form
+    buttonProps['type'] = 'submit'
+  }
+
   return (
-    <button className={classes} onClick={props.clickHandler} disabled={props.disabled}>{props.text} </button>
+    <button { ...buttonProps }>{props.text} </button>
   )
 };
 
@@ -19,3 +30,4 @@ Button.propTypes = {
 }
 
 export default Button;
+

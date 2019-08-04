@@ -3,7 +3,9 @@ import { combineReducers } from 'redux';
 import { FETCH_POLLS, FETCH_USER_POLLS, FETCH_RESPONDED_POLLS,
          FETCH_CATEGORIES, POLLS_TAB, USER_POLLS_TAB,
          RESPONDED_POLLS_TAB, TAB_ACTIVE_CLASS, TAB_CLASS,
-         BUILD_TRANSLATIONS, ANSWER_POLL, SEARCH_POLL
+         BUILD_TRANSLATIONS, ANSWER_POLL, SEARCH_POLL, LOGIN,
+         LOGOUT, SIGNUP, AVAILABLE_MODALS, AVAILABLE_BUTTONS,
+         MODAL_ERRORS, TOGGLE_LOADER
        } from '../packs/constants'
 
 const INITIAL_POLLS = []
@@ -84,6 +86,74 @@ const searchPoll = (state=null, action) => {
   return state;
 }
 
+const initialToken = window.localStorage.getItem('jwt')
+const token = (state=initialToken, action) => {
+  switch(action.type) {
+    case LOGIN:
+      return action.payload.data.jwt;
+    case LOGOUT:
+      return null;
+    default:
+      return state;
+  }
+}
+
+const initialUser = JSON.parse(window.localStorage.getItem('user'))
+const user = (state=initialUser, action) => {
+  switch(action.type) {
+    case LOGIN:
+      return action.payload.data.user;
+    case LOGOUT:
+      return null;
+    default:
+      return state;
+  }
+}
+
+const modal = (state=null, action) => {
+  if (AVAILABLE_MODALS.includes(action.type)) {
+    return action.payload
+  }
+  if([LOGIN, SIGNUP].includes(action.type)){
+    // close modal after login
+    return null;
+  }
+
+  return state;
+}
+
+const enabledModalButton = (state=null, action) => {
+  if (AVAILABLE_BUTTONS.includes(action.type)) {
+    return action.payload
+  }
+  if([LOGIN, SIGNUP].includes(action.type)){
+    // disable  modal after login
+    return null;
+  }
+
+  return state;
+}
+
+const modalErrors = (state=[], action) => {
+  if(MODAL_ERRORS.includes(action.type)){
+    return [action.payload];
+  }
+  if(AVAILABLE_MODALS.includes(action.type)){
+    // when new modal opens make sure old errors are not shown
+    return [];
+  }
+  else {
+    return state;
+  }
+}
+
+const showLoader = (state=false, action) => {
+  if(action.type == TOGGLE_LOADER){
+    return action.payload;
+  }
+  return false; // hide for all other actions
+}
+
 export default combineReducers({
   polls,
   userPolls,
@@ -92,5 +162,11 @@ export default combineReducers({
   categories,
   translations,
   currentPoll,
-  searchPoll
+  searchPoll,
+  user,
+  token,
+  modal,
+  enabledModalButton,
+  modalErrors,
+  showLoader
 });

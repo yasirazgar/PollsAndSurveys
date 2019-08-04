@@ -5,6 +5,7 @@ import NewPoll from './Polls/NewPoll'
 import SearchPoll from './Polls/SearchPoll'
 import Tabs from './Polls/Tabs'
 import Button from './Utils/Button'
+import Loader from './Utils/Loader'
 import { fetchCategories } from '../actions'
 import { connect } from 'react-redux';
 
@@ -39,22 +40,28 @@ class MainWrapper extends Component {
   }
 
   render() {
+    const { showLoader, categories, translations, user } = this.props;
+    let loader;
+    if(showLoader){
+      loader = <Loader />
+    }
     return (
       <div className="main-wrapper">
+        {loader}
         <div className="main-wrapper-header">
           <div className="main-wrapper-header-content">
-            <SearchPoll categories={this.props.categories} callback={this.searchPollCallback}/>
+            <SearchPoll categories={categories} callback={this.searchPollCallback}/>
           </div>
           <span>
-            <Button classes="btn__outer" text={this.props.translations.add_new_poll} clickHandler={this.setCreatePollView} />
+            <Button classes="btn__outer" text={translations.add_new_poll} clickHandler={this.setCreatePollView} />
           </span>
 
         </div>
         <div className="tab">
-          <Tabs user={this.props.user} />
+          <Tabs user={user} />
         </div>
         <div className="main-wrapper__content">
-          <NewPoll categories={this.props.categories}/>
+          <NewPoll categories={categories}/>
           <Polls />
         </div>
       </div>
@@ -63,7 +70,11 @@ class MainWrapper extends Component {
 }
 
 const mapStateToProps = state => {
-  return { translations: state.translations, categories: state.categories };
+  return {
+    translations: state.translations,
+    categories: state.categories,
+    showLoader: state.showLoader
+  };
 };
 
 export default connect(mapStateToProps, { fetchCategories })(MainWrapper)

@@ -28,7 +28,8 @@ const mapStateToProps = state => {
     pollsClass: state.tab.pollsClass,
     userPollsClass: state.tab.userPollsClass,
     respondedPollsClass: state.tab.respondedPollsClass,
-    translations: state.translations
+    translations: state.translations,
+    user: state.user
   }
 }
 
