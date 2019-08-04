@@ -64,7 +64,7 @@ class SearchPoll extends Component {
 
   render() {
     return (
-      <div className="search-poll">
+      <React.Fragment >
 
         {/* <Input classes="poll-location" placeholder="Location" /> */ }
 
@@ -73,7 +73,7 @@ class SearchPoll extends Component {
         <FilterComponents categories={this.props.categories} categoryChangeHandler={this.categoryChangeHandler} ageGroupChangeHandler={this.ageGroupChangeHandler} />
 
         <Button classes="btn__inner" text={this.props.translations.search} clickHandler={this.searchPollHandler} disabled={!this.state.submitEnabled}/>
-      </div>
+      </React.Fragment>
 
     );
   }

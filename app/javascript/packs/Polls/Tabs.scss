@@ -1,11 +1,11 @@
-.tab {
+.tabs {
   border: 1px solid #ccc;
   background-color: #f1f1f1;
   display: flex;
   overflow: hidden;
   position: sticky;
   top: 18%;
-  width: 89%;
+  width: 100%;
   z-index: 10;
 
   /* Style the buttons inside the tab */
@@ -28,7 +28,11 @@
     &.active {
       background-color: #ccc;
     }
+    &.btn__inner {
+      float: right;
+    }
   }
+
 
   /* Style the tab content */
   .tabcontent {
