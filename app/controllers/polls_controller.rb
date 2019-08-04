@@ -20,7 +20,7 @@ class PollsController < ApplicationController
     if poll.errors.present?
       render json: {message: poll.errors.full_messages.join(',')}, status: :bad_request
     else
-      render json: {poll_id: poll.id}
+      render json: {poll_id: poll.id, message: t('actions.poll.create.success')}
     end
   end
 

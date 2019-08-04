@@ -30,6 +30,10 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 ta:
+  actions:
+    poll:
+      create:
+        success: 'வாக்கெடுப்பு வெற்றிகரமாக உருவாக்கப்பட்டது'
   activerecord:
     models:
       poll: 'கருத்து கணிப்பு'

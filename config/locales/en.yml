@@ -29,15 +29,22 @@
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
 
+# TODO - separate locales - https://guides.rubyonrails.org/i18n.html#organization-of-locale-files
+
 en:
-  models:
-    poll: 'Poll'
-  attributes:
+  actions:
     poll:
-      question: 'Question'
-  errors:
+      create:
+        success: 'Poll created successfully'
+  activerecord:
     models:
+      poll: 'Poll'
+    attributes:
       poll:
-        attributes:
-          question:
-            taken: 'has been already taken by you'
+        question: 'Question'
+    errors:
+      models:
+        poll:
+          attributes:
+            question:
+              taken: 'has been already taken by you'

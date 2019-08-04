@@ -17,6 +17,10 @@ class MainWrapper extends Component {
     super(props)
 
     this.searchPollCallback = this.searchPollCallback.bind(this)
+    this.toggleCreatePollForm = this.toggleCreatePollForm.bind(this)
+    this.state = {
+      newPollMode: false
+    }
   }
 
   componentDidMount(){
@@ -27,16 +31,11 @@ class MainWrapper extends Component {
     this.setState({polls: polls})
   }
 
-  hideCreatePollForm() {
-    this.setState({createPollMode: false})
-  }
-
-  setCreatePollView = () => {
-    setTimeout(function(){
-      document.getElementById("new-poll").scrollIntoView({
-        behavior: 'smooth'
-      });
-    }, 400);
+  toggleCreatePollForm() {
+    this.setState((state, props) => ({
+      newPollMode: !state.newPollMode
+    }));
+    document.getElementById("main-wrapper").scrollIntoView({ behavior: 'smooth' });
   }
 
   render() {
@@ -46,22 +45,21 @@ class MainWrapper extends Component {
       loader = <Loader />
     }
     return (
-      <div className="main-wrapper">
+      <div className="main-wrapper" id="main-wrapper">
         {loader}
         <div className="main-wrapper-header">
           <div className="main-wrapper-header-content">
+            <div className="search-poll">
+            <Button classes="btn__inner" text={translations.new_poll} clickHandler={this.toggleCreatePollForm} />
             <SearchPoll categories={categories} callback={this.searchPollCallback}/>
+            </div>
           </div>
-          <span>
-            <Button classes="btn__outer" text={translations.add_new_poll} clickHandler={this.setCreatePollView} />
-          </span>
 
         </div>
-        <div className="tab">
-          <Tabs user={user} />
-        </div>
+
+        <Tabs />
         <div className="main-wrapper__content">
-          <NewPoll categories={categories}/>
+          {this.state.newPollMode && (<NewPoll categories={categories} hideCreatePollForm={this.toggleCreatePollForm}/>)}
           <Polls />
         </div>
       </div>

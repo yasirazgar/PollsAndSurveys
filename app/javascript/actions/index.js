@@ -65,6 +65,18 @@ export const searchPoll = data => async dispatch => {
   dispatch({type: SEARCH_POLL, payload: response})
 }
 
+// # TODO movie this into separate service
+export const createPoll = data => async dispatch => {
+  let response, error;
+  try {
+    response = await pollsRequest.post('/polls', data);
+  } catch (error) {
+    response = error.response;
+  }
+
+  alert(response['data']['message'])
+};
+
 // pull login/signup and related things into separate service
 export const login = data => async dispatch => {
   let response, error;
