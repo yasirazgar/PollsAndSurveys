@@ -4,13 +4,18 @@ import { connect } from 'react-redux';
 import Input from '../Utils/Input'
 import Button from '../Utils/Button'
 import FilterComponents from './FilterComponents'
-import { searchPoll } from '../../actions'
+import { searchPoll, fetchPolls } from '../../actions'
 
 class SearchPoll extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
+    this.state = this.getInitialState();
+    this.clearSearch = this.clearSearch.bind(this);
+  }
+
+  getInitialState = () => {
+    return {
       categories: [],
       term: '',
       age_group_ids: [],
@@ -62,13 +67,21 @@ class SearchPoll extends Component {
     this.setState(attrs)
   }
 
+  clearSearch = () => {
+    this.props.fetchPolls();
+    this.setState(this.getInitialState());
+  }
+
   render() {
     return (
       <React.Fragment >
 
         {/* <Input classes="poll-location" placeholder="Location" /> */ }
 
-        <Input classes="poll-search" placeholder={this.props.translations.search_placeholder} onChange={this.questionChangeHandler}/>
+        <span class="text-input-wrapper">
+          <input className="poll-search" name="term" placeholder={this.props.translations.search_placeholder} onChange={this.questionChangeHandler} value={this.state.term}/>
+          <span title="clear" onClick={this.clearSearch}>&times;</span>
+        </span>
 
         <FilterComponents categories={this.props.categories} categoryChangeHandler={this.categoryChangeHandler} ageGroupChangeHandler={this.ageGroupChangeHandler} />
 
@@ -86,4 +99,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, { searchPoll })(SearchPoll)
+export default connect(mapStateToProps, { searchPoll, fetchPolls })(SearchPoll)

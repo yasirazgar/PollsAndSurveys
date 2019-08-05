@@ -82,6 +82,9 @@ const searchPoll = (state=null, action) => {
   if (action.type == SEARCH_POLL){
     return action.payload.data.polls
   }
+  if (action.type == FETCH_POLLS) {
+    return null;
+  }
 
   return state;
 }

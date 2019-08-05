@@ -50,9 +50,26 @@
 
   .main-wrapper__content{
     margin-top: 50px;
-
   }
-
+  .text-input-wrapper {
+    border:1px solid;
+    padding:1px 6px 1px 1px;
+    display:inline-block;
+  }
+  .text-input-wrapper input {
+    font-size: inherit;
+    padding: 0.4em 0.4em;
+    margin: 0.1em 0.2em;
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    border: 1px solid #f90;
+    background-color: #fff;
+  }
+  .text-input-wrapper span {
+    cursor:pointer;
+    font-weight:bold;
+  }
 }
 
 @media (max-width: 700px) {
