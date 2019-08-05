@@ -93,10 +93,10 @@ export const signup = data => async dispatch => {
   let response;
   try {
     response = await pollsRequest.post('/users', {user: data})
-    console.log(response);
   } catch (error) {
     response = error.response;
   }
+
   userService.signup(dispatch, response)
 }
 

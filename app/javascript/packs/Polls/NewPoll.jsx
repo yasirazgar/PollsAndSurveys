@@ -6,7 +6,7 @@ import Select from '../Utils/Select'
 import ModalButtonGroup from '../Utils/ModalButtonGroup'
 import FilterComponents from './FilterComponents'
 
-import { createPoll } from '../../actions'
+import { createPoll, toggleLoader } from '../../actions'
 
 import './NewPoll.scss'
 
@@ -37,6 +37,8 @@ class NewPoll extends Component {
   }
 
   createPollHandler = (poll, callback) => {
+    this.props.toggleLoader(true);
+
     let data =  {
       poll: {
         question: this.state.question,
@@ -128,4 +130,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, { createPoll })(NewPoll)
+export default connect(mapStateToProps, { createPoll, toggleLoader })(NewPoll)

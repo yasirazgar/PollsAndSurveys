@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Input from '../Utils/Input'
 import Button from '../Utils/Button'
 import FilterComponents from './FilterComponents'
-import { searchPoll, fetchPolls } from '../../actions'
+import { searchPoll, fetchPolls, toggleLoader } from '../../actions'
 
 class SearchPoll extends Component {
   constructor(props) {
@@ -25,6 +25,8 @@ class SearchPoll extends Component {
   }
 
   searchPollHandler = () => {
+    this.props.toggleLoader(true);
+
     const params = {
       type: this.props.tab,
       terms: {
@@ -99,4 +101,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, { searchPoll, fetchPolls })(SearchPoll)
+export default connect(mapStateToProps, { searchPoll, fetchPolls, toggleLoader })(SearchPoll)
