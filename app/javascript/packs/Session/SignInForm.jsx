@@ -20,7 +20,7 @@ class SignInForm extends Component{
 
   handleSubmit = (event) => {
     event.preventDefault();
-    toggleLoader(true);
+    this.props.toggleLoader(true);
     this.props.login({email: this.state.email, password: this.state.password});
   }
 
