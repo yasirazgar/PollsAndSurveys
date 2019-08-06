@@ -5,7 +5,7 @@
 import axios from 'axios'
 
 export default axios.create({
-  baseURL: 'http://localhost:5000',
+  baseURL: 'https://pollsandsurveys.herokuapp.com',
   headers: {
     'Content-Type': 'application/json',
     // 'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content,
