@@ -82,6 +82,8 @@ export const createPoll = data => async dispatch => {
   }
 
   alert(response['data']['message'])
+
+  dispatch({type: TOGGLE_LOADER, payload: false})
 };
 
 // pull login/signup and related things into separate service
