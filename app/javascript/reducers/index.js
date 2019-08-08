@@ -5,7 +5,7 @@ import { FETCH_POLLS, FETCH_USER_POLLS, FETCH_RESPONDED_POLLS,
          RESPONDED_POLLS_TAB, TAB_ACTIVE_CLASS, TAB_CLASS,
          BUILD_TRANSLATIONS, ANSWER_POLL, SEARCH_POLL, LOGIN,
          LOGOUT, SIGNUP, AVAILABLE_MODALS, AVAILABLE_BUTTONS,
-         MODAL_ERRORS, TOGGLE_LOADER
+         MODAL_ERRORS, TOGGLE_LOADER, DELETE_POLL
        } from '../packs/constants'
 
 const INITIAL_POLLS = []
@@ -19,6 +19,9 @@ const polls = (state=INITIAL_POLLS, action) => {
 
 const userPolls = (state=INITIAL_POLLS, action) => {
   if (action.type === FETCH_USER_POLLS) {
+    return action.payload.data.polls;
+  }
+  if (action.type === DELETE_POLL) {
     return action.payload.data.polls;
   }
 

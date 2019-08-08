@@ -28,7 +28,7 @@ class PollsController < ApplicationController
     poll = current_user.polls.find_by_id(params[:id])
 
     if poll && poll.destroy
-      render json: {}
+      render json: {polls: poll_service.get_users_polls}
       return
     end
 

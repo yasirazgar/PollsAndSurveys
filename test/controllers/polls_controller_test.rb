@@ -4,6 +4,7 @@ require_relative '../helpers/users_polls_test_helper'
 
 class PollsControllerTest < ActionDispatch::IntegrationTest
   include PollsTestHelper
+  include UsersPollsTestHelper
 
   setup do
     @yasir = users(:yasir)
@@ -35,7 +36,7 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
     post(polls_url, params: create_params, headers: { "Authorization" => token_for_user(@yasir) }, xhr: true)
     assert_response :success
     assert_equal(
-      {'poll_id' => 1},
+      {'poll_id' => 1, 'message' => I18n.t('actions.poll.create.success')},
       json_response,
       'Should return poll_id and success message')
   end
@@ -46,7 +47,7 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :bad_request
-    assert_equal('Question has already been taken', json_response['message'],
+    assert_equal('Question has been already taken by you', json_response['message'],
        'Should return a error message')
   end
 
@@ -56,6 +57,11 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Poll.count', -1, 'Should destroy the poll') do
       delete(poll_url(poll), headers: { "Authorization" => token_for_user(@yasir) }, xhr: true)
     end
+
+    assert_equal(
+      [YASIR_IT_ANS, YASIR_NO_ANS_ANS],
+      json_response['polls'],
+      "Should return all users polls except the deleted one")
 
     assert_response :success
   end

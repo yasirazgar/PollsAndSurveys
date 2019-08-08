@@ -18,7 +18,7 @@ const OptionWithAnswer = props => {
   const liProps = {
     className: klass,
     style: {width: width},
-    onClick: props.answerPoll.bind(this, props.pollId, option_id, props.callback)
+    onClick: props.answerPoll.bind(this, props.pollId, option_id)
   }
 
   return (

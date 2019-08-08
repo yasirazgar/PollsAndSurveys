@@ -16,20 +16,19 @@ const optionsListWithAnswer = (poll, callback) => {
   const [options, names, pollId] = getPollAttrs(poll);
 
   const list = names.map((name, i) => {
-    const owaProps = commonOptionsProp(options, name, pollId, callback)
+    const owaProps = commonOptionsProp(options, name, pollId)
     return(<OptionWithAnswer {...owaProps}/>)
   })
   return(list);
 }
 
-const commonOptionsProp = (options, name, pollId, callback) => {
+const commonOptionsProp = (options, name, pollId) => {
   const option = options[name]
   return {
     pollId: pollId,
     option: option,
     key: option.option_id,
-    name: name,
-    callback: callback
+    name: name
   }
 }
 

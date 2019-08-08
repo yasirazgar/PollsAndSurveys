@@ -10,7 +10,7 @@ import { FETCH_POLLS, FETCH_USER_POLLS, FETCH_RESPONDED_POLLS,
          FETCH_CATEGORIES, BUILD_TRANSLATIONS, ANSWER_POLL,
          SEARCH_POLL, LOGIN, LOGOUT, SIGNUP, SIGNUP_MODAL, SIGNIN_MODAL,
          PROFILE_MODAL, SIGNUP_BUTTON, SIGNIN_BUTTON, PROFILE_BUTTON,
-         LOGIN_FAILURE, SIGNUP_FAILURE, TOGGLE_LOADER
+         LOGIN_FAILURE, SIGNUP_FAILURE, TOGGLE_LOADER, DELETE_POLL
        } from '../packs/constants'
 
 const handleUnauthorizedRequest = (response) => {
@@ -52,7 +52,7 @@ export const updateLocale = new_locale => async dispatch => {
   await pollsRequest.patch('/user/update_locale', {locale: new_locale});
 }
 
-export const answerPoll = (poll_id, option_id, callback) => async dispatch => {
+export const answerPoll = (poll_id, option_id) => async dispatch => {
   const url = "/polls/" + poll_id + "/" + option_id + "/answer"
   const response = await pollsRequest.post(url)
 
@@ -63,6 +63,13 @@ export const searchPoll = data => async dispatch => {
   const response = await pollsRequest.get('/polls/search', {params: data})
 
   dispatch({type: SEARCH_POLL, payload: response})
+}
+
+export const deletePoll = id => async dispatch => {
+  const url = ('/polls/' + id);
+  const response = await pollsRequest.delete(url);
+
+  dispatch({type: DELETE_POLL, payload: response})
 }
 
 // # TODO movie this into separate service
