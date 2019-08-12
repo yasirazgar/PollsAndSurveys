@@ -4,11 +4,7 @@ class PollsController < ApplicationController
   include PollsConcern
 
   def index
-    if current_user
-      polls = poll_service.get_polls_for_user
-    else
-      polls = Web::PollService.get_polls
-    end
+    polls = poll_service.get_polls_for_user
 
     render json: {polls: polls}
   end

@@ -11,9 +11,6 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "index - without signin" do
-    Web::PollService.expects(:get_polls).returns(expected_polls_for_user['polls'])
-    Web::PollService.expects(:get_polls_for_user).never
-
     get(polls_url, xhr: true)
     assert_response :success
     assert_equal(expected_polls_for_user, json_response,
@@ -21,12 +18,13 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "index" do
-    service_mock.expects(:get_polls_for_user).returns(expected_polls_for_user['polls'])
-    Web::PollService.expects(:get_polls).never
+    expected = {
+      'polls' => [YASIR_IT]
+    }
 
     get(polls_url, headers: { "Authorization" => token_for_user(@yasir) }, xhr: true)
     assert_response :success
-    assert_equal(expected_polls_for_user, json_response,
+    assert_equal(expected, json_response,
       'Should return polls based on users preference, as json')
   end
 
@@ -77,7 +75,7 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "answer_poll" do
-    poll_hash = UsersPollsTestHelper::YASIR_NO_ANS_ANS.clone
+    poll_hash = UsersPollsTestHelper::YASIR_NO_ANS_ANS.deep_dup
     poll_hash['options']["Crazy"]['percentage'] = 100
     poll_hash['options']["Crazy"]['selected'] = true
 
@@ -92,7 +90,7 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
 
   ['polls', 'user_polls', 'user_responded_polls'].each do |type|
     test "search - #{type}" do
-      params, sanitized_params, expected_response = search_reqs(type)
+      params, sanitized_params, expected_response = search_request(type)
       service_mock.expects("search_#{type}").with(sanitized_params[:terms]).returns(expected_response['polls'])
 
       get(search_polls_url(params), headers: { "Authorization" => token_for_user(@yasir) }, xhr: true)
@@ -114,7 +112,7 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
     ActionController::Parameters.new(params).require(:poll).permit(:question, category_ids: [], options: [], age_group_ids: [])
   end
 
-  def search_reqs(type)
+  def search_request(type)
     params = {
       terms: {
         age_group_ids: ['1'],

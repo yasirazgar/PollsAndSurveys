@@ -1,12 +1,6 @@
 class Web::PollService < PollService
-  delegate :format_polls, :format_poll, to: :class
 
   def get_polls_for_user
-    polls = super
-    format_polls(polls)
-  end
-
-  def self.get_polls
     polls = super
     format_polls(polls)
   end
@@ -52,11 +46,11 @@ class Web::PollService < PollService
 
   private
 
-  def self.format_polls(polls)
+  def format_polls(polls)
     polls.map(&method(:format_poll))
   end
 
-  def self.format_poll(poll)
+  def format_poll(poll)
     {
       poll_id: poll.id,
       question: poll.question,

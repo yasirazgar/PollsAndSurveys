@@ -11,15 +11,13 @@ class PollService
   end
   alias_method :users_polls, :get_users_polls
 
-  def self.get_polls
-    Poll.includes([:categories, :options])
-  end
-  # alias_method :polls, :get_polls
-
   def get_polls_for_user
-    user_details = @user.details
+    polls_rel = get_polls_rel
 
-    polls_rel = Poll.includes([:categories, :options])
+    # when user is not logged in
+    return polls_rel unless @user
+
+    user_details = @user.details
 
     return polls_rel unless user_details # currently not creating user details by default
 
@@ -96,7 +94,7 @@ class PollService
   end
 
   def search_polls(terms)
-    polls_rel = PollService.get_polls
+    polls_rel = get_polls_rel
     search(polls_rel, terms)
   end
 
@@ -111,6 +109,10 @@ class PollService
   end
 
   private
+
+  def get_polls_rel
+    Poll.includes([:categories, :options])
+  end
 
   # Guess its time to pull this into a query builder ?
   def search(polls_rel, terms)
