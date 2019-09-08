@@ -61,4 +61,12 @@ poll3_ans2 = PollAnswer.create(user_id: user1.id, polls_options_id: poll3_opt2.i
 poll3_ans3 = PollAnswer.create(user_id: user2.id, polls_options_id: poll3_opt3.id)
 
 
+# create junk
+1.upto(100) do |idx|
+  poll = Poll.create(question: "junk #{idx}", user_id: admin.id)
 
+  PollsOptions.create(poll_id: poll.id, option_id: Option.create(name: "junk opt 1 #{idx}").id)
+  PollsOptions.create(poll_id: poll.id, option_id: Option.create(name: "junk opt 2 #{idx}").id)
+  PollsOptions.create(poll_id: poll.id, option_id: Option.create(name: "junk opt 3 #{idx}").id)
+  PollsOptions.create(poll_id: poll.id, option_id: Option.create(name: "junk opt 4 #{idx}").id)
+end
