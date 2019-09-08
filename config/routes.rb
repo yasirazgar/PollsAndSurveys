@@ -23,4 +23,31 @@ Rails.application.routes.draw do
   end
   resources :categories, only: [:index]
   root to: "home#index"
+
+  defaults format: :json do
+    namespace :api, :format => true, :constraints => { :format => 'json' } do
+      namespace :v1 do
+        post "login", to: "authentication#create", as: "login"
+        # delete "logout", to: "authentication#destroy", as: "logout"
+        resources :categories, only: [:index]
+        resources :users, only: [:create, :destroy, :update]
+        resource :user, controller: :user do
+          patch 'update_profile'
+          patch 'update_locale'
+          collection do
+            get 'polls'
+            get 'responded_polls'
+          end
+        end
+        resources :polls, except: [:new, :update] do
+          member do
+            post ':option_id/answer' => 'polls#answer', :as => 'answer'
+          end
+          collection do
+            get 'search'
+          end
+        end
+      end
+    end
+  end
 end

@@ -1,26 +1,49 @@
 class Api::V1::PollService < PollService
-
-  def get_users_polls
-    polls = super()
+  def get_polls_for_user
+    polls = super
     format_polls(polls)
   end
 
-  def get_polls_for_user
-    polls = super()
-    format_users_polls(polls)
+  def get_users_polls
+    polls = super
+    format_polls_with_answer(polls)
   end
 
-  def get_answers_for_poll(poll)
-    polls = super()
+  def answer_poll(poll_id, option_id)
+    super
+    get_answers_for_poll(poll_id)
+  end
+
+  def get_answers_for_poll(poll_id)
+    poll = super
+    format_poll_with_answer(poll)
   end
 
   def get_user_responded_polls
-    polls = super()
+    polls = super
+    format_polls_with_answer(polls)
   end
 
-  def create
-    poll = super()
+  def create(params)
+    poll = super
   end
+
+  def search_polls(terms)
+    polls = super
+    format_polls(polls)
+  end
+
+  def search_users_polls(terms)
+    polls = super
+    format_polls_with_answer(polls)
+  end
+
+  def search_user_responded_polls(terms)
+    polls = super
+    format_polls_with_answer(polls)
+  end
+
+  private
 
   def format_polls(polls)
     polls.map(&method(:format_poll))
@@ -30,20 +53,10 @@ class Api::V1::PollService < PollService
     {
       poll_id: poll.id,
       question: poll.question,
-      categories: poll.categories,
-      options: poll.options.map(&:option)
-    }
-  end
-
-  def format_poll_with_answer(poll)
-    { poll_id: poll.id,
-      question: poll.question,
-      categories: poll.categories,
-      options: poll.poll_answers.inject({}){|h,a|
-        count = h[a.polls_options.option.name] ||= 0
-        h[a.polls_options.option.name] = count + 1
-        h
-      } # poll.poll_answers.join(:options).group('options.option').count # convert to group query
+      categories: poll.categories.ids_codes,
+      options: poll.options.inject({}){|hash, opt|
+        hash[opt.name]={option_id: opt.id}
+        hash}
     }
   end
 
@@ -51,42 +64,44 @@ class Api::V1::PollService < PollService
     polls.map(&method(:format_poll_with_answer))
   end
 
-  def format_users_polls(polls)
-    polls.map(&method(:format_user_poll))
-  end
-
-  def format_user_poll(poll)
-    {
-      poll_id: poll.id,
+  def format_poll_with_answer(poll)
+    { poll_id: poll.id,
       question: poll.question,
-      categories: poll.categories,
-      options: poll.poll_answers.inject({}){ |h,ans| # convert to query
-        h[ans.polls_options.option.name] ||= [0, false]
-        count = h[ans.polls_options.option.name][0] + 1
-        h[ans.polls_options.option.name][0] = count
-        h[ans.polls_options.option.name][1] = true if ans.user_id == current_user.id
-        h
-      }
+      categories: poll.categories.ids_codes,
+      options: answer_data(poll)
     }
   end
 
-  def user_answer_data(poll)
+  # convert to query
+  def answer_data(poll)
     total = poll.poll_answers.count
-    hash = poll.poll_answers.inject({}){ |h,ans| # convert to query
-      h[ans.polls_options.option.name] ||= [0, false]
-      count = h[ans.polls_options.option.name][0] + 1
-      h[ans.polls_options.option.name][0] = count
-      h[ans.polls_options.option.name][1] = true if ans.user_id == current_user.id
-      h
-    }
-    hash.keys.each do |opt|
-      count = hash[opt][0]
-      percentage = ((count.to_f/total.to_f) * 100).round(2)
-      selected = hash[opt][0]
-      hash[opt] = {percentage: percentage, selected: selected}
+    unless total.zero?
+      return populate_answer_data(poll, total)
     end
 
-    hash
+    h = Hash.new { |hash, option|
+      option.is_a?(Array) ? option.each{|h| hash[h]} : hash[option.name]={option_id: option.id, percentage: 0.0, selected: false}
+    }
+    h[poll.options.to_a]
+    h
+  end
+
+  def populate_answer_data(poll, total)
+    data = poll.polls_options.inject({}){ |hash,po|
+      option = po.option
+      hash[option.name] = {
+        option_id: option.id,
+        percentage: ((po.poll_answers.count.to_f/total.to_f) * 100).round(1),
+        selected: false
+      }
+
+      hash
+    }
+    if user_ans = poll.poll_answers.includes(:option).find_by_user_id(@user.id)
+      data[user_ans.option.name][:selected] = true
+    end
+
+    data
   end
 
 end
