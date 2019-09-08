@@ -99,12 +99,14 @@ class PollService
   end
 
   def search_users_polls(terms)
-    polls_rel = users_polls
+    # avoid calling child class (Web::PollService/Api::PollService) method
+    polls_rel = PollService.instance_method(:get_users_polls).bind(self).call
     search(polls_rel, terms)
   end
 
   def search_user_responded_polls(terms)
-    polls_rel = user_responded_polls
+    # avoid calling child class (Web::PollService/Api::PollService) method
+    polls_rel = PollService.instance_method(:get_user_responded_polls).bind(self).call
     search(polls_rel, terms)
   end
 

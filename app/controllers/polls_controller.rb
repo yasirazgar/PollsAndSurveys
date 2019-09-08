@@ -38,6 +38,7 @@ class PollsController < ApplicationController
   end
 
   # maybe its good to split this into three separate methods for each type
+  # also dangerous to trust user's params
   def search
     type = params[:type]
     polls = poll_service.send('search_'+type, params[:terms])

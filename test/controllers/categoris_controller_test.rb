@@ -3,10 +3,12 @@ require 'test_helper'
 class CategoriesControllerTest < ActionDispatch::IntegrationTest
 
   test "index" do
-    user = FactoryBot.create(:user)
+    user = users(:yasir)
 
     get(categories_url, xhr: true)
     assert_response :success
-    flunck("needs test for json response")
+    assert_equal({
+      "categories" => [[1, "It"], [2, "Programming languages"], [3, "Animals"], [4, "Gems"]]
+    }, json_response)
   end
 end

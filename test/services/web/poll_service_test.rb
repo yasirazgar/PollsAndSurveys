@@ -1,4 +1,4 @@
- require 'test_helper'
+require 'test_helper'
 require_relative '../../helpers/users_polls_test_helper'
 require_relative '../../helpers/polls_test_helper'
 

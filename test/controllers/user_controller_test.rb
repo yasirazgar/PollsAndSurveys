@@ -6,11 +6,10 @@ class UserControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     @yasir = users(:yasir)
-    sign_in_as @yasir
   end
 
   test "polls" do
-    get(polls_user_url, xhr: true)
+    get(polls_user_url, headers: { "Authorization" => token_for_user(@yasir) }, xhr: true)
     assert_response :success
 
     Web::PollService.any_instance.stubs(:get_users_polls).returns(expected_users_poll)
@@ -18,7 +17,7 @@ class UserControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "resonded_polls" do
-    get(responded_polls_user_url, xhr: true)
+    get(responded_polls_user_url, headers: { "Authorization" => token_for_user(@yasir) }, xhr: true)
     assert_response :success
 
     Web::PollService.any_instance.stubs(:get_users_polls).returns(expected_users_poll)
@@ -33,7 +32,7 @@ class UserControllerTest < ActionDispatch::IntegrationTest
       nick_name: 'Azz'
     }
 
-    patch(update_profile_user_url, params: update_params, xhr: true)
+    patch(update_profile_user_url, params: update_params, headers: { "Authorization" => token_for_user(@yasir) }, xhr: true)
     assert_response :success
 
     @yasir.reload
@@ -44,12 +43,12 @@ class UserControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "update_locale" do
-    new_locale = 'en'
+    new_locale = 'ta'
 
     assert_not_equal(new_locale, @yasir.locale,
       "Should not be already set to #{new_locale}")
 
-    patch(update_locale_user_url, params: {locale: new_locale}, xhr: true)
+    patch(update_locale_user_url, params: {locale: new_locale}, headers: { "Authorization" => token_for_user(@yasir) }, xhr: true)
     assert_response :success
 
     @yasir.reload
