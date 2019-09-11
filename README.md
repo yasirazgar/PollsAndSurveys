@@ -7,7 +7,7 @@ Currently the app runs with
 * Rails version - 5.2.3
 * React - 16
 
-Unit Testing
+# Unit Testing
 
 Rails - Minitest
 
@@ -19,13 +19,14 @@ Command - jest
 
 Database - PostgreSQL
 
-Dev Setup
+# Dev Setup
 
 After cloning the app usual steps should do the job, `bundle;rails db:setup;yarn`.
 
 Used foreman to start up both webpacker dev server and rails server, running `foreman start` should kick both.
 
-Other Details:
+# Other Details:
+
 Tried to avoid third party libraries as much as possible.
 
 Webpacker for compiling and yarn for managing assets.
