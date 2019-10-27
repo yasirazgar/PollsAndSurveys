@@ -1,0 +1,149 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Poll renders correctly with currentPoll 1`] = `
+<ContextProvider
+  value={
+    Object {
+      "store": Object {
+        "clearActions": [Function],
+        "dispatch": [Function],
+        "getActions": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      },
+      "subscription": Subscription {
+        "handleChangeWrapper": [Function],
+        "listeners": Object {
+          "clear": [Function],
+          "get": [Function],
+          "notify": [Function],
+          "subscribe": [Function],
+        },
+        "onStateChange": [Function],
+        "parentSub": undefined,
+        "store": Object {
+          "clearActions": [Function],
+          "dispatch": [Function],
+          "getActions": [Function],
+          "getState": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+        },
+        "unsubscribe": [Function],
+      },
+    }
+  }
+>
+  <Connect(Poll)
+    currentPoll={
+      Object {
+        "categories": Array [
+          Array [
+            3,
+            "Animals",
+          ],
+        ],
+        "options": Object {
+          "Cobra": Object {
+            "option_id": 2,
+            "percentage": 25,
+            "selected": false,
+          },
+          "Mamba": Object {
+            "option_id": 4,
+            "percentage": 0,
+            "selected": false,
+          },
+          "Python": Object {
+            "option_id": 1,
+            "percentage": 50,
+            "selected": true,
+          },
+          "Viper": Object {
+            "option_id": 3,
+            "percentage": 25,
+            "selected": false,
+          },
+        },
+        "poll_id": 1,
+        "question": "Fav snake",
+      }
+    }
+  />
+</ContextProvider>
+`;
+
+exports[`Poll renders correctly with poll 1`] = `
+<ContextProvider
+  value={
+    Object {
+      "store": Object {
+        "clearActions": [Function],
+        "dispatch": [Function],
+        "getActions": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      },
+      "subscription": Subscription {
+        "handleChangeWrapper": [Function],
+        "listeners": Object {
+          "clear": [Function],
+          "get": [Function],
+          "notify": [Function],
+          "subscribe": [Function],
+        },
+        "onStateChange": [Function],
+        "parentSub": undefined,
+        "store": Object {
+          "clearActions": [Function],
+          "dispatch": [Function],
+          "getActions": [Function],
+          "getState": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+        },
+        "unsubscribe": [Function],
+      },
+    }
+  }
+>
+  <Connect(Poll)
+    poll={
+      Object {
+        "categories": Array [
+          Array [
+            3,
+            "Animals",
+          ],
+        ],
+        "options": Object {
+          "Cobra": Object {
+            "option_id": 2,
+            "percentage": 25,
+            "selected": false,
+          },
+          "Mamba": Object {
+            "option_id": 4,
+            "percentage": 0,
+            "selected": false,
+          },
+          "Python": Object {
+            "option_id": 1,
+            "percentage": 50,
+            "selected": true,
+          },
+          "Viper": Object {
+            "option_id": 3,
+            "percentage": 25,
+            "selected": false,
+          },
+        },
+        "poll_id": 1,
+        "question": "Fav snake",
+      }
+    }
+  />
+</ContextProvider>
+`;
