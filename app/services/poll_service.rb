@@ -136,6 +136,6 @@ class PollService
       polls_rel = polls_rel.where("polls.question ilike ?", "%#{terms[:term]}%")
     end
 
-    polls_rel.distinct
+    polls_rel.distinct.order(:id)
   end
 end
