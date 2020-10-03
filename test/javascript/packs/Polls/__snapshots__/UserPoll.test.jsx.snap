@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Home renders correctly 1`] = `
+exports[`UserPoll renders correctly with poll 1`] = `
 <ContextProvider
   value={
     Object {
@@ -35,6 +35,41 @@ exports[`Home renders correctly 1`] = `
     }
   }
 >
-  <Home />
+  <Connect(UserPoll)
+    poll={
+      Object {
+        "categories": Array [
+          Array [
+            3,
+            "Animals",
+          ],
+        ],
+        "options": Object {
+          "Cobra": Object {
+            "option_id": 2,
+            "percentage": 25,
+            "selected": false,
+          },
+          "Mamba": Object {
+            "option_id": 4,
+            "percentage": 0,
+            "selected": false,
+          },
+          "Python": Object {
+            "option_id": 1,
+            "percentage": 50,
+            "selected": true,
+          },
+          "Viper": Object {
+            "option_id": 3,
+            "percentage": 25,
+            "selected": false,
+          },
+        },
+        "poll_id": 1,
+        "question": "Fav snake",
+      }
+    }
+  />
 </ContextProvider>
 `;
