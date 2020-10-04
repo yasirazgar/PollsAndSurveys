@@ -12,8 +12,9 @@
 # Indexes:
 #     "user_details_pkey" PRIMARY KEY, btree (id)
 
-class UserDetails < ApplicationRecord
-	belongs_to :user
+class UserDetail < ApplicationRecord
+
+  belongs_to :user, :class_name => 'User', :foreign_key => 'user_id'
 
   def age
     return unless self.birth_date
