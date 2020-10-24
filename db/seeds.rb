@@ -34,9 +34,9 @@ poll1_opt1 = PollOption.create(poll_id: poll1.id, option_id: opt1.id)
 poll1_opt2 = PollOption.create(poll_id: poll1.id, option_id: opt2.id)
 poll1_opt3 = PollOption.create(poll_id: poll1.id, option_id: opt3.id)
 poll1_opt4 = PollOption.create(poll_id: poll1.id, option_id: opt4.id)
-poll1_ans1 = PollAnswer.create(user_id: admin.id, poll_options_id: poll1_opt1.id)
-poll1_ans2 = PollAnswer.create(user_id: user1.id, poll_options_id: poll1_opt2.id)
-poll1_ans1 = PollAnswer.create(user_id: user2.id, poll_options_id: poll1_opt3.id)
+poll1_ans1 = PollAnswer.create(user_id: admin.id, poll_option_id: poll1_opt1.id)
+poll1_ans2 = PollAnswer.create(user_id: user1.id, poll_option_id: poll1_opt2.id)
+poll1_ans1 = PollAnswer.create(user_id: user2.id, poll_option_id: poll1_opt3.id)
 
 poll2 = Poll.new(question: 'Longest Snake', category_ids: [cat3.id], user_id: user1.id, age_group_ids: [1])
 poll2.categories << cat3
@@ -46,9 +46,9 @@ poll2_opt1 = PollOption.create(poll_id: poll2.id, option_id: opt4.id)
 poll2_opt2 = PollOption.create(poll_id: poll2.id, option_id: opt5.id)
 poll2_opt3 = PollOption.create(poll_id: poll2.id, option_id: opt6.id)
 poll2_opt4 = PollOption.create(poll_id: poll2.id, option_id: opt7.id)
-poll2_ans1 = PollAnswer.create(user_id: admin.id, poll_options_id: poll2_opt1.id)
-poll2_ans2 = PollAnswer.create(user_id: user1.id, poll_options_id: poll2_opt2.id)
-poll2_ans3 = PollAnswer.create(user_id: user2.id, poll_options_id: poll2_opt3.id)
+poll2_ans1 = PollAnswer.create(user_id: admin.id, poll_option_id: poll2_opt1.id)
+poll2_ans2 = PollAnswer.create(user_id: user1.id, poll_option_id: poll2_opt2.id)
+poll2_ans3 = PollAnswer.create(user_id: user2.id, poll_option_id: poll2_opt3.id)
 
 poll3 = Poll.create(question: 'What do you like the most', user_id: user2.id, age_group_ids: nil)
 
@@ -56,9 +56,9 @@ poll3_opt1 = PollOption.create(poll_id: poll3.id, option_id: opt3.id)
 poll3_opt2 = PollOption.create(poll_id: poll3.id, option_id: opt5.id)
 poll3_opt3 = PollOption.create(poll_id: poll3.id, option_id: opt8.id)
 poll3_opt4 = PollOption.create(poll_id: poll3.id, option_id: opt9.id)
-poll3_ans1 = PollAnswer.create(user_id: admin.id, poll_options_id: poll3_opt1.id)
-poll3_ans2 = PollAnswer.create(user_id: user1.id, poll_options_id: poll3_opt2.id)
-poll3_ans3 = PollAnswer.create(user_id: user2.id, poll_options_id: poll3_opt3.id)
+poll3_ans1 = PollAnswer.create(user_id: admin.id, poll_option_id: poll3_opt1.id)
+poll3_ans2 = PollAnswer.create(user_id: user1.id, poll_option_id: poll3_opt2.id)
+poll3_ans3 = PollAnswer.create(user_id: user2.id, poll_option_id: poll3_opt3.id)
 
 
 # create junk
