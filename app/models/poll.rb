@@ -32,9 +32,9 @@ class Poll < ApplicationRecord
   end
 
 	belongs_to :user
-  has_many :polls_options, class_name: 'PollsOptions', dependent: :destroy
-  has_many :options, through: :polls_options, dependent: :destroy
-  has_many :poll_answers, through: :polls_options
+  has_many :poll_options, class_name: 'PollOption', dependent: :destroy
+  has_many :options, through: :poll_options, dependent: :destroy
+  has_many :poll_answers, through: :poll_options
   has_and_belongs_to_many :categories,
     class_name: 'Category',
     join_table: 'polls_categories'

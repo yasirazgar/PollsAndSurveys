@@ -11,8 +11,8 @@
 #     "index_poll_answers_on_user_id_and_poll_option_id" btree (user_id, poll_option_id)
 
 class PollAnswer < ApplicationRecord
-	belongs_to :polls_options
-  has_one :option, through: :polls_options
-  has_one :poll, through: :polls_options
+  belongs_to :poll_option
+  has_one :option, through: :poll_option
+  has_one :poll, through: :poll_option
   belongs_to :user
 end

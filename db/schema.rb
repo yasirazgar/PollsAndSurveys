@@ -28,11 +28,19 @@ ActiveRecord::Schema.define(version: 2020_10_02_172510) do
   end
 
   create_table "poll_answers", force: :cascade do |t|
-    t.integer "polls_options_id", null: false
+    t.integer "poll_option_id", null: false
     t.integer "user_id", null: false
-    t.index ["polls_options_id"], name: "index_poll_answers_on_polls_options_id"
-    t.index ["user_id", "polls_options_id"], name: "index_poll_answers_on_user_id_and_polls_options_id"
+    t.index ["poll_option_id"], name: "index_poll_answers_on_poll_option_id"
+    t.index ["user_id", "poll_option_id"], name: "index_poll_answers_on_user_id_and_poll_option_id"
     t.index ["user_id"], name: "index_poll_answers_on_user_id"
+  end
+
+  create_table "poll_options", force: :cascade do |t|
+    t.integer "poll_id", null: false
+    t.integer "option_id", null: false
+    t.index ["option_id"], name: "index_poll_options_on_option_id"
+    t.index ["poll_id", "option_id"], name: "index_poll_options_on_poll_id_and_option_id", unique: true
+    t.index ["poll_id"], name: "index_poll_options_on_poll_id"
   end
 
   create_table "polls", force: :cascade do |t|
@@ -47,14 +55,6 @@ ActiveRecord::Schema.define(version: 2020_10_02_172510) do
     t.integer "category_id", null: false
     t.index ["category_id"], name: "index_polls_categories_on_category_id"
     t.index ["poll_id"], name: "index_polls_categories_on_poll_id"
-  end
-
-  create_table "polls_options", force: :cascade do |t|
-    t.integer "poll_id", null: false
-    t.integer "option_id", null: false
-    t.index ["option_id"], name: "index_polls_options_on_option_id"
-    t.index ["poll_id", "option_id"], name: "index_polls_options_on_poll_id_and_option_id", unique: true
-    t.index ["poll_id"], name: "index_polls_options_on_poll_id"
   end
 
   create_table "user_details", force: :cascade do |t|

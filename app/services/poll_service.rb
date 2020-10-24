@@ -1,5 +1,5 @@
 class PollService
-  NEEDED_FOR_ANSWERS = [:polls_options, :categories]
+  NEEDED_FOR_ANSWERS = [:poll_options, :categories]
 
   def initialize(user)
     @user = user
@@ -12,6 +12,7 @@ class PollService
   alias_method :users_polls, :get_users_polls
 
   def get_polls_for_user
+    byebug
     polls_rel = get_polls_rel
 
     # when user is not logged in
@@ -51,15 +52,15 @@ class PollService
   alias_method :user_responded_polls, :get_user_responded_polls
 
   def answer_poll(poll_id, option_id)
-    po_id = PollsOptions.find_by(poll_id: poll_id, option_id: option_id).id
+    po_id = PollOption.find_by(poll_id: poll_id, option_id: option_id).id
     answer = @user.poll_answers.joins(:poll).where("polls.id = ?", poll_id).take
     unless answer
-      PollAnswer.create(polls_options_id: po_id, user_id: @user.id)
+      PollAnswer.create(poll_options_id: po_id, user_id: @user.id)
       return
     end
 
-    if answer.polls_options_id != po_id # user responded for same answer
-      answer.polls_options_id = po_id
+    if answer.poll_options_id != po_id # user responded for same answer
+      answer.poll_options_id = po_id
       answer.save
     end
   end

@@ -5,40 +5,40 @@
 # below each fixture, per the syntax in the comments below
 #
 yasir_snake_yasir:
-  polls_options: yasir_snake_python
+  poll_option: yasir_snake_python
   user: yasir
 yasir_snake_david:
-  polls_options: yasir_snake_python
+  poll_option: yasir_snake_python
   user: david
 yasir_snake_yaseer:
-  polls_options: yasir_snake_viper
+  poll_option: yasir_snake_viper
   user: yaseer
 yasir_snake_sundar:
-  polls_options: yasir_snake_cobra
+  poll_option: yasir_snake_cobra
   user: sundar
 
 yasir_it_yasir:
-  polls_options: yasir_it_python
+  poll_option: yasir_it_python
   user: david
 yasir_it_david:
-  polls_options: yasir_it_ruby
+  poll_option: yasir_it_ruby
   user: yasir
 yasir_it_yaseer:
-  polls_options: yasir_it_ruby
+  poll_option: yasir_it_ruby
   user: yaseer
 yasir_it_sundar:
-  polls_options: yasir_it_ruby
+  poll_option: yasir_it_ruby
   user: sundar
 
 david_gems_yasir:
-  polls_options: david_gems_ruby
+  poll_option: david_gems_ruby
   user: yasir
 david_gems_david:
-  polls_options: david_gems_gold
+  poll_option: david_gems_gold
   user: david
 david_gems_yaseer:
-  polls_options: david_gems_dimond
+  poll_option: david_gems_dimond
   user: yaseer
 david_gems_sundar:
-  polls_options: david_gems_platinum
+  poll_option: david_gems_platinum
   user: sundar

@@ -17,9 +17,9 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
       'Should return polls as json without any filteration')
   end
 
-  test "index" do
+  test "indexr" do
     expected = {
-      'polls' => [YASIR_IT]
+      'polls' => [yasir_it]
     }
 
     get(polls_url, headers: { "Authorization" => token_for_user(@yasir) }, xhr: true)
@@ -57,7 +57,7 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_equal(
-      [YASIR_IT_ANS, YASIR_NO_ANS_ANS],
+      [yasir_it_ans, yasir_no_ans_ans],
       json_response['polls'],
       "Should return all users polls except the deleted one")
 
@@ -75,7 +75,7 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "answer_poll" do
-    poll_hash = UsersPollsTestHelper::YASIR_NO_ANS_ANS.deep_dup
+    poll_hash = yasir_no_ans_ans.deep_dup
     poll_hash['options']["Crazy"]['percentage'] = 100
     poll_hash['options']["Crazy"]['selected'] = true
 
@@ -125,7 +125,7 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
     sanitized_params = ActionController::Parameters.new(params)
 
     expected_response = {
-      'polls' => [YASIR_SNAKE]
+      'polls' => [yasir_snake]
     }
 
     [params, sanitized_params, expected_response]
