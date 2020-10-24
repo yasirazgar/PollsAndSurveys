@@ -12,7 +12,6 @@ class PollService
   alias_method :users_polls, :get_users_polls
 
   def get_polls_for_user
-    byebug
     polls_rel = get_polls_rel
 
     # when user is not logged in
