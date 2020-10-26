@@ -23,6 +23,9 @@ class User < ApplicationRecord
 	has_many :polls
   has_many :poll_answers, dependent: :destroy
   has_many :responded_polls, through: :poll_answers, source: :poll
+  has_and_belongs_to_many :categories,
+    class_name: 'Category',
+    join_table: 'users_categories'
 
   delegate :age, :age_group, to: :details, allow_nil: true
 end

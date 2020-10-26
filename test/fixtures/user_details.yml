@@ -6,16 +6,13 @@
 #
 yasir_details:
   user: yasir
-  category_ids: <%= [1,2] %>
   birth_date: <%= Date.new(1990, 03, 19) %>
 
 yaseer_details:
   user: yaseer
-  category_ids: <%= [3] %>
   birth_date: <%= Date.new(1991, 04, 20) %>
 
 david_details:
   user: david
-  category_ids:
   birth_date:
 

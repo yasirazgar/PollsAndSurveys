@@ -5,7 +5,7 @@ module PollsTestHelper
     {
       'poll_id' => polls(:yasir_snake).id,
       'question' => 'Fav snake',
-      'categories' => [[3, 'Animals']],
+      'categories' => [[categories(:animals).id, 'Animals']],
       'options' => {
         'Python' => {'option_id' => options(:python).id},
         'Cobra' =>  {'option_id' => options(:cobra).id},
@@ -19,7 +19,7 @@ module PollsTestHelper
     {
       'poll_id' => polls(:yasir_it).id,
       'question' => 'Fav programming language',
-      'categories' => [[1, "It"], [2, 'Programming languages']],
+      'categories' => [[categories(:it).id, "It"], [categories(:programming_languages).id, 'Programming languages']],
       'options' => {
         'Python'     => {'option_id' => options(:python).id},
         'Java'       => {'option_id' => options(:java).id},
@@ -46,7 +46,7 @@ module PollsTestHelper
     {
       'poll_id' => polls(:david_gems).id,
       'question' => 'Fav gems',
-      'categories' => [[4, 'Gems']],
+      'categories' => [[categories(:gems).id, 'Gems']],
       'options' => {
         'Ruby'     => {'option_id' => options(:ruby).id},
         'Gold'     => {'option_id' => options(:gold).id},
@@ -71,10 +71,10 @@ module PollsTestHelper
   def create_params
     {
       poll: {
-        question: 'My question',
-        options: ['opt1', 'opt2', 'opt3', 'opt4'],
-        category_ids: [categories(:it).id],
-        age_group_ids: ['1', '2', '3'],
+        'question' => 'My question',
+        'category_ids' => [categories(:it).id.to_s],
+        'options' => ['opt1', 'opt2', 'opt3', 'opt4'],
+        'age_group_ids' => ['1', '2', '3'],
       }
     }
   end
@@ -82,9 +82,9 @@ module PollsTestHelper
   def create_dup_params
     {
       poll: {
-        question: 'Fav snake',
-        options: ['opt1', 'opt2', 'opt3', 'opt4'],
-        category_ids: [categories(:it).id]
+        'question' => 'Fav snake',
+        'options' => ['opt1', 'opt2', 'opt3', 'opt4'],
+        'category_ids' => [categories(:it).id]
       }
     }
   end

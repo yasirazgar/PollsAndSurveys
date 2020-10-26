@@ -29,12 +29,12 @@ class Api::V1::PollsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "create" do
-    service_mock.expects(:create).with(santize_create_params(create_params)).returns(polls(:yasir_snake))
+    service_mock.expects(:create).with(create_params[:poll]).returns(polls(:yasir_snake))
 
     post(api_v1_polls_url, params: create_params, headers: { "Authorization" => token_for_user(@yasir) })
     assert_response :success
     assert_equal(
-      {'poll_id' => 1, 'message' => I18n.t('actions.poll.create.success')},
+      {'poll_id' => polls(:yasir_snake).id, 'message' => I18n.t('actions.poll.create.success')},
       json_response,
       'Should return poll_id and success message')
   end
@@ -75,12 +75,12 @@ class Api::V1::PollsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "answer_poll" do
-    poll_hash = UsersPollsTestHelper::yasir_no_ans_ans.deep_dup
+    poll_hash = yasir_no_ans_ans.deep_dup
     poll_hash['options']["Crazy"]['percentage'] = 100
     poll_hash['options']["Crazy"]['selected'] = true
 
     assert_difference('PollAnswer.count', 1, 'Should create a new answer') do
-      post(answer_api_v1_poll_url(3, options(:crazy).id), headers: { "Authorization" => token_for_user(@yasir) })
+      post(answer_api_v1_poll_url(polls(:yasir_no_ans).id, options(:crazy).id), headers: { "Authorization" => token_for_user(@yasir) })
     end
 
     assert_response :success
@@ -90,8 +90,8 @@ class Api::V1::PollsControllerTest < ActionDispatch::IntegrationTest
 
   ['polls', 'user_polls', 'user_responded_polls'].each do |type|
     test "search - #{type}" do
-      params, sanitized_params, expected_response = search_request(type)
-      service_mock.expects("search_#{type}").with(sanitized_params[:terms]).returns(expected_response['polls'])
+      params, expected_response = search_request(type)
+      service_mock.expects("search_#{type}").with(params[:terms]).returns(expected_response['polls'])
 
       get(search_api_v1_polls_url(params), headers: { "Authorization" => token_for_user(@yasir) })
       assert_response :success
@@ -108,27 +108,21 @@ class Api::V1::PollsControllerTest < ActionDispatch::IntegrationTest
     service
   end
 
-  def santize_create_params(params)
-    ActionController::Parameters.new(params).require(:poll).permit(:question, category_ids: [], options: [], age_group_ids: [])
-  end
-
   def search_request(type)
     params = {
       terms: {
-        age_group_ids: ['1'],
-        category_ids: ['1'],
-        term: 'programming'
+        'term' => 'programming',
+        'age_group_ids' => ['1'],
+        'category_ids' => [categories(:it).id.to_s]
       },
       type: type
     }
-
-    sanitized_params = ActionController::Parameters.new(params)
 
     expected_response = {
       'polls' => [yasir_snake]
     }
 
-    [params, sanitized_params, expected_response]
+    [params, expected_response]
   end
 
 end

@@ -4,6 +4,8 @@ class CreatePolls < ActiveRecord::Migration[5.2]
     	t.integer :user_id, null: false
       t.text :question, null: false
       t.integer :age_group_ids, array: true
+
+      t.timestamps
     end
 
     add_index :polls, :user_id

@@ -7,7 +7,6 @@ class CreateUserDetails < ActiveRecord::Migration[5.2]
     	t.text :about
     	t.string :avatar
     	t.string :location
-    	t.integer :category_ids, array: true
       t.date :birth_date
     end
   end

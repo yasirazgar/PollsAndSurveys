@@ -7,7 +7,6 @@
 #  about        | text              |           |          |
 #  avatar       | character varying |           |          |
 #  location     | character varying |           |          |
-#  category_ids | integer[]         |           |          |
 #  birth_date   | date              |           |          |
 # Indexes:
 #     "user_details_pkey" PRIMARY KEY, btree (id)

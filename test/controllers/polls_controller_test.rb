@@ -29,12 +29,15 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "create" do
-    service_mock.expects(:create).with(santize_create_params(create_params)).returns(polls(:yasir_snake))
+    service_mock.expects(:create).with(create_params[:poll]).returns(polls(:yasir_snake))
 
     post(polls_url, params: create_params, headers: { "Authorization" => token_for_user(@yasir) }, xhr: true)
     assert_response :success
     assert_equal(
-      {'poll_id' => 1, 'message' => I18n.t('actions.poll.create.success')},
+      {
+        'poll_id' => polls(:yasir_snake).id,
+       'message' => I18n.t('actions.poll.create.success')
+      },
       json_response,
       'Should return poll_id and success message')
   end
@@ -80,7 +83,7 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
     poll_hash['options']["Crazy"]['selected'] = true
 
     assert_difference('PollAnswer.count', 1, 'Should create a new answer') do
-      post(answer_poll_url(3, options(:crazy).id), headers: { "Authorization" => token_for_user(@yasir) }, xhr: true)
+      post(answer_poll_url(polls(:yasir_no_ans).id, options(:crazy).id), headers: { "Authorization" => token_for_user(@yasir) }, xhr: true)
     end
 
     assert_response :success
@@ -90,8 +93,8 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
 
   ['polls', 'user_polls', 'user_responded_polls'].each do |type|
     test "search - #{type}" do
-      params, sanitized_params, expected_response = search_request(type)
-      service_mock.expects("search_#{type}").with(sanitized_params[:terms]).returns(expected_response['polls'])
+      params, expected_response = search_request(type)
+      service_mock.expects("search_#{type}").with(params['terms']).returns(expected_response['polls'])
 
       get(search_polls_url(params), headers: { "Authorization" => token_for_user(@yasir) }, xhr: true)
       assert_response :success
@@ -114,21 +117,19 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
 
   def search_request(type)
     params = {
-      terms: {
-        age_group_ids: ['1'],
-        category_ids: ['1'],
-        term: 'programming'
+      'terms' => {
+        'term' => 'programming',
+        'age_group_ids' => ['1'],
+        'category_ids' => [categories(:it).id.to_s]
       },
-      type: type
+      'type' => type
     }
-
-    sanitized_params = ActionController::Parameters.new(params)
 
     expected_response = {
       'polls' => [yasir_snake]
     }
 
-    [params, sanitized_params, expected_response]
+    [params, expected_response]
   end
 
 end

@@ -10,7 +10,7 @@ class Api::V1::PollsController < ApplicationController
   end
 
   def create
-    poll_params = params.require(:poll).permit(:question, category_ids: [], options: [], age_group_ids: [])
+    poll_params = params.require(:poll).permit(:question, category_ids: [], options: [], age_group_ids: []).to_h
     poll = poll_service.create(poll_params)
 
     if poll.errors.present?
@@ -40,7 +40,7 @@ class Api::V1::PollsController < ApplicationController
   # maybe its good to split this into three separate methods for each type
   def search
     type = params[:type]
-    polls = poll_service.send('search_'+type, params[:terms])
+    polls = poll_service.send('search_' + type, params[:terms].permit(:term, age_group_ids: [], category_ids: []).to_h)
 
     render json: {polls: polls}
   end

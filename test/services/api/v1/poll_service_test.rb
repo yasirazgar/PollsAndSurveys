@@ -38,7 +38,7 @@ class Api::V1::PollServiceTest < ActiveSupport::TestCase
   end
 
   test "polls_for_user - with age_group_ids and category_ids" do
-    UserDetails.any_instance.expects(:age_group).returns(1)
+    UserDetail.any_instance.expects(:age_group).returns(1)
     assert_equal([yasir_snake, yasir_it, david_gems], @service.get_polls_for_user.map(&:deep_stringify_keys),
       'Should return polls for user based on users fields')
   end
@@ -84,7 +84,7 @@ class Api::V1::PollServiceTest < ActiveSupport::TestCase
   test "create with existing options" do
     poll = nil
     params = create_params[:poll]
-    params[:options][0] = 'Python'
+    params['options'][0] = 'Python'
 
     assert_difference('Poll.count', 1) do
       assert_difference('Option.count', 3, "Should create only three options, as first option is already availabel") do
@@ -98,7 +98,7 @@ class Api::V1::PollServiceTest < ActiveSupport::TestCase
   test "create - with invalid age_group" do
     poll = nil
     params = create_params[:poll]
-    params[:age_group_ids] << '100'
+    params['age_group_ids'] << '100'
 
     assert_difference('Poll.count', 1, 'Should create a poll') do
       assert_difference('Option.count', 4) do
@@ -106,7 +106,7 @@ class Api::V1::PollServiceTest < ActiveSupport::TestCase
       end
     end
 
-    params[:age_group_ids] = params[:age_group_ids] - ['100']
+    params['age_group_ids'] = params['age_group_ids'] - ['100']
     assert_poll(poll, params)
   end
 
@@ -125,7 +125,7 @@ class Api::V1::PollServiceTest < ActiveSupport::TestCase
     expected_hash['options']["Crazy"]['percentage'] = 100
     expected_hash['options']["Crazy"]['selected'] = true
 
-    assert_equal(expected_hash, @service.answer_poll(3, 12).deep_stringify_keys,
+    assert_equal(expected_hash, @service.answer_poll(polls(:yasir_no_ans), options(:crazy)).deep_stringify_keys,
       'Should record the answer for the poll and return the answers to poll')
   end
 
@@ -136,12 +136,12 @@ class Api::V1::PollServiceTest < ActiveSupport::TestCase
     expected_hash['options']["JavaScript"]['percentage'] = 25.0
     expected_hash['options']["JavaScript"]['selected'] = true
 
-    assert_equal(expected_hash, @service.answer_poll(2, 6).deep_stringify_keys,
+    assert_equal(expected_hash, @service.answer_poll(polls(:yasir_it), options(:javascript)).deep_stringify_keys,
       'Should update the answer')
   end
 
   test "answer_poll - user chosses the same answer" do
-    assert_equal(yasir_it_ans, @service.answer_poll(2, 7).deep_stringify_keys,
+    assert_equal(yasir_it_ans, @service.answer_poll(polls(:yasir_it), options(:ruby)).deep_stringify_keys,
       'Should do nothing and return the same')
   end
 
@@ -149,7 +149,7 @@ class Api::V1::PollServiceTest < ActiveSupport::TestCase
     assert_equal(
       [yasir_snake, yasir_it],
       @service.search_polls({
-            category_ids: [1,2,3],
+            category_ids: [categories(:it).id, categories(:programming_languages).id, categories(:animals).id],
             term: 'Fav'
       }).map(&:deep_stringify_keys),
       'Should return polls based on category_ids and search term')
@@ -157,7 +157,7 @@ class Api::V1::PollServiceTest < ActiveSupport::TestCase
 
   test "search - polls - age_group - with all" do
     assert_equal(
-      [yasir_snake, yasir_it , david_gems],
+      [yasir_snake, david_gems, yasir_it],
       @service.search_polls({
             age_group_ids: [Poll::Age::GROUPING.key(Poll::Age::ALL)],
             term: 'Fav'
@@ -180,7 +180,7 @@ class Api::V1::PollServiceTest < ActiveSupport::TestCase
       [david_gems_ans],
       @service.search_user_responded_polls({
         age_group_ids: [1],
-        category_ids: [4]
+        category_ids: [categories(:gems).id]
       }).map(&:deep_stringify_keys),
       "Should include common age group (1) in all cases")
   end
@@ -188,11 +188,11 @@ class Api::V1::PollServiceTest < ActiveSupport::TestCase
   private
 
   def assert_poll(poll, params)
-    assert_equal(params[:options].sort, poll.options.map(&:name).sort,
+    assert_equal(params['options'].sort, poll.options.map(&:name).sort,
       'Should create options')
-    assert_equal(params[:category_ids].map(&:to_i), poll.category_ids,
+    assert_equal(params['category_ids'].map(&:to_i), poll.category_ids,
       'Should set categories')
-    assert_equal(params[:age_group_ids].map(&:to_i), poll.age_group_ids,
+    assert_equal(params['age_group_ids'].map(&:to_i), poll.age_group_ids,
       'Should set age_group')
   end
 end

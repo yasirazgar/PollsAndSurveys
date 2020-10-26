@@ -3,9 +3,9 @@ module UsersPollsTestHelper
 
   def yasir_snake_ans
     {
-      'poll_id' => 1,
+      'poll_id' => polls(:yasir_snake).id,
       'question' => 'Fav snake',
-      'categories' => [[3, 'Animals']],
+      'categories' => [[categories(:animals).id, 'Animals']],
       'options' => {
         'Python' => {'option_id' => options(:python).id, 'percentage' => 50.0, 'selected' => true},
         'Cobra' =>  {'option_id' => options(:cobra).id, 'percentage' => 25.0, 'selected' => false},
@@ -17,9 +17,9 @@ module UsersPollsTestHelper
 
   def yasir_it_ans
     {
-      'poll_id' => 2,
+      'poll_id' => polls(:yasir_it).id,
       'question' => 'Fav programming language',
-      'categories' => [[1, "It"], [2, 'Programming languages']],
+      'categories' => [[categories(:it).id, "It"], [categories(:programming_languages).id, 'Programming languages']],
       'options' => {
         'Python'     => {'option_id' => options(:python).id, 'percentage' => 25.0, 'selected' => false},
         'Java'       => {'option_id' => options(:java).id, 'percentage' => 0.0,  'selected' => false},
@@ -31,7 +31,7 @@ module UsersPollsTestHelper
 
   def yasir_no_ans_ans
     {
-      'poll_id' => 3,
+      'poll_id' => polls(:yasir_no_ans).id,
       'question' => 'Some dumb question',
       'categories' => [],
       'options' => {
@@ -44,9 +44,9 @@ module UsersPollsTestHelper
 
   def david_gems_ans
     {
-      'poll_id' => 4,
+      'poll_id' => polls(:david_gems).id,
       'question' => 'Fav gems',
-      'categories' => [[4, 'Gems']],
+      'categories' => [[categories(:gems).id, 'Gems']],
       'options' => {
         'Ruby'     => {'option_id' => options(:ruby).id,  'percentage' => 25.0, 'selected' => true},
         'Gold'     => {'option_id' => options(:gold).id,  'percentage' => 25.0, 'selected' => false},

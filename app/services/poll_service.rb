@@ -30,7 +30,7 @@ class PollService
       binds << [age_group]
     end
 
-    category_ids = user_details.category_ids
+    category_ids = @user.category_ids
     if category_ids.present?
       polls_rel = polls_rel.joins(:categories)
       qry << "OR categories.id IN (?)"
@@ -54,24 +54,24 @@ class PollService
     po_id = PollOption.find_by(poll_id: poll_id, option_id: option_id).id
     answer = @user.poll_answers.joins(:poll).where("polls.id = ?", poll_id).take
     unless answer
-      PollAnswer.create(poll_options_id: po_id, user_id: @user.id)
+      PollAnswer.create(poll_option_id: po_id, user_id: @user.id)
       return
     end
 
-    if answer.poll_options_id != po_id # user responded for same answer
-      answer.poll_options_id = po_id
+    if answer.poll_option_id != po_id # user responded for same answer
+      answer.poll_option_id = po_id
       answer.save
     end
   end
 
   def create(params)
-    poll_params = params.slice(:question, :category_ids, :age_group_ids)
-    if poll_params[:age_group_ids]
-      poll_params[:age_group_ids] = (poll_params[:age_group_ids].map(&:to_i) & Poll::Age::GROUPING.keys)
+    poll_params = params.slice('question', 'category_ids', 'age_group_ids')
+    if poll_params['age_group_ids']
+      poll_params['age_group_ids'] = (poll_params['age_group_ids'].map(&:to_i) & Poll::Age::GROUPING.keys)
     end
-    poll = Poll.new(poll_params.slice(:question, :category_ids, :age_group_ids))
+    poll = Poll.new(poll_params)
     poll.user_id = @user.id
-    poll.options_attributes = params[:options].inject([]) do |opts, opt|
+    poll.options_attributes = params['options'].inject([]) do |opts, opt|
       if (existing_opt = Option.find_by_name(opt))
         poll.options << existing_opt
       else
@@ -120,7 +120,6 @@ class PollService
   def search(polls_rel, terms)
     # If the age_group is empty or contains only group - All then dont filter based on age_group
     terms = ((String === terms) ? JSON.parse(terms) : terms).with_indifferent_access # why is this happening, analyze
-
     if (age_group = terms[:age_group_ids]).present?
       age_group = age_group.map(&:to_i)
       age_all = Poll::Age::GROUPING.key(Poll::Age::ALL)
@@ -136,6 +135,6 @@ class PollService
       polls_rel = polls_rel.where("polls.question ilike ?", "%#{terms[:term]}%")
     end
 
-    polls_rel.distinct.order(:id)
+    polls_rel.distinct.reorder(:created_at)
   end
 end

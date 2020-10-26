@@ -8,7 +8,11 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     get(categories_url, xhr: true)
     assert_response :success
     assert_equal({
-      "categories" => [[1, "It"], [2, "Programming languages"], [3, "Animals"], [4, "Gems"]]
+      'categories' => [
+        [categories(:it).id, 'It'],
+        [categories(:programming_languages).id, 'Programming languages'],
+        [categories(:animals).id, 'Animals'],
+        [categories(:gems).id, 'Gems']]
     }, json_response)
   end
 end
