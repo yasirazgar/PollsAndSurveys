@@ -1,58 +1,69 @@
 module PollsTestHelper
-  YASIR_SNAKE = {
-    'poll_id' => 1,
-    'question' => 'Fav snake',
-    'categories' => [[3, 'Animals']],
-    'options' => {
-      'Python' => {'option_id' => 1},
-      'Cobra' =>  {'option_id' => 2},
-      'Viper' =>  {'option_id' => 3},
-      'Mamba' =>  {'option_id' => 4}
-    }
-  }.freeze
-  YASIR_IT = {
-    'poll_id' => 2,
-    'question' => 'Fav programming language',
-    'categories' => [[1, "It"], [2, 'Programming languages']],
-    'options' => {
-      'Python'     => {'option_id' => 1},
-      'Java'       => {'option_id' => 5},
-      'JavaScript' => {'option_id' => 6},
-      'Ruby'       => {'option_id' => 7}
-    }
-  }.freeze
-  YASIR_NO_ANS = {
-    'poll_id' => 3,
-    'question' => 'Some dumb question',
-    'categories' => [],
-    'options' => {
-      'Crazy'    => {'option_id' => 12},
-      'Stupid'   => {'option_id' => 13},
-      'Annoying' => {'option_id' => 14}
-    }
-  }.freeze
-  DAVID_GEMS = {
-    'poll_id' => 4,
-    'question' => 'Fav gems',
-    'categories' => [[4, 'Gems']],
-    'options' => {
-      'Ruby'     => {'option_id' => 7},
-      'Gold'     => {'option_id' => 8},
-      'Dimond'   => {'option_id' => 9},
-      'Emerald'  => {'option_id' => 10},
-      'Platinum' => {'option_id' => 11}
-    }
-  }.freeze
-
   private
+
+  def yasir_snake
+    {
+      'poll_id' => polls(:yasir_snake).id,
+      'question' => 'Fav snake',
+      'categories' => [[categories(:animals).id, 'Animals']],
+      'options' => {
+        'Python' => {'option_id' => options(:python).id},
+        'Cobra' =>  {'option_id' => options(:cobra).id},
+        'Viper' =>  {'option_id' => options(:viper).id},
+        'Mamba' =>  {'option_id' => options(:mamba).id}
+      }
+    }
+  end
+
+  def yasir_it
+    {
+      'poll_id' => polls(:yasir_it).id,
+      'question' => 'Fav programming language',
+      'categories' => [[categories(:it).id, "It"], [categories(:programming_languages).id, 'Programming languages']],
+      'options' => {
+        'Python'     => {'option_id' => options(:python).id},
+        'Java'       => {'option_id' => options(:java).id},
+        'JavaScript' => {'option_id' => options(:javascript).id},
+        'Ruby'       => {'option_id' => options(:ruby).id}
+      }
+    }
+  end
+
+  def yasir_no_ans
+    {
+      'poll_id' => polls(:yasir_no_ans).id,
+      'question' => 'Some dumb question',
+      'categories' => [],
+      'options' => {
+        'Crazy'    => {'option_id' => options(:crazy).id},
+        'Stupid'   => {'option_id' => options(:stupid).id},
+        'Annoying' => {'option_id' => options(:annoying).id}
+      }
+    }
+  end
+
+  def david_gems
+    {
+      'poll_id' => polls(:david_gems).id,
+      'question' => 'Fav gems',
+      'categories' => [[categories(:gems).id, 'Gems']],
+      'options' => {
+        'Ruby'     => {'option_id' => options(:ruby).id},
+        'Gold'     => {'option_id' => options(:gold).id},
+        'Dimond'   => {'option_id' => options(:dimond).id},
+        'Emerald'  => {'option_id' => options(:emerald).id},
+        'Platinum' => {'option_id' => options(:platinum).id}
+      }
+    }
+  end
 
   def expected_polls_for_user
     {
       'polls' => [
-        YASIR_SNAKE,
-        YASIR_IT,
-        YASIR_NO_ANS,
-        DAVID_GEMS
+        yasir_snake,
+        yasir_it,
+        yasir_no_ans,
+        david_gems
       ]
     }
   end
@@ -60,10 +71,10 @@ module PollsTestHelper
   def create_params
     {
       poll: {
-        question: 'My question',
-        options: ['opt1', 'opt2', 'opt3', 'opt4'],
-        category_ids: ['1'],
-        age_group_ids: ['1', '2', '3'],
+        'question' => 'My question',
+        'category_ids' => [categories(:it).id.to_s],
+        'options' => ['opt1', 'opt2', 'opt3', 'opt4'],
+        'age_group_ids' => ['1', '2', '3'],
       }
     }
   end
@@ -71,9 +82,9 @@ module PollsTestHelper
   def create_dup_params
     {
       poll: {
-        question: 'Fav snake',
-        options: ['opt1', 'opt2', 'opt3', 'opt4'],
-        category_ids: ['1']
+        'question' => 'Fav snake',
+        'options' => ['opt1', 'opt2', 'opt3', 'opt4'],
+        'category_ids' => [categories(:it).id]
       }
     }
   end

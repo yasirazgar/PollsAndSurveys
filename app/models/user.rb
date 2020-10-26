@@ -19,10 +19,13 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates :nick_name, presence: true, uniqueness: true
 
-	has_one :details, class_name: 'UserDetails'
+  has_one :details, class_name: 'UserDetail', foreign_key: :user_id, dependent: :destroy
 	has_many :polls
-  has_many :poll_answers
+  has_many :poll_answers, dependent: :destroy
   has_many :responded_polls, through: :poll_answers, source: :poll
+  has_and_belongs_to_many :categories,
+    class_name: 'Category',
+    join_table: 'users_categories'
 
   delegate :age, :age_group, to: :details, allow_nil: true
 end

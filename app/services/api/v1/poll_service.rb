@@ -87,7 +87,7 @@ class Api::V1::PollService < PollService
   end
 
   def populate_answer_data(poll, total)
-    data = poll.polls_options.inject({}){ |hash,po|
+    data = poll.poll_options.inject({}){ |hash,po|
       option = po.option
       hash[option.name] = {
         option_id: option.id,

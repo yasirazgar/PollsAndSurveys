@@ -5,44 +5,30 @@
 # below each fixture, per the syntax in the comments below
 #
 python:
-  id: 1
   name: Python
 cobra:
-  id: 2
   name: Cobra
 viper:
-  id: 3
   name: Viper
 mamba:
-  id: 4
   name: Mamba
 java:
-  id: 5
   name: Java
 javascript:
-  id: 6
   name: JavaScript
 ruby:
-  id: 7
   name: Ruby
 gold:
-  id: 8
   name: Gold
 dimond:
-  id: 9
   name: Dimond
 emerald:
-  id: 10
   name: Emerald
 platinum:
-  id: 11
   name: Platinum
 crazy:
-  id: 12
   name: Crazy
 stupid:
-  id: 13
   name: Stupid
 annoying:
-  id: 14
   name: Annoying

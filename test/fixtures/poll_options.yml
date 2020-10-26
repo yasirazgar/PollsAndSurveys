@@ -5,53 +5,53 @@
 # below each fixture, per the syntax in the comments below
 #
 yasir_snake_python:
-  poll_id: 1
-  option_id: 1
+  poll: yasir_snake
+  option: python
 yasir_snake_cobra:
-  poll_id: 1
-  option_id: 2
+  poll: yasir_snake
+  option: cobra
 yasir_snake_viper:
-  poll_id: 1
-  option_id: 3
+  poll: yasir_snake
+  option: viper
 yasir_snake_mamba:
-  poll_id: 1
-  option_id: 4
+  poll: yasir_snake
+  option: mamba
 
 yasir_it_python:
-  poll_id: 2
-  option_id: 1
+  poll: yasir_it
+  option: python
 yasir_it_java:
-  poll_id: 2
-  option_id: 5
+  poll: yasir_it
+  option: java
 yasir_it_javascript:
-  poll_id: 2
-  option_id: 6
+  poll: yasir_it
+  option: javascript
 yasir_it_ruby:
-  poll_id: 2
-  option_id: 7
+  poll: yasir_it
+  option: ruby
 
 yasir_no_ans_crazy:
-  poll_id: 3
-  option_id: 12
+  poll: yasir_no_ans
+  option: crazy
 yasir_no_ans_stupid:
-  poll_id: 3
-  option_id: 13
+  poll: yasir_no_ans
+  option: stupid
 yasir_no_ans_annoying:
-  poll_id: 3
-  option_id: 14
+  poll: yasir_no_ans
+  option: annoying
 
 david_gems_ruby:
-  poll_id: 4
-  option_id: 7
+  poll: david_gems
+  option: ruby
 david_gems_gold:
-  poll_id: 4
-  option_id: 8
+  poll: david_gems
+  option: gold
 david_gems_dimond:
-  poll_id: 4
-  option_id: 9
+  poll: david_gems
+  option: dimond
 david_gems_emerald:
-  poll_id: 4
-  option_id: 10
+  poll: david_gems
+  option: emerald
 david_gems_platinum:
-  poll_id: 4
-  option_id: 11
+  poll: david_gems
+  option: platinum

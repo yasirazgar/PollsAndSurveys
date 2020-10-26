@@ -10,13 +10,13 @@ class PollsController < ApplicationController
   end
 
   def create
-    poll_params = params.require(:poll).permit(:question, category_ids: [], options: [], age_group_ids: [])
+    poll_params = params.require(:poll).permit(:question, category_ids: [], options: [], age_group_ids: []).to_h
     poll = poll_service.create(poll_params)
 
     if poll.errors.present?
-      render json: {message: poll.errors.full_messages.join(',')}, status: :bad_request
+      render json: { message: poll.errors.full_messages.join(',') }, status: :bad_request
     else
-      render json: {poll_id: poll.id, message: t('actions.poll.create.success')}
+      render json: { poll_id: poll.id, message: t('actions.poll.create.success') }
     end
   end
 
@@ -24,7 +24,7 @@ class PollsController < ApplicationController
     poll = current_user.polls.find_by_id(params[:id])
 
     if poll && poll.destroy
-      render json: {polls: poll_service.get_users_polls}
+      render json: { polls: poll_service.get_users_polls }
       return
     end
 
@@ -41,9 +41,9 @@ class PollsController < ApplicationController
   # also dangerous to trust user's params
   def search
     type = params[:type]
-    polls = poll_service.send('search_'+type, params[:terms])
+    polls = poll_service.send('search_' + type, params[:terms].permit(:term, age_group_ids: [], category_ids: []).to_h)
 
-    render json: {polls: polls}
+    render json: { polls: polls }
   end
 
 end

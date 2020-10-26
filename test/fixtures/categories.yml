@@ -5,21 +5,17 @@
 # below each fixture, per the syntax in the comments below
 #
 it:
-  id: 1
   code: It
   aliases: <%= ['Software engineering'] %>
 
 programming_languages:
-  id: 2
   code: 'Programming languages'
   aliases: <%= ['Coding'] %>
 
 animals:
-  id: 3
   code: Animals
   aliases: <%= ['Snakes'] %>
 
 gems:
-  id: 4
   code: Gems
   aliases: <%= ['Precious stones'] %>

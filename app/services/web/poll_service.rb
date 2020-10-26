@@ -76,6 +76,7 @@ class Web::PollService < PollService
   # convert to query
   def answer_data(poll)
     total = poll.poll_answers.count
+
     unless total.zero?
       return populate_answer_data(poll, total)
     end
@@ -88,7 +89,7 @@ class Web::PollService < PollService
   end
 
   def populate_answer_data(poll, total)
-    data = poll.polls_options.inject({}){ |hash,po|
+    data = poll.poll_options.inject({}){ |hash,po|
       option = po.option
       hash[option.name] = {
         option_id: option.id,
@@ -104,5 +105,4 @@ class Web::PollService < PollService
 
     data
   end
-
 end
