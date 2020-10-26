@@ -17,7 +17,7 @@ class Api::V1::UserController < ApplicationController
     attrs = update_params
     attrs.delete(:locale) unless I18n.available_locales.include?(attrs[:locale].try(:to_sym))
 
-    current_user.update_attributes(attrs)
+    current_user.update(attrs)
     render json: {}, status: :ok
   end
 
