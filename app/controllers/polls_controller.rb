@@ -1,17 +1,18 @@
+# frozen_string_literal: true
+
 class PollsController < ApplicationController
   skip_before_action :authenticate_request, only: [:index]
 
   include PollsConcern
 
   def index
-    polls = poll_service.get_polls_for_user
+    polls = poll_service.polls_for_user
 
-    render json: {polls: polls}
+    render json: { polls: polls }
   end
 
   def create
-    poll_params = params.require(:poll).permit(:question, category_ids: [], options: [], age_group_ids: []).to_h
-    poll = poll_service.create(poll_params)
+    poll = poll_service.create(create_params)
 
     if poll.errors.present?
       render json: { message: poll.errors.full_messages.join(',') }, status: :bad_request
@@ -23,8 +24,8 @@ class PollsController < ApplicationController
   def destroy
     poll = current_user.polls.find_by_id(params[:id])
 
-    if poll && poll.destroy
-      render json: { polls: poll_service.get_users_polls }
+    if poll&.destroy
+      render json: { polls: poll_service.users_polls }
       return
     end
 
@@ -34,7 +35,7 @@ class PollsController < ApplicationController
   def answer
     poll_with_ans = poll_service.answer_poll(params[:id], params[:option_id])
 
-    render json: {poll: poll_with_ans}
+    render json: { poll: poll_with_ans }
   end
 
   # maybe its good to split this into three separate methods for each type
@@ -44,6 +45,12 @@ class PollsController < ApplicationController
     polls = poll_service.send('search_' + type, params[:terms].permit(:term, age_group_ids: [], category_ids: []).to_h)
 
     render json: { polls: polls }
+  end
+
+  private
+
+  def create_params
+    params.require(:poll).permit(:question, category_ids: [], options: [], age_group_ids: []).to_h
   end
 
 end

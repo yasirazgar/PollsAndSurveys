@@ -10,28 +10,28 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
     @yasir = users(:yasir)
   end
 
-  test "index - without signin" do
+  test 'index - without signin' do
     get(polls_url, xhr: true)
     assert_response :success
     assert_equal(expected_polls_for_user, json_response,
       'Should return polls as json without any filteration')
   end
 
-  test "indexr" do
+  test 'indexr' do
     expected = {
       'polls' => [yasir_it]
     }
 
-    get(polls_url, headers: { "Authorization" => token_for_user(@yasir) }, xhr: true)
+    get(polls_url, headers: { 'Authorization' => token_for_user(@yasir) }, xhr: true)
     assert_response :success
     assert_equal(expected, json_response,
       'Should return polls based on users preference, as json')
   end
 
-  test "create" do
+  test 'create' do
     service_mock.expects(:create).with(create_params[:poll]).returns(polls(:yasir_snake))
 
-    post(polls_url, params: create_params, headers: { "Authorization" => token_for_user(@yasir) }, xhr: true)
+    post(polls_url, params: create_params, headers: { 'Authorization' => token_for_user(@yasir) }, xhr: true)
     assert_response :success
     assert_equal(
       {
@@ -42,9 +42,9 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
       'Should return poll_id and success message')
   end
 
-  test "create-with duplicate question" do
+  test 'create-with duplicate question' do
     assert_difference('Poll.count', 0, 'Should not create with duplicate question') do
-      post(polls_url, params: create_dup_params, headers: { "Authorization" => token_for_user(@yasir) }, xhr: true)
+      post(polls_url, params: create_dup_params, headers: { 'Authorization' => token_for_user(@yasir) }, xhr: true)
     end
 
     assert_response :bad_request
@@ -52,38 +52,38 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
        'Should return a error message')
   end
 
-  test "destroy" do
+  test 'destroy' do
     poll = polls(:yasir_snake)
 
     assert_difference('Poll.count', -1, 'Should destroy the poll') do
-      delete(poll_url(poll), headers: { "Authorization" => token_for_user(@yasir) }, xhr: true)
+      delete(poll_url(poll), headers: { 'Authorization' => token_for_user(@yasir) }, xhr: true)
     end
 
     assert_equal(
       [yasir_it_ans, yasir_no_ans_ans],
       json_response['polls'],
-      "Should return all users polls except the deleted one")
+      'Should return all users polls except the deleted one')
 
     assert_response :success
   end
 
-  test "destroy - other users polls" do
+  test 'destroy - other users polls' do
     other_user_poll = polls(:david_gems)
 
     assert_difference('Poll.count', 0, 'Should not destroy other users polls') do
-      delete(poll_url(other_user_poll), headers: { "Authorization" => token_for_user(@yasir) }, xhr: true)
+      delete(poll_url(other_user_poll), headers: { 'Authorization' => token_for_user(@yasir) }, xhr: true)
     end
 
     assert_response :not_found
   end
 
-  test "answer_poll" do
+  test 'answer_poll' do
     poll_hash = yasir_no_ans_ans.deep_dup
-    poll_hash['options']["Crazy"]['percentage'] = 100
-    poll_hash['options']["Crazy"]['selected'] = true
+    poll_hash['options']['Crazy']['percentage'] = 100
+    poll_hash['options']['Crazy']['selected'] = true
 
     assert_difference('PollAnswer.count', 1, 'Should create a new answer') do
-      post(answer_poll_url(polls(:yasir_no_ans).id, options(:crazy).id), headers: { "Authorization" => token_for_user(@yasir) }, xhr: true)
+      post(answer_poll_url(polls(:yasir_no_ans).id, options(:crazy).id), headers: { 'Authorization' => token_for_user(@yasir) }, xhr: true)
     end
 
     assert_response :success
@@ -96,10 +96,10 @@ class PollsControllerTest < ActionDispatch::IntegrationTest
       params, expected_response = search_request(type)
       service_mock.expects("search_#{type}").with(params['terms']).returns(expected_response['polls'])
 
-      get(search_polls_url(params), headers: { "Authorization" => token_for_user(@yasir) }, xhr: true)
+      get(search_polls_url(params), headers: { 'Authorization' => token_for_user(@yasir) }, xhr: true)
       assert_response :success
       assert_equal(expected_response, json_response,
-        "Should return response based on the params")
+        'Should return response based on the params')
     end
   end
 

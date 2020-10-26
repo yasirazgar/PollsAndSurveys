@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Table "public.options"
 #  Column |       Type        | Collation | Nullable |               Default
 # --------+-------------------+-----------+----------+-------------------------------------
@@ -5,9 +7,8 @@
 #  name | character varying |           |          |
 # Indexes:
 #     "options_pkey" PRIMARY KEY, btree (id)
-
 class Option < ApplicationRecord
-	has_many :polls, through: :poll_options
+  has_many :polls, through: :poll_options
 
   validates :name, presence: true
 end

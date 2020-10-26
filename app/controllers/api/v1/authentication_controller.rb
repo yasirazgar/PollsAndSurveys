@@ -1,15 +1,21 @@
-class Api::V1::AuthenticationController < ApplicationController
-  skip_before_action :authenticate_request
+# frozen_string_literal: true
 
-  def create
-    user = User.find_by_email(params[:email])
+module Api
+  module V1
+    class AuthenticationController < ApplicationController
+      skip_before_action :authenticate_request
 
-    if user && user.authenticate(params[:password])
-      jwt = JsonWebToken.encode(user_id: user.id)
-      # cookies.signed[:jwt] = {value:  created_jwt, httponly: true}
-      render json: {user: user.slice(:name, :nick_name, :email), jwt: jwt, message: 'Successfully logged in'}
-    else
-      render json: {error: 'Username or password incorrect'}, status: 404
+      def create
+        user = User.find_by_email(params[:email])
+
+        if user&.authenticate(params[:password])
+          jwt = JsonWebToken.encode(user_id: user.id)
+          # cookies.signed[:jwt] = {value:  created_jwt, httponly: true}
+          render json: { user: user.slice(:name, :nick_name, :email), jwt: jwt, message: 'Successfully logged in' }
+        else
+          render json: { error: 'Username or password incorrect' }, status: 404
+        end
+      end
     end
   end
 end

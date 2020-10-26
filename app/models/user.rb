@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #  Column       |            Type             | Collation | Nullable |              Default
 # --------------------+-----------------------------+-----------+----------+-----------------------------------
 #  id                 | bigint                      |           | not null | nextval('users_id_seq'::regclass)
@@ -12,7 +14,6 @@
 #  updated_at         | timestamp without time zone |           | not null |
 # Indexes:
 #     "users_pkey" PRIMARY KEY, btree (id)
-
 class User < ApplicationRecord
   has_secure_password
 
@@ -20,12 +21,10 @@ class User < ApplicationRecord
   validates :nick_name, presence: true, uniqueness: true
 
   has_one :details, class_name: 'UserDetail', foreign_key: :user_id, dependent: :destroy
-	has_many :polls
+  has_many :polls
   has_many :poll_answers, dependent: :destroy
   has_many :responded_polls, through: :poll_answers, source: :poll
-  has_and_belongs_to_many :categories,
-    class_name: 'Category',
-    join_table: 'users_categories'
+  has_and_belongs_to_many :categories, class_name: 'Category', join_table: 'users_categories'
 
   delegate :age, :age_group, to: :details, allow_nil: true
 end

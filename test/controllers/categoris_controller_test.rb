@@ -2,7 +2,7 @@ require 'test_helper'
 
 class CategoriesControllerTest < ActionDispatch::IntegrationTest
 
-  test "index" do
+  test 'index' do
     user = users(:yasir)
 
     get(categories_url, xhr: true)
