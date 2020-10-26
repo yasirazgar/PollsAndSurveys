@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Table "public.poll_options"
 #   Column   |  Type   | Collation | Nullable |                  Default
 # -----------+---------+-----------+----------+-------------------------------------------
@@ -9,9 +11,8 @@
 #     "index_poll_options_on_option_id" btree (option_id)
 #     "index_poll_options_on_poll_id" btree (poll_id)
 #     "index_poll_options_on_poll_id_and_option_id" btree (poll_id, option_id)
-
 class PollOption < ApplicationRecord
-	belongs_to :poll
+  belongs_to :poll
   belongs_to :option
   has_many :poll_answers
 end

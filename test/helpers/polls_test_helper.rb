@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PollsTestHelper
   private
 
@@ -6,12 +8,13 @@ module PollsTestHelper
       'poll_id' => polls(:yasir_snake).id,
       'question' => 'Fav snake',
       'categories' => [[categories(:animals).id, 'Animals']],
-      'options' => {
-        'Python' => {'option_id' => options(:python).id},
-        'Cobra' =>  {'option_id' => options(:cobra).id},
-        'Viper' =>  {'option_id' => options(:viper).id},
-        'Mamba' =>  {'option_id' => options(:mamba).id}
-      }
+      'options' =>
+        {
+          'Python' => { 'option_id' => options(:python).id },
+          'Cobra' => { 'option_id' => options(:cobra).id },
+          'Viper' => { 'option_id' => options(:viper).id },
+          'Mamba' => { 'option_id' => options(:mamba).id }
+        }
     }
   end
 
@@ -21,10 +24,10 @@ module PollsTestHelper
       'question' => 'Fav programming language',
       'categories' => [[categories(:it).id, "It"], [categories(:programming_languages).id, 'Programming languages']],
       'options' => {
-        'Python'     => {'option_id' => options(:python).id},
-        'Java'       => {'option_id' => options(:java).id},
-        'JavaScript' => {'option_id' => options(:javascript).id},
-        'Ruby'       => {'option_id' => options(:ruby).id}
+        'Python'     => { 'option_id' => options(:python).id },
+        'Java'       => { 'option_id' => options(:java).id },
+        'JavaScript' => { 'option_id' => options(:javascript).id },
+        'Ruby'       => { 'option_id' => options(:ruby).id }
       }
     }
   end

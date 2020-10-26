@@ -1,26 +1,26 @@
 class Web::PollService < PollService
 
-  def get_polls_for_user
+  def polls_for_user
     polls = super
     format_polls(polls)
   end
 
-  def get_users_polls
+  def users_polls
     polls = super
     format_polls_with_answer(polls)
   end
 
   def answer_poll(poll_id, option_id)
     super
-    get_answers_for_poll(poll_id)
+    answers_for_poll(poll_id)
   end
 
-  def get_answers_for_poll(poll_id)
+  def answers_for_poll(poll_id)
     poll = super
     format_poll_with_answer(poll)
   end
 
-  def get_user_responded_polls
+  def user_responded_polls
     polls = super
     format_polls_with_answer(polls)
   end

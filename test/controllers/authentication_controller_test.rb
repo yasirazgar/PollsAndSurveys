@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class AuthenticationControllerTest < ActionDispatch::IntegrationTest
-  test "create - login - success" do
+  test 'create - login - success' do
     user = users(:yasir)
     params = {
       email: 'yasir@pas.com',
@@ -17,8 +17,7 @@ class AuthenticationControllerTest < ActionDispatch::IntegrationTest
     assert_not_nil(json_response['jwt'])
   end
 
-  test "create - login - failure" do
-    user = users(:yasir)
+  test 'create - login - failure' do
     params = {
       email: 'yasir@pas.com',
       password: 'PassworD@1'
