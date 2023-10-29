@@ -12,7 +12,7 @@ class Api::V1::PollServiceTest < ActiveSupport::TestCase
   end
 
   test "users_poll" do
-    assert_equal(expected_users_poll, @service.get_users_polls.map(&:deep_stringify_keys),
+    assert_equal(expected_users_poll, @service.users_polls.map(&:deep_stringify_keys),
       'Should return polls created by the user')
   end
 
@@ -23,23 +23,23 @@ class Api::V1::PollServiceTest < ActiveSupport::TestCase
         yasir_it,
         yasir_no_ans,
         david_gems
-      ], Api::V1::PollService.new(nil).get_polls_for_user.map(&:deep_stringify_keys),
+      ], Api::V1::PollService.new(nil).polls_for_user.map(&:deep_stringify_keys),
       'Should return polls created by the user')
   end
 
   test "polls_for_user" do
-    assert_equal([yasir_it], @service.get_polls_for_user.map(&:deep_stringify_keys),
+    assert_equal([yasir_it], @service.polls_for_user.map(&:deep_stringify_keys),
       'Should return polls for user based on users fields')
   end
 
   test "polls_for_user - with category_ids" do
-    assert_equal([yasir_it], @service.get_polls_for_user.map(&:deep_stringify_keys),
+    assert_equal([yasir_it], @service.polls_for_user.map(&:deep_stringify_keys),
       'Should return polls for user based on users fields')
   end
 
   test "polls_for_user - with age_group_ids and category_ids" do
     UserDetail.any_instance.expects(:age_group).returns(1)
-    assert_equal([yasir_snake, yasir_it, david_gems], @service.get_polls_for_user.map(&:deep_stringify_keys),
+    assert_equal([yasir_snake, yasir_it, david_gems], @service.polls_for_user.map(&:deep_stringify_keys),
       'Should return polls for user based on users fields')
   end
 
@@ -47,7 +47,7 @@ class Api::V1::PollServiceTest < ActiveSupport::TestCase
     user = users(:sundar)
     service = Api::V1::PollService.new(user)
 
-    assert_equal(expected_polls_for_user['polls'], service.get_polls_for_user.map(&:deep_stringify_keys),
+    assert_equal(expected_polls_for_user['polls'], service.polls_for_user.map(&:deep_stringify_keys),
       'Should return all polls there are no parameters for filtering')
   end
 
@@ -110,13 +110,13 @@ class Api::V1::PollServiceTest < ActiveSupport::TestCase
     assert_poll(poll, params)
   end
 
-  test "get_answers_for_poll" do
-    assert_equal(yasir_snake_ans, @service.get_answers_for_poll(polls(:yasir_snake)).deep_stringify_keys,
+  test "answers_for_poll" do
+    assert_equal(yasir_snake_ans, @service.answers_for_poll(polls(:yasir_snake)).deep_stringify_keys,
       'Should return the answers for poll')
   end
 
-  test "get_user_responded_polls" do
-    assert_equal(expected_user_responded_polls, @service.get_user_responded_polls.map(&:deep_stringify_keys),
+  test "user_responded_polls" do
+    assert_equal(expected_user_responded_polls, @service.user_responded_polls.map(&:deep_stringify_keys),
       'Should return the polls responded by the user')
   end
 

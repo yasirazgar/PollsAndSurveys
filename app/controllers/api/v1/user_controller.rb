@@ -1,35 +1,41 @@
-class Api::V1::UserController < ApplicationController
-  include Api::V1::PollsConcern
+# frozen_string_literal: true
 
-  def polls
-    polls = poll_service.get_users_polls
+module Api
+  module V1
+    class UserController < ApplicationController
+      include Api::V1::PollsConcern
 
-    render json: {polls: polls}
-  end
+      def polls
+        polls = poll_service.users_polls
 
-  def responded_polls
-    polls = poll_service.get_user_responded_polls
+        render json: { polls: polls }
+      end
 
-    render json: {polls: polls}
-  end
+      def responded_polls
+        polls = poll_service.user_responded_polls
 
-  def update_profile
-    attrs = update_params
-    attrs.delete(:locale) unless I18n.available_locales.include?(attrs[:locale].try(:to_sym))
+        render json: { polls: polls }
+      end
 
-    current_user.update(attrs)
-    render json: {}, status: :ok
-  end
+      def update_profile
+        attrs = update_params
+        attrs.delete(:locale) unless I18n.available_locales.include?(attrs[:locale].try(:to_sym))
 
-  def update_locale
-    locale = params[:locale]
-    current_user.update_column(:locale, locale) if I18n.available_locales.include?(locale.to_sym)
-    render json: {}, status: :ok
-  end
+        current_user.update(attrs)
+        render json: {}, status: :ok
+      end
 
-  private
+      def update_locale
+        locale = params[:locale]
+        current_user.update_column(:locale, locale) if I18n.available_locales.include?(locale.to_sym)
+        render json: {}, status: :ok
+      end
 
-  def update_params
-    params.permit(:email, :password, :password_confirmation, :name, :nick_name, :locale)
+      private
+
+      def update_params
+        params.permit(:email, :password, :password_confirmation, :name, :nick_name, :locale)
+      end
+    end
   end
 end
